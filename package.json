@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "bootstrap:demo": "tsx scripts/bootstrap-c1-responses.ts"
   },
   "dependencies": {
     "@crayonai/react-core": "^0.7.6",
@@ -30,6 +31,7 @@
     "eslint-config-next": "15.2.4",
     "lightningcss": "^1.29.2",
     "tailwindcss": "^4",
+    "tsx": "^4.19.3",
     "typescript": "^5"
   },
   "overrides": {

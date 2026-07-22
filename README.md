@@ -26,7 +26,17 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing your responses by modifying the system prompt in `src/app/api/chat/route.ts`.
+## Staged demo data
+
+Demo content lives in `src/demo/data/`. The chat API serves pre-generated C1 responses from `src/demo/responses/`.
+
+If you change any demo data (tables, numbers, intro text, flags, summaries, etc.), regenerate the response files:
+
+```bash
+npm run bootstrap:demo
+```
+
+This requires `THESYS_API_KEY` in `.env`. See `src/demo/README.md` for more details on adding new flows.
 
 ## Learn More
 

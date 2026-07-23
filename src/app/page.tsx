@@ -1,6 +1,6 @@
 "use client";
 
-import { C1Chat, ArtifactViewMode } from "@thesysai/genui-sdk";
+import { C1Chat, ArtifactViewMode, ThemeProvider } from "@thesysai/genui-sdk";
 import "@crayonai/react-ui/styles/index.css";
 import { useCallback, useRef } from "react";
 
@@ -53,13 +53,15 @@ export default function Home() {
   );
 
   return (
-    <C1Chat
-      apiUrl="/api/chat"
-      theme={{ mode: "dark" }}
-      customizeC1={{
-        exportAsPPTX: handlePptxExport,
-        artifactViewMode: ArtifactViewMode.AUTO_OPEN,
-      }}
-    />
+    <ThemeProvider mode="light">
+      <C1Chat
+        apiUrl="/api/chat"
+        disableThemeProvider
+        customizeC1={{
+          exportAsPPTX: handlePptxExport,
+          artifactViewMode: ArtifactViewMode.AUTO_OPEN,
+        }}
+      />
+    </ThemeProvider>
   );
 }

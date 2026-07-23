@@ -2,7 +2,8 @@
 
 import { C1Chat, ArtifactViewMode, ThemeProvider } from "@thesysai/genui-sdk";
 import "@crayonai/react-ui/styles/index.css";
-import { useCallback, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
+import { useAnomalyChatManagers } from "@/hooks/useAnomalyChatManagers";
 
 export default function Home() {
   const isExportingRef = useRef(false);
@@ -52,15 +53,27 @@ export default function Home() {
     []
   );
 
+  const customizeC1 = useMemo(
+    () => ({
+      exportAsPPTX: handlePptxExport,
+      artifactViewMode: ArtifactViewMode.AUTO_OPEN,
+    }),
+    [handlePptxExport]
+  );
+
+  const { threadListManager, threadManager } = useAnomalyChatManagers({
+    apiUrl: "/api/chat",
+    customizeC1,
+  });
+
   return (
     <ThemeProvider mode="light">
       <C1Chat
         apiUrl="/api/chat"
         disableThemeProvider
-        customizeC1={{
-          exportAsPPTX: handlePptxExport,
-          artifactViewMode: ArtifactViewMode.AUTO_OPEN,
-        }}
+        threadListManager={threadListManager}
+        threadManager={threadManager}
+        customizeC1={customizeC1}
       />
     </ThemeProvider>
   );

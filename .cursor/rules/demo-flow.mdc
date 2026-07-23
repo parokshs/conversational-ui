@@ -41,3 +41,4 @@ Six-step portfolio demo in `src/demo/`. Read `src/demo/README.md` for full workf
 - `flows/buildStagedResponse.ts` — streams `.c1.txt` after optional thinking + latency
 - `demoLatency.ts` — env-driven delay (`DEMO_LATENCY_MS`, min/max jitter, `DEMO_PRESENTATION_LATENCY_MS`)
 - `presentation/buildBundle.ts` — collects answered steps for slide export
+- `demo/anomaly/` + `hooks/useAnomalyChatManagers.ts` — pre-seeded "Anomaly" thread on app load

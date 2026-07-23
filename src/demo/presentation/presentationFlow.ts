@@ -18,13 +18,15 @@ export function isPresentationExportRequest(question: string) {
 
   return (
     /export\s+(a\s+)?presentation/.test(q) ||
-    /create\s+(a\s+)?presentation/.test(q) ||
-    /generate\s+(a\s+)?(presentation|slides|deck)/.test(q) ||
-    /make\s+(a\s+)?(presentation|slides|deck)/.test(q) ||
-    /build\s+(a\s+)?(presentation|slides|deck)/.test(q) ||
-    /prepare\s+(a\s+)?presentation/.test(q) ||
+    /export\s+(as\s+)?(a\s+)?(presentation|pptx?)/.test(q) ||
+    /create\s+(a\s+)?(presentation|pptx?)/.test(q) ||
+    /generate\s+(a\s+)?(presentation|slides|deck|pptx?)/.test(q) ||
+    /make\s+(a\s+)?(presentation|slides|deck|pptx?)/.test(q) ||
+    /build\s+(a\s+)?(presentation|slides|deck|pptx?)/.test(q) ||
+    /prepare\s+(a\s+)?(presentation|pptx?)/.test(q) ||
     /presentation\s+.*executives/.test(q) ||
-    /share\s+with\s+(the\s+)?executives/.test(q)
+    /share\s+with\s+(the\s+)?executives/.test(q) ||
+    /\bas\s+pptx?\b/.test(q)
   );
 }
 

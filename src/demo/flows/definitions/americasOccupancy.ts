@@ -1,7 +1,5 @@
-import {
-  americasBuildings,
-  americasIntro,
-} from "../../data/americasBuildings";
+import { getAmericasCharts, getAmericasPromptData } from "../../data/americasBuildings";
+import { buildPromptFromData } from "../../format/buildPromptFromData";
 import type { PresentationSection } from "../../presentation/types";
 import type { DemoFlowDefinition } from "../types";
 
@@ -23,40 +21,45 @@ export const americasOccupancyFlow: DemoFlowDefinition = {
     description: "Reviewing building-level occupancy across the Americas region.",
   },
   buildChatPrompt() {
-    const rows = americasBuildings
-      .map(
-        (row) =>
-          `${row.building}: ${row.employees} employees, ${row.seats} seats, ${row.vacantPct}% vacant`
-      )
-      .join("\n");
+    const data = getAmericasPromptData();
 
-    return `Create a professional portfolio analytics response.
-
-Start with this exact sentence:
-"${americasIntro}"
-
-Then render a sortable data table with exactly these columns: Building, Employees, Seats, Vacant %
-
-Use exactly this data (10 rows, no extra rows):
-${rows}
-
-Do not mention that this is a demo or staged. Keep the layout clean and executive-ready.`;
+    return buildPromptFromData({
+      task: "Create a professional portfolio analytics response.",
+      data,
+      layout: [
+        `Start with DATA.intro exactly.`,
+        "Render a sortable data table from DATA.buildings with columns: Building, Employees, Seats, Vacant %.",
+        "After the table, render DATA.charts[0] as a horizontal bar chart titled \"Vacant % by Building\".",
+      ],
+    });
   },
   buildPresentationSection(): PresentationSection {
+    const data = getAmericasPromptData();
+    const topBuilding = data.buildings[0];
+
     return {
       id: "americas-occupancy",
       title: "Americas Portfolio Occupancy",
-      intro: americasIntro,
+      intro: data.intro,
       tables: [
         {
           heading: "Building-Level Metrics",
           columns: ["Building", "Employees", "Seats", "Vacant %"],
-          rows: americasBuildings.map((row) => [
+          rows: data.buildings.map((row) => [
             row.building,
             String(row.employees),
             String(row.seats),
             `${row.vacantPct}%`,
           ]),
+        },
+      ],
+      charts: getAmericasCharts(),
+      bullets: [
+        {
+          label: "Key Insight",
+          items: [
+            `${topBuilding.building} leads the portfolio with ${topBuilding.vacantPct}% vacant — the highest among Americas buildings.`,
+          ],
         },
       ],
     };

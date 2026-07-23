@@ -37,3 +37,53 @@ export const boltroRoomAnomaly: RoomOccupancyAnomaly = {
 };
 
 export const anomalyUserPrompt = "What anomalies have been found in the data?";
+
+export function getAnomalyPromptData() {
+  return {
+    intro: anomalyIntro,
+    findings: [
+      {
+        id: "sanam-cost-per-sqft",
+        analysis: sanamCostAnalysis,
+        table: {
+          columns: [
+            "Building",
+            "Floor",
+            "Current Cost per SQFT",
+            "Previous Cost per SQFT",
+          ],
+          rows: [
+            [
+              sanamCostAnomaly.building,
+              sanamCostAnomaly.floor,
+              sanamCostAnomaly.currentCostPerSqft,
+              sanamCostAnomaly.previousCostPerSqft,
+            ],
+          ],
+        },
+      },
+      {
+        id: "boltro-room-occupancy",
+        analysis: boltroRoomAnalysis,
+        table: {
+          columns: [
+            "Building",
+            "Floor",
+            "Room",
+            "Employee Count",
+            "Workstations",
+          ],
+          rows: [
+            [
+              boltroRoomAnomaly.building,
+              boltroRoomAnomaly.floor,
+              boltroRoomAnomaly.room,
+              boltroRoomAnomaly.employeeCount,
+              boltroRoomAnomaly.workstations,
+            ],
+          ],
+        },
+      },
+    ],
+  };
+}

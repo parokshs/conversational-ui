@@ -1,9 +1,8 @@
 import {
-  engineeringAllocations,
-  engineeringIntro,
-  engineeringObservations,
-  engineeringOpportunities,
+  getEngineeringCharts,
+  getEngineeringPromptData,
 } from "../../data/engineeringWorkspace";
+import { buildPromptFromData } from "../../format/buildPromptFromData";
 import type { PresentationSection } from "../../presentation/types";
 import type { DemoFlowDefinition } from "../types";
 
@@ -25,33 +24,26 @@ export const engineeringWorkspaceFlow: DemoFlowDefinition = {
       "Analysing Engineering workspace allocation by floor and seat type.",
   },
   buildChatPrompt() {
-    const rows = engineeringAllocations
-      .map(
-        (row) =>
-          `Floor ${row.floor}, ${row.roomUse}: ${row.employees} employees, ${row.workstations} workstations, ${row.vacantWorkstations} vacant workstations`
-      )
-      .join("\n");
+    const data = getEngineeringPromptData();
 
-    return `Create a professional workspace allocation analysis response.
-
-Render a data table with exactly these columns: Floor, Room Use, Employees, Workstations, Vacant Workstations
-
-Use exactly this data:
-${rows}
-
-After the table, add a "Key observations" section with these bullets:
-${engineeringObservations.map((item) => `- ${item}`).join("\n")}
-
-Then add a short paragraph that Floor 07 is largely unused and may represent an opportunity to:
-${engineeringOpportunities.map((item) => `- ${item}`).join("\n")}
-
-Do not mention that this is a demo or staged. Keep the layout clean and executive-ready.`;
+    return buildPromptFromData({
+      task: "Create a professional workspace allocation analysis response.",
+      data,
+      layout: [
+        "Render a data table from DATA.allocations with columns: Floor, Room Use, Employees, Workstations, Vacant Workstations.",
+        "After the table, render DATA.charts[0] as a grouped bar chart.",
+        "Add a Key observations section from DATA.observations.",
+        "Add a short paragraph that Floor 07 is largely unused and may represent an opportunity to, followed by bullets from DATA.opportunities.",
+      ],
+    });
   },
   buildPresentationSection(): PresentationSection {
+    const data = getEngineeringPromptData();
+
     return {
       id: "engineering-workspace",
       title: "Engineering Workspace Allocation",
-      intro: engineeringIntro,
+      intro: data.intro,
       tables: [
         {
           heading: "Allocation by Floor and Seat Type",
@@ -62,7 +54,7 @@ Do not mention that this is a demo or staged. Keep the layout clean and executiv
             "Workstations",
             "Vacant Workstations",
           ],
-          rows: engineeringAllocations.map((row) => [
+          rows: data.allocations.map((row) => [
             row.floor,
             row.roomUse,
             String(row.employees),
@@ -71,16 +63,17 @@ Do not mention that this is a demo or staged. Keep the layout clean and executiv
           ]),
         },
       ],
+      charts: getEngineeringCharts(),
       bullets: [
         {
           label: "Key Observations",
-          items: engineeringObservations,
+          items: data.observations,
         },
         {
           label: "Opportunities",
           items: [
             "Floor 07 is largely unused and may represent an opportunity to:",
-            ...engineeringOpportunities,
+            ...data.opportunities,
           ],
         },
       ],

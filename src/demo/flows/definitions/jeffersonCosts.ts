@@ -1,38 +1,11 @@
 import {
-  jeffersonBusinessUnits,
-  jeffersonIntro,
-  jeffersonObservations,
-  jeffersonRecommendations,
+  formatCurrency,
+  getJeffersonCharts,
+  getJeffersonPromptData,
 } from "../../data/jeffersonHouseCosts";
+import { buildPromptFromData } from "../../format/buildPromptFromData";
 import type { PresentationSection } from "../../presentation/types";
 import type { DemoFlowDefinition } from "../types";
-
-const formatCurrency = (value: number) =>
-  value.toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-
-function formatObservation(
-  observation: (typeof jeffersonObservations)[number],
-  index: number
-): string {
-  const lines = [`${index + 1}. ${observation.title}`];
-
-  for (const paragraph of observation.paragraphs) {
-    lines.push(paragraph);
-  }
-
-  if (observation.bullets?.length) {
-    lines.push(...observation.bullets.map((item) => `- ${item}`));
-  }
-
-  if (observation.closingParagraphs?.length) {
-    lines.push(...observation.closingParagraphs);
-  }
-
-  return lines.join("\n");
-}
 
 export const jeffersonCostsFlow: DemoFlowDefinition = {
   id: "jefferson-costs",
@@ -52,40 +25,28 @@ export const jeffersonCostsFlow: DemoFlowDefinition = {
       "Breaking down vacant versus allocated costs by business unit for Jefferson House.",
   },
   buildChatPrompt() {
-    const rows = jeffersonBusinessUnits
-      .map(
-        (row) =>
-          `${row.businessUnit}: Vacancy Cost $${formatCurrency(row.vacancyCost)}, Allocated Cost $${formatCurrency(row.allocatedCost)}, Vacant Cost % ${row.vacantCostPct}`
-      )
-      .join("\n");
+    const data = getJeffersonPromptData();
 
-    const analysis = jeffersonObservations
-      .map((observation, index) => formatObservation(observation, index))
-      .join("\n\n");
-
-    return `Create a professional building cost analysis response.
-
-Start with this exact sentence:
-"${jeffersonIntro}"
-
-Then render a data table with exactly these columns: Business Unit, Vacancy Cost ($), Allocated Cost ($), Vacant Cost %
-
-Use exactly this data:
-${rows}
-
-After the table, add clearly numbered analysis sections using this exact content:
-${analysis}
-
-End with a Recommendations section:
-${jeffersonRecommendations.map((item) => `- ${item}`).join("\n")}
-
-Do not mention that this is a demo or staged. Keep the layout clean and executive-ready.`;
+    return buildPromptFromData({
+      task: "Create a professional building cost analysis response.",
+      data,
+      layout: [
+        `Start with DATA.intro exactly.`,
+        "Render a data table from DATA.businessUnits with columns: Business Unit, Vacancy Cost ($), Allocated Cost ($), Vacant Cost %.",
+        "After the table, render DATA.charts[0] as a horizontal bar chart for Vacant Cost % by Business Unit.",
+        "Then render DATA.charts[1] as a grouped bar chart comparing Vacancy Cost ($) and Allocated Cost ($).",
+        "Add clearly numbered analysis sections from DATA.observations (title, paragraphs, bullets, closingParagraphs).",
+        "End with a Recommendations section from DATA.recommendations.",
+      ],
+    });
   },
   buildPresentationSection(): PresentationSection {
+    const data = getJeffersonPromptData();
+
     return {
       id: "jefferson-costs",
       title: "Jefferson House — Cost Allocation",
-      intro: jeffersonIntro,
+      intro: data.intro,
       tables: [
         {
           heading: "Vacant vs Allocated by Business Unit",
@@ -95,7 +56,7 @@ Do not mention that this is a demo or staged. Keep the layout clean and executiv
             "Allocated Cost ($)",
             "Vacant Cost %",
           ],
-          rows: jeffersonBusinessUnits.map((row) => [
+          rows: data.businessUnits.map((row) => [
             row.businessUnit,
             formatCurrency(row.vacancyCost),
             formatCurrency(row.allocatedCost),
@@ -103,8 +64,9 @@ Do not mention that this is a demo or staged. Keep the layout clean and executiv
           ]),
         },
       ],
+      charts: getJeffersonCharts(),
       bullets: [
-        ...jeffersonObservations.map((observation) => ({
+        ...data.observations.map((observation) => ({
           label: observation.title,
           items: [
             ...observation.paragraphs,
@@ -114,7 +76,7 @@ Do not mention that this is a demo or staged. Keep the layout clean and executiv
         })),
         {
           label: "Recommendations",
-          items: jeffersonRecommendations,
+          items: data.recommendations,
         },
       ],
     };

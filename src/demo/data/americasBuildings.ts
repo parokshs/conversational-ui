@@ -1,3 +1,8 @@
+import type {
+  PresentationChart,
+  PresentationHighlight,
+} from "../presentation/types";
+
 export type BuildingOccupancy = {
   building: string;
   employees: number;
@@ -20,3 +25,41 @@ export const americasBuildings: BuildingOccupancy[] = [
 
 export const americasIntro =
   "I've analysed the Americas portfolio. Here are the top 10 buildings with the highest Vacant percentage figures.";
+
+export function getAmericasHighlights(): PresentationHighlight[] {
+  const topBuilding = americasBuildings[0];
+
+  return [
+    {
+      label: "Highest Vacant %",
+      value: `${topBuilding.vacantPct}%`,
+      caption: `${topBuilding.building} leads the Americas portfolio`,
+    },
+  ];
+}
+
+export function getAmericasCharts(): PresentationChart[] {
+  return [
+    {
+      heading: "Vacant % by Building",
+      chartType: "horizontalBar",
+      categories: americasBuildings.map((row) => row.building),
+      series: [
+        {
+          name: "Vacant %",
+          values: americasBuildings.map((row) => row.vacantPct),
+        },
+      ],
+      valueAxisLabel: "Vacant %",
+    },
+  ];
+}
+
+export function getAmericasPromptData() {
+  return {
+    intro: americasIntro,
+    buildings: americasBuildings,
+    highlights: getAmericasHighlights(),
+    charts: getAmericasCharts(),
+  };
+}

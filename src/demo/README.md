@@ -113,7 +113,7 @@ PPTX export is handled by `/api/export-pptx`, which proxies to the Thesys artifa
 2. Add a flow definition under `flows/definitions/yourStep.ts` that:
    - imports the data file
    - defines `keywords`, `responseFile`, and optional `thinking`
-   - implements `buildChatPrompt()`
+   - implements `buildChatPrompt()` using `format/buildPromptFromData.ts` and a `get*PromptData()` helper from the data file
    - implements `buildPresentationSection()`
 3. Register the flow in `flows/registry.ts`
 4. Run `npm run bootstrap:demo`

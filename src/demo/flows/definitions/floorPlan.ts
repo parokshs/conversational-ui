@@ -3,6 +3,7 @@ import {
   floorPlanImageUrl,
   floorPlanIntro,
 } from "../../data/floorPlan";
+import { buildPromptFromData } from "../../format/buildPromptFromData";
 import type { PresentationSection } from "../../presentation/types";
 import type { DemoFlowDefinition } from "../types";
 
@@ -26,18 +27,20 @@ export const floorPlanFlow: DemoFlowDefinition = {
       "Rendering the Floor 07 allocation map with occupied and vacant workstation legend.",
   },
   buildChatPrompt() {
-    return `Create a professional floor plan response for Floor 07.
-
-Start with this exact sentence:
-"${floorPlanIntro}"
-
-Then display the floor plan image using this exact URL:
-${floorPlanImageUrl}
-
-Use a large, readable image component with this caption:
-"${floorPlanCaption}"
-
-Do not mention that this is a demo or staged. Keep the layout clean and executive-ready.`;
+    return buildPromptFromData({
+      task: "Create a professional floor plan response for Floor 07.",
+      data: {
+        intro: floorPlanIntro,
+        image: {
+          url: floorPlanImageUrl,
+          caption: floorPlanCaption,
+        },
+      },
+      layout: [
+        "Start with DATA.intro exactly.",
+        "Display DATA.image.url using a large readable image component with caption DATA.image.caption.",
+      ],
+    });
   },
   buildPresentationSection(): PresentationSection {
     return {

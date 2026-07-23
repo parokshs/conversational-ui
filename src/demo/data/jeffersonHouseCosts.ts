@@ -1,3 +1,7 @@
+import type {
+  PresentationChart,
+} from "../presentation/types";
+
 export type BusinessUnitCost = {
   businessUnit: string;
   vacancyCost: number;
@@ -54,52 +58,134 @@ export const jeffersonBusinessUnits: BusinessUnitCost[] = [
   },
 ];
 
-export const jeffersonObservations: CostObservation[] = [
-  {
-    title: "Engineering is the clear outlier",
-    paragraphs: [
-      "Engineering has the highest vacancy rate at 59.6%, meaning almost 60 cents of every dollar of Engineering budget is vacant.",
-      "What's interesting is that although its vacancy cost ($30.8k) is only the third highest, its allocated budget is relatively small ($20.9k), making the vacancy proportion extremely high.",
-      "This suggests:",
-    ],
-    bullets: [
-      "significant unfilled positions,",
-      "delayed recruitment,",
-      "or a department that's operating well below planned staffing.",
-    ],
-  },
-  {
-    title: "Travel has the largest financial impact",
-    paragraphs: ["Travel has:"],
-    bullets: [
-      "the highest Vacancy Cost ($72.6k)",
-      "the highest Allocated Cost ($120.5k)",
-    ],
-    closingParagraphs: [
-      "Although its vacancy percentage (37.6%) is lower than Engineering and Operations, it represents the largest absolute value of vacant budget, so reducing vacancies here would likely have the biggest financial impact.",
-    ],
-  },
-  {
-    title: "Operations is also relatively high",
-    paragraphs: ["Operations has:"],
-    bullets: ["Vacancy Cost: $31.8k", "Vacancy %: 40.7%"],
-    closingParagraphs: [
-      "Anything above about 40% generally warrants investigation, particularly if vacancies are affecting service delivery.",
-    ],
-  },
-  {
-    title: "Finance appears well staffed",
-    paragraphs: ["Finance has:"],
-    bullets: [
-      "lowest vacancy percentage (12.5%)",
-      "one of the largest allocated costs ($106.9k)",
-    ],
-    closingParagraphs: [
-      "This suggests staffing is relatively close to plan.",
-    ],
-  },
-];
-
 export const jeffersonRecommendations = [
   "Review workspace assignments for Engineering, Travel and Operations to determine whether the vacancy is intentional (for example, project-based seating or temporary moves) or whether workspace should be reallocated.",
 ];
+
+const formatCurrency = (value: number) =>
+  value.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
+const formatCurrencyShort = (value: number) => {
+  if (value >= 1000) {
+    return `$${(value / 1000).toFixed(1)}k`;
+  }
+
+  return `$${formatCurrency(value)}`;
+};
+
+function getUnit(units: BusinessUnitCost[], businessUnit: string) {
+  const unit = units.find((row) => row.businessUnit === businessUnit);
+  if (!unit) {
+    throw new Error(`Missing business unit: ${businessUnit}`);
+  }
+
+  return unit;
+}
+
+export function buildJeffersonObservations(
+  units: BusinessUnitCost[] = jeffersonBusinessUnits
+): CostObservation[] {
+  const engineering = getUnit(units, "Engineering");
+  const travel = getUnit(units, "Travel");
+  const operations = getUnit(units, "Operations");
+  const finance = getUnit(units, "Finance");
+
+  return [
+    {
+      title: "Engineering is the clear outlier",
+      paragraphs: [
+        `Engineering has the highest vacancy rate at ${engineering.vacantCostPct}%, meaning almost 60 cents of every dollar of Engineering budget is vacant.`,
+        `What's interesting is that although its vacancy cost (${formatCurrencyShort(engineering.vacancyCost)}) is only the third highest, its allocated budget is relatively small (${formatCurrencyShort(engineering.allocatedCost)}), making the vacancy proportion extremely high.`,
+        "This suggests:",
+      ],
+      bullets: [
+        "significant unfilled positions,",
+        "delayed recruitment,",
+        "or a department that's operating well below planned staffing.",
+      ],
+    },
+    {
+      title: "Travel has the largest financial impact",
+      paragraphs: ["Travel has:"],
+      bullets: [
+        `the highest Vacancy Cost (${formatCurrencyShort(travel.vacancyCost)})`,
+        `the highest Allocated Cost (${formatCurrencyShort(travel.allocatedCost)})`,
+      ],
+      closingParagraphs: [
+        `Although its vacancy percentage (${travel.vacantCostPct}%) is lower than Engineering and Operations, it represents the largest absolute value of vacant budget, so reducing vacancies here would likely have the biggest financial impact.`,
+      ],
+    },
+    {
+      title: "Operations is also relatively high",
+      paragraphs: ["Operations has:"],
+      bullets: [
+        `Vacancy Cost: ${formatCurrencyShort(operations.vacancyCost)}`,
+        `Vacancy %: ${operations.vacantCostPct}%`,
+      ],
+      closingParagraphs: [
+        "Anything above about 40% generally warrants investigation, particularly if vacancies are affecting service delivery.",
+      ],
+    },
+    {
+      title: "Finance appears well staffed",
+      paragraphs: ["Finance has:"],
+      bullets: [
+        `lowest vacancy percentage (${finance.vacantCostPct}%)`,
+        `one of the largest allocated costs (${formatCurrencyShort(finance.allocatedCost)})`,
+      ],
+      closingParagraphs: [
+        "This suggests staffing is relatively close to plan.",
+      ],
+    },
+  ];
+}
+
+export const jeffersonObservations = buildJeffersonObservations();
+
+export function getJeffersonCharts(): PresentationChart[] {
+  return [
+    {
+      heading: "Vacant Cost % by Business Unit",
+      chartType: "horizontalBar",
+      categories: jeffersonBusinessUnits.map((row) => row.businessUnit),
+      series: [
+        {
+          name: "Vacant Cost %",
+          values: jeffersonBusinessUnits.map((row) => row.vacantCostPct),
+        },
+      ],
+      valueAxisLabel: "Vacant Cost %",
+    },
+    {
+      heading: "Vacancy Cost vs Allocated Cost",
+      chartType: "groupedBar",
+      categories: jeffersonBusinessUnits.map((row) => row.businessUnit),
+      series: [
+        {
+          name: "Vacancy Cost ($)",
+          values: jeffersonBusinessUnits.map((row) => row.vacancyCost),
+        },
+        {
+          name: "Allocated Cost ($)",
+          values: jeffersonBusinessUnits.map((row) => row.allocatedCost),
+        },
+      ],
+      valueAxisLabel: "USD",
+    },
+  ];
+}
+
+export function getJeffersonPromptData() {
+  return {
+    intro: jeffersonIntro,
+    businessUnits: jeffersonBusinessUnits,
+    observations: buildJeffersonObservations(),
+    recommendations: jeffersonRecommendations,
+    charts: getJeffersonCharts(),
+  };
+}
+
+export { formatCurrency };

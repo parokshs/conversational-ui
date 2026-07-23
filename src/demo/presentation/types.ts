@@ -4,6 +4,24 @@ export type PresentationTable = {
   rows: string[][];
 };
 
+export type PresentationChart = {
+  heading: string;
+  chartType: "horizontalBar" | "groupedBar" | "bar" | "line" | "pie" | "area";
+  categories: string[];
+  series: {
+    name: string;
+    values: number[];
+  }[];
+  categoryAxisLabel?: string;
+  valueAxisLabel?: string;
+};
+
+export type PresentationHighlight = {
+  label: string;
+  value: string;
+  caption?: string;
+};
+
 export type PresentationCallout = {
   label: string;
   tone: "red" | "green" | "neutral";
@@ -25,7 +43,9 @@ export type PresentationSection = {
   id: string;
   title: string;
   intro?: string;
+  highlights?: PresentationHighlight[];
   tables?: PresentationTable[];
+  charts?: PresentationChart[];
   callouts?: PresentationCallout[];
   bullets?: PresentationBullets[];
   images?: PresentationImage[];

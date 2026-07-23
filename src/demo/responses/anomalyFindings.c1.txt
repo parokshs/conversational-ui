@@ -8,71 +8,97 @@
           &quot;component&quot;: &quot;Header&quot;,
           &quot;props&quot;: {
             &quot;title&quot;: &quot;Data Anomaly Report&quot;,
-            &quot;subtitle&quot;: &quot;Executive Summary of Detected Issues&quot;
+            &quot;subtitle&quot;: &quot;Executive Summary&quot;
           }
         },
         {
           &quot;component&quot;: &quot;TextContent&quot;,
           &quot;props&quot;: {
-            &quot;textMarkdown&quot;: &quot;Some anomalies have been found in the data\n\nThe cost per sqft for Sanam Floor 07 has significantly increased. Almost doubling the cost per square foot points to a major shift, far outside the normal bounds of change.&quot;
+            &quot;textMarkdown&quot;: &quot;Some anomalies have been found in the data&quot;
           }
         },
         {
-          &quot;component&quot;: &quot;Table&quot;,
+          &quot;component&quot;: &quot;SectionBlock&quot;,
           &quot;props&quot;: {
-            &quot;tableHeader&quot;: {
-              &quot;rows&quot;: [
-                { &quot;children&quot;: &quot;Building&quot;, &quot;type&quot;: &quot;string&quot; },
-                { &quot;children&quot;: &quot;Floor&quot;, &quot;type&quot;: &quot;string&quot; },
-                { &quot;children&quot;: &quot;Current Cost per SQFT&quot;, &quot;type&quot;: &quot;string&quot; },
-                { &quot;children&quot;: &quot;Previous Cost per SQFT&quot;, &quot;type&quot;: &quot;string&quot; }
-              ]
-            },
-            &quot;tableBody&quot;: {
-              &quot;rows&quot;: [
-                {
-                  &quot;children&quot;: [
-                    &quot;Sanam&quot;,
-                    &quot;07&quot;,
-                    &quot;67.84&quot;,
-                    &quot;37.76&quot;
-                  ]
-                }
-              ]
-            }
-          }
-        },
-        {
-          &quot;component&quot;: &quot;TextContent&quot;,
-          &quot;props&quot;: {
-            &quot;textMarkdown&quot;: &quot;A room in Boltro Road Floor 01 has been found to have an exceptionally high employee count compared to Workstations. Indicating that something is incorrect, either employees have been misplaced in this room, or it is an enclosed office where the Workstation count has not been updated.&quot;
-          }
-        },
-        {
-          &quot;component&quot;: &quot;Table&quot;,
-          &quot;props&quot;: {
-            &quot;tableHeader&quot;: {
-              &quot;rows&quot;: [
-                { &quot;children&quot;: &quot;Building&quot;, &quot;type&quot;: &quot;string&quot; },
-                { &quot;children&quot;: &quot;Floor&quot;, &quot;type&quot;: &quot;string&quot; },
-                { &quot;children&quot;: &quot;Room&quot;, &quot;type&quot;: &quot;string&quot; },
-                { &quot;children&quot;: &quot;Employee Count&quot;, &quot;type&quot;: &quot;string&quot; },
-                { &quot;children&quot;: &quot;Workstations&quot;, &quot;type&quot;: &quot;string&quot; }
-              ]
-            },
-            &quot;tableBody&quot;: {
-              &quot;rows&quot;: [
-                {
-                  &quot;children&quot;: [
-                    &quot;Boltro Road&quot;,
-                    &quot;1&quot;,
-                    &quot;01A0705E&quot;,
-                    &quot;21&quot;,
-                    &quot;1&quot;
-                  ]
-                }
-              ]
-            }
+            &quot;isFoldable&quot;: false,
+            &quot;sections&quot;: [
+              {
+                &quot;value&quot;: &quot;section1&quot;,
+                &quot;trigger&quot;: &quot;Sanam · Cost per SQFT Spike&quot;,
+                &quot;content&quot;: [
+                  {
+                    &quot;component&quot;: &quot;TextContent&quot;,
+                    &quot;props&quot;: {
+                      &quot;textMarkdown&quot;: &quot;The cost per sqft for Sanam Floor 07 has significantly increased. Almost doubling the cost per square foot points to a major shift, far outside the normal bounds of change.&quot;
+                    }
+                  },
+                  {
+                    &quot;component&quot;: &quot;Table&quot;,
+                    &quot;props&quot;: {
+                      &quot;tableHeader&quot;: {
+                        &quot;rows&quot;: [
+                          { &quot;children&quot;: &quot;Building&quot;, &quot;type&quot;: &quot;string&quot; },
+                          { &quot;children&quot;: &quot;Floor&quot;, &quot;type&quot;: &quot;string&quot; },
+                          { &quot;children&quot;: &quot;Current Cost per SQFT&quot;, &quot;type&quot;: &quot;number&quot; },
+                          { &quot;children&quot;: &quot;Previous Cost per SQFT&quot;, &quot;type&quot;: &quot;number&quot; }
+                        ]
+                      },
+                      &quot;tableBody&quot;: {
+                        &quot;rows&quot;: [
+                          {
+                            &quot;children&quot;: [
+                              &quot;Sanam&quot;,
+                              &quot;07&quot;,
+                              &quot;67.84&quot;,
+                              &quot;37.76&quot;
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                &quot;value&quot;: &quot;section2&quot;,
+                &quot;trigger&quot;: &quot;Boltro Road · Room Occupancy&quot;,
+                &quot;content&quot;: [
+                  {
+                    &quot;component&quot;: &quot;TextContent&quot;,
+                    &quot;props&quot;: {
+                      &quot;textMarkdown&quot;: &quot;A room in Boltro Road Floor 01 has been found to have an exceptionally high employee count compared to Workstations. Indicating that something is incorrect, either employees have been misplaced in this room, or it is an enclosed office where the Workstation count has not been updated.&quot;
+                    }
+                  },
+                  {
+                    &quot;component&quot;: &quot;Table&quot;,
+                    &quot;props&quot;: {
+                      &quot;tableHeader&quot;: {
+                        &quot;rows&quot;: [
+                          { &quot;children&quot;: &quot;Building&quot;, &quot;type&quot;: &quot;string&quot; },
+                          { &quot;children&quot;: &quot;Floor&quot;, &quot;type&quot;: &quot;string&quot; },
+                          { &quot;children&quot;: &quot;Room&quot;, &quot;type&quot;: &quot;string&quot; },
+                          { &quot;children&quot;: &quot;Employee Count&quot;, &quot;type&quot;: &quot;number&quot; },
+                          { &quot;children&quot;: &quot;Workstations&quot;, &quot;type&quot;: &quot;number&quot; }
+                        ]
+                      },
+                      &quot;tableBody&quot;: {
+                        &quot;rows&quot;: [
+                          {
+                            &quot;children&quot;: [
+                              &quot;Boltro Road&quot;,
+                              &quot;1&quot;,
+                              &quot;01A0705E&quot;,
+                              &quot;21&quot;,
+                              &quot;1&quot;
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
           }
         }
       ]

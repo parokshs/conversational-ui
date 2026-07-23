@@ -7,8 +7,7 @@
         {
           &quot;component&quot;: &quot;Header&quot;,
           &quot;props&quot;: {
-            &quot;title&quot;: &quot;Floor 07 — Executive Overview&quot;,
-            &quot;subtitle&quot;: &quot;Workspace allocation and legend visibility&quot;
+            &quot;title&quot;: &quot;Floor 07 — Workspace Allocation&quot;
           }
         },
         {
@@ -18,101 +17,11 @@
           }
         },
         {
-          &quot;component&quot;: &quot;Layout&quot;,
+          &quot;component&quot;: &quot;Image&quot;,
           &quot;props&quot;: {
-            &quot;children&quot;: {
-              &quot;variant&quot;: &quot;L-S&quot;,
-              &quot;rows&quot;: [
-                {
-                  &quot;headerLeft&quot;: {
-                    &quot;component&quot;: &quot;InlineHeader&quot;,
-                    &quot;props&quot;: {
-                      &quot;heading&quot;: &quot;Floor Plan&quot;,
-                      &quot;description&quot;: &quot;High-resolution layout&quot;
-                    }
-                  },
-                  &quot;largeLeft&quot;: [
-                    {
-                      &quot;component&quot;: &quot;Image&quot;,
-                      &quot;props&quot;: {
-                        &quot;src&quot;: &quot;https://res.cloudinary.com/zdhgzz00/image/upload/v1784785651/floor-plan_ddlqm6.png&quot;,
-                        &quot;alt&quot;: &quot;Floor 07 — Business Unit allocation with occupied and vacant workstation legend&quot;,
-                        &quot;aspectRatio&quot;: &quot;16:9&quot;
-                      }
-                    },
-                    {
-                      &quot;component&quot;: &quot;TextContent&quot;,
-                      &quot;props&quot;: {
-                        &quot;textMarkdown&quot;: &quot;_Floor 07 — Business Unit allocation with occupied and vacant workstation legend_&quot;
-                      }
-                    }
-                  ],
-                  &quot;headerRight&quot;: {
-                    &quot;component&quot;: &quot;InlineHeader&quot;,
-                    &quot;props&quot;: {
-                      &quot;heading&quot;: &quot;Legend&quot;,
-                      &quot;description&quot;: &quot;Occupied vs. Vacant and unit keys&quot;
-                    }
-                  },
-                  &quot;smallRight&quot;: [
-                    {
-                      &quot;component&quot;: &quot;List&quot;,
-                      &quot;props&quot;: {
-                        &quot;heading&quot;: &quot;Workstation Status&quot;,
-                        &quot;variant&quot;: &quot;icon&quot;,
-                        &quot;items&quot;: [
-                          {
-                            &quot;title&quot;: &quot;Occupied&quot;,
-                            &quot;subtitle&quot;: &quot;Assigned workstations&quot;,
-                            &quot;iconName&quot;: &quot;circle-check&quot;,
-                            &quot;iconCategory&quot;: &quot;status&quot;
-                          },
-                          {
-                            &quot;title&quot;: &quot;Vacant&quot;,
-                            &quot;subtitle&quot;: &quot;Available workstations&quot;,
-                            &quot;iconName&quot;: &quot;circle&quot;,
-                            &quot;iconCategory&quot;: &quot;shapes&quot;
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      &quot;component&quot;: &quot;List&quot;,
-                      &quot;props&quot;: {
-                        &quot;heading&quot;: &quot;Business Unit Keys&quot;,
-                        &quot;variant&quot;: &quot;icon&quot;,
-                        &quot;items&quot;: [
-                          {
-                            &quot;title&quot;: &quot;BU-A&quot;,
-                            &quot;subtitle&quot;: &quot;Client Services&quot;,
-                            &quot;iconName&quot;: &quot;building-2&quot;,
-                            &quot;iconCategory&quot;: &quot;buildings&quot;
-                          },
-                          {
-                            &quot;title&quot;: &quot;BU-B&quot;,
-                            &quot;subtitle&quot;: &quot;Product &amp; Engineering&quot;,
-                            &quot;iconName&quot;: &quot;cpu&quot;,
-                            &quot;iconCategory&quot;: &quot;devices&quot;
-                          },
-                          {
-                            &quot;title&quot;: &quot;BU-C&quot;,
-                            &quot;subtitle&quot;: &quot;Finance &amp; Ops&quot;,
-                            &quot;iconName&quot;: &quot;banknote&quot;,
-                            &quot;iconCategory&quot;: &quot;finance&quot;
-                          },
-                          {
-                            &quot;title&quot;: &quot;BU-D&quot;,
-                            &quot;subtitle&quot;: &quot;Marketing &amp; Growth&quot;,
-                            &quot;iconName&quot;: &quot;megaphone&quot;,
-                            &quot;iconCategory&quot;: &quot;communication&quot;
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
+            &quot;src&quot;: &quot;https://res.cloudinary.com/zdhgzz00/image/upload/v1784785651/floor-plan_ddlqm6.png&quot;,
+            &quot;alt&quot;: &quot;Floor 07 — Business Unit allocation with occupied and vacant workstation legend&quot;,
+            &quot;aspectRatio&quot;: &quot;16:9&quot;
           }
         }
       ]

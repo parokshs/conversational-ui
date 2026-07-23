@@ -7,8 +7,8 @@
         {
           &quot;component&quot;: &quot;Header&quot;,
           &quot;props&quot;: {
-            &quot;title&quot;: &quot;Jefferson House • Vacancy vs Allocated by Business Unit&quot;,
-            &quot;subtitle&quot;: &quot;Executive Summary and Analysis&quot;
+            &quot;title&quot;: &quot;Jefferson House — Building Cost Analysis&quot;,
+            &quot;subtitle&quot;: &quot;Vacant vs Allocated by Business Unit&quot;
           }
         },
         {
@@ -23,21 +23,88 @@
             &quot;tableHeader&quot;: {
               &quot;rows&quot;: [
                 { &quot;children&quot;: &quot;Business Unit&quot;, &quot;type&quot;: &quot;string&quot; },
-                { &quot;children&quot;: &quot;Vacancy Cost ($)&quot;, &quot;type&quot;: &quot;string&quot; },
-                { &quot;children&quot;: &quot;Allocated Cost ($)&quot;, &quot;type&quot;: &quot;string&quot; },
-                { &quot;children&quot;: &quot;Vacant Cost %&quot;, &quot;type&quot;: &quot;string&quot; }
+                { &quot;children&quot;: &quot;Vacancy Cost ($)&quot;, &quot;type&quot;: &quot;number&quot; },
+                { &quot;children&quot;: &quot;Allocated Cost ($)&quot;, &quot;type&quot;: &quot;number&quot; },
+                { &quot;children&quot;: &quot;Vacant Cost %&quot;, &quot;type&quot;: &quot;number&quot; }
               ]
             },
             &quot;tableBody&quot;: {
               &quot;rows&quot;: [
-                { &quot;children&quot;: [&quot;Engineering&quot;, &quot;$30,831.90&quot;, &quot;$20,915.20&quot;, &quot;59.6%&quot;] },
-                { &quot;children&quot;: [&quot;Operations&quot;, &quot;$31,812.51&quot;, &quot;$46,414.37&quot;, &quot;40.7%&quot;] },
-                { &quot;children&quot;: [&quot;Travel&quot;, &quot;$72,618.88&quot;, &quot;$120,546.64&quot;, &quot;37.6%&quot;] },
-                { &quot;children&quot;: [&quot;Utilities&quot;, &quot;$35,523.11&quot;, &quot;$89,817.82&quot;, &quot;28.3%&quot;] },
-                { &quot;children&quot;: [&quot;Human Resources&quot;, &quot;$15,553.77&quot;, &quot;$42,172.88&quot;, &quot;26.9%&quot;] },
-                { &quot;children&quot;: [&quot;Finance&quot;, &quot;$15,219.98&quot;, &quot;$106,906.88&quot;, &quot;12.5%&quot;] }
+                { &quot;children&quot;: [&quot;Engineering&quot;, &quot;30831.9&quot;, &quot;20915.2&quot;, &quot;59.6&quot;] },
+                { &quot;children&quot;: [&quot;Operations&quot;, &quot;31812.51&quot;, &quot;46414.37&quot;, &quot;40.7&quot;] },
+                { &quot;children&quot;: [&quot;Travel&quot;, &quot;72618.88&quot;, &quot;120546.64&quot;, &quot;37.6&quot;] },
+                { &quot;children&quot;: [&quot;Utilities&quot;, &quot;35523.11&quot;, &quot;89817.82&quot;, &quot;28.3&quot;] },
+                { &quot;children&quot;: [&quot;Human Resources&quot;, &quot;15553.77&quot;, &quot;42172.88&quot;, &quot;26.9&quot;] },
+                { &quot;children&quot;: [&quot;Finance&quot;, &quot;15219.98&quot;, &quot;106906.88&quot;, &quot;12.5&quot;] }
               ]
             }
+          }
+        },
+        {
+          &quot;component&quot;: &quot;BarChartV2&quot;,
+          &quot;props&quot;: {
+            &quot;type&quot;: &quot;horizontal&quot;,
+            &quot;chartData&quot;: {
+              &quot;header&quot;: {
+                &quot;component&quot;: &quot;InlineHeader&quot;,
+                &quot;props&quot;: {
+                  &quot;heading&quot;: &quot;Vacant Cost % by Business Unit&quot;
+                }
+              },
+              &quot;data&quot;: {
+                &quot;labels&quot;: [
+                  &quot;Engineering&quot;,
+                  &quot;Operations&quot;,
+                  &quot;Travel&quot;,
+                  &quot;Utilities&quot;,
+                  &quot;Human Resources&quot;,
+                  &quot;Finance&quot;
+                ],
+                &quot;series&quot;: [
+                  {
+                    &quot;category&quot;: &quot;Vacant Cost %&quot;,
+                    &quot;values&quot;: [59.6, 40.7, 37.6, 28.3, 26.9, 12.5]
+                  }
+                ]
+              }
+            },
+            &quot;xAxisLabel&quot;: &quot;Vacant Cost %&quot;
+          }
+        },
+        {
+          &quot;component&quot;: &quot;BarChartV2&quot;,
+          &quot;props&quot;: {
+            &quot;variant&quot;: &quot;grouped&quot;,
+            &quot;type&quot;: &quot;normal&quot;,
+            &quot;chartData&quot;: {
+              &quot;header&quot;: {
+                &quot;component&quot;: &quot;InlineHeader&quot;,
+                &quot;props&quot;: {
+                  &quot;heading&quot;: &quot;Vacancy Cost vs Allocated Cost&quot;
+                }
+              },
+              &quot;data&quot;: {
+                &quot;labels&quot;: [
+                  &quot;Engineering&quot;,
+                  &quot;Operations&quot;,
+                  &quot;Travel&quot;,
+                  &quot;Utilities&quot;,
+                  &quot;Human Resources&quot;,
+                  &quot;Finance&quot;
+                ],
+                &quot;series&quot;: [
+                  {
+                    &quot;category&quot;: &quot;Vacancy Cost ($)&quot;,
+                    &quot;values&quot;: [30831.9, 31812.51, 72618.88, 35523.11, 15553.77, 15219.98]
+                  },
+                  {
+                    &quot;category&quot;: &quot;Allocated Cost ($)&quot;,
+                    &quot;values&quot;: [20915.2, 46414.37, 120546.64, 89817.82, 42172.88, 106906.88]
+                  }
+                ]
+              }
+            },
+            &quot;yAxisLabel&quot;: &quot;USD&quot;
           }
         },
         {
@@ -47,48 +114,143 @@
             &quot;sections&quot;: [
               {
                 &quot;value&quot;: &quot;section1&quot;,
-                &quot;trigger&quot;: &quot;1. Engineering is the clear outlier&quot;,
+                &quot;trigger&quot;: &quot;1) Engineering is the clear outlier&quot;,
                 &quot;content&quot;: [
                   {
                     &quot;component&quot;: &quot;TextContent&quot;,
                     &quot;props&quot;: {
-                      &quot;textMarkdown&quot;: &quot;Engineering has the highest vacancy rate at 59.6%, meaning almost 60 cents of every dollar of Engineering budget is vacant.\n\nWhat&#39;s interesting is that although its vacancy cost ($30.8k) is only the third highest, its allocated budget is relatively small ($20.9k), making the vacancy proportion extremely high.\n\nThis suggests:\n- significant unfilled positions,\n- delayed recruitment,\n- or a department that&#39;s operating well below planned staffing.&quot;
+                      &quot;textMarkdown&quot;: &quot;Engineering has the highest vacancy rate at 59.6%, meaning almost 60 cents of every dollar of Engineering budget is vacant.\n\nWhat&#39;s interesting is that although its vacancy cost ($30.8k) is only the third highest, its allocated budget is relatively small ($20.9k), making the vacancy proportion extremely high.\n\nThis suggests:&quot;
+                    }
+                  },
+                  {
+                    &quot;component&quot;: &quot;List&quot;,
+                    &quot;props&quot;: {
+                      &quot;variant&quot;: &quot;icon&quot;,
+                      &quot;items&quot;: [
+                        {
+                          &quot;title&quot;: &quot;significant unfilled positions,&quot;,
+                          &quot;iconName&quot;: &quot;alert-triangle&quot;,
+                          &quot;iconCategory&quot;: &quot;notifications&quot;
+                        },
+                        {
+                          &quot;title&quot;: &quot;delayed recruitment,&quot;,
+                          &quot;iconName&quot;: &quot;timer&quot;,
+                          &quot;iconCategory&quot;: &quot;time&quot;
+                        },
+                        {
+                          &quot;title&quot;: &quot;or a department that&#39;s operating well below planned staffing.&quot;,
+                          &quot;iconName&quot;: &quot;users&quot;,
+                          &quot;iconCategory&quot;: &quot;people&quot;
+                        }
+                      ]
                     }
                   }
                 ]
               },
               {
                 &quot;value&quot;: &quot;section2&quot;,
-                &quot;trigger&quot;: &quot;2. Travel has the largest financial impact&quot;,
+                &quot;trigger&quot;: &quot;2) Travel has the largest financial impact&quot;,
                 &quot;content&quot;: [
                   {
                     &quot;component&quot;: &quot;TextContent&quot;,
                     &quot;props&quot;: {
-                      &quot;textMarkdown&quot;: &quot;Travel has:\n- the highest Vacancy Cost ($72.6k)\n- the highest Allocated Cost ($120.5k)\n\nAlthough its vacancy percentage (37.6%) is lower than Engineering and Operations, it represents the largest absolute value of vacant budget, so reducing vacancies here would likely have the biggest financial impact.&quot;
+                      &quot;textMarkdown&quot;: &quot;Travel has:&quot;
+                    }
+                  },
+                  {
+                    &quot;component&quot;: &quot;List&quot;,
+                    &quot;props&quot;: {
+                      &quot;variant&quot;: &quot;icon&quot;,
+                      &quot;items&quot;: [
+                        {
+                          &quot;title&quot;: &quot;the highest Vacancy Cost ($72.6k)&quot;,
+                          &quot;iconName&quot;: &quot;dollar-sign&quot;,
+                          &quot;iconCategory&quot;: &quot;finance&quot;
+                        },
+                        {
+                          &quot;title&quot;: &quot;the highest Allocated Cost ($120.5k)&quot;,
+                          &quot;iconName&quot;: &quot;wallet&quot;,
+                          &quot;iconCategory&quot;: &quot;finance&quot;
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    &quot;component&quot;: &quot;TextContent&quot;,
+                    &quot;props&quot;: {
+                      &quot;textMarkdown&quot;: &quot;Although its vacancy percentage (37.6%) is lower than Engineering and Operations, it represents the largest absolute value of vacant budget, so reducing vacancies here would likely have the biggest financial impact.&quot;
                     }
                   }
                 ]
               },
               {
                 &quot;value&quot;: &quot;section3&quot;,
-                &quot;trigger&quot;: &quot;3. Operations is also relatively high&quot;,
+                &quot;trigger&quot;: &quot;3) Operations is also relatively high&quot;,
                 &quot;content&quot;: [
                   {
                     &quot;component&quot;: &quot;TextContent&quot;,
                     &quot;props&quot;: {
-                      &quot;textMarkdown&quot;: &quot;Operations has:\n- Vacancy Cost: $31.8k\n- Vacancy %: 40.7%\n\nAnything above about 40% generally warrants investigation, particularly if vacancies are affecting service delivery.&quot;
+                      &quot;textMarkdown&quot;: &quot;Operations has:&quot;
+                    }
+                  },
+                  {
+                    &quot;component&quot;: &quot;List&quot;,
+                    &quot;props&quot;: {
+                      &quot;variant&quot;: &quot;icon&quot;,
+                      &quot;items&quot;: [
+                        {
+                          &quot;title&quot;: &quot;Vacancy Cost: $31.8k&quot;,
+                          &quot;iconName&quot;: &quot;chart-column&quot;,
+                          &quot;iconCategory&quot;: &quot;charts&quot;
+                        },
+                        {
+                          &quot;title&quot;: &quot;Vacancy %: 40.7%&quot;,
+                          &quot;iconName&quot;: &quot;percent&quot;,
+                          &quot;iconCategory&quot;: &quot;math&quot;
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    &quot;component&quot;: &quot;TextContent&quot;,
+                    &quot;props&quot;: {
+                      &quot;textMarkdown&quot;: &quot;Anything above about 40% generally warrants investigation, particularly if vacancies are affecting service delivery.&quot;
                     }
                   }
                 ]
               },
               {
                 &quot;value&quot;: &quot;section4&quot;,
-                &quot;trigger&quot;: &quot;4. Finance appears well staffed&quot;,
+                &quot;trigger&quot;: &quot;4) Finance appears well staffed&quot;,
                 &quot;content&quot;: [
                   {
                     &quot;component&quot;: &quot;TextContent&quot;,
                     &quot;props&quot;: {
-                      &quot;textMarkdown&quot;: &quot;Finance has:\n- lowest vacancy percentage (12.5%)\n- one of the largest allocated costs ($106.9k)\n\nThis suggests staffing is relatively close to plan.&quot;
+                      &quot;textMarkdown&quot;: &quot;Finance has:&quot;
+                    }
+                  },
+                  {
+                    &quot;component&quot;: &quot;List&quot;,
+                    &quot;props&quot;: {
+                      &quot;variant&quot;: &quot;icon&quot;,
+                      &quot;items&quot;: [
+                        {
+                          &quot;title&quot;: &quot;lowest vacancy percentage (12.5%)&quot;,
+                          &quot;iconName&quot;: &quot;shield-check&quot;,
+                          &quot;iconCategory&quot;: &quot;security&quot;
+                        },
+                        {
+                          &quot;title&quot;: &quot;one of the largest allocated costs ($106.9k)&quot;,
+                          &quot;iconName&quot;: &quot;banknote&quot;,
+                          &quot;iconCategory&quot;: &quot;finance&quot;
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    &quot;component&quot;: &quot;TextContent&quot;,
+                    &quot;props&quot;: {
+                      &quot;textMarkdown&quot;: &quot;This suggests staffing is relatively close to plan.&quot;
                     }
                   }
                 ]
@@ -98,9 +260,16 @@
                 &quot;trigger&quot;: &quot;Recommendations&quot;,
                 &quot;content&quot;: [
                   {
-                    &quot;component&quot;: &quot;TextContent&quot;,
+                    &quot;component&quot;: &quot;List&quot;,
                     &quot;props&quot;: {
-                      &quot;textMarkdown&quot;: &quot;- Review workspace assignments for Engineering, Travel and Operations to determine whether the vacancy is intentional (for example, project-based seating or temporary moves) or whether workspace should be reallocated.&quot;
+                      &quot;variant&quot;: &quot;icon&quot;,
+                      &quot;items&quot;: [
+                        {
+                          &quot;title&quot;: &quot;Review workspace assignments for Engineering, Travel and Operations to determine whether the vacancy is intentional (for example, project-based seating or temporary moves) or whether workspace should be reallocated.&quot;,
+                          &quot;iconName&quot;: &quot;clipboard-check&quot;,
+                          &quot;iconCategory&quot;: &quot;files&quot;
+                        }
+                      ]
                     }
                   }
                 ]

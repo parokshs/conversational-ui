@@ -8,13 +8,13 @@
           &quot;component&quot;: &quot;Header&quot;,
           &quot;props&quot;: {
             &quot;title&quot;: &quot;Workspace Allocation Analysis&quot;,
-            &quot;subtitle&quot;: &quot;Utilization by floor and room use&quot;
+            &quot;subtitle&quot;: &quot;Engineering · Floors 07–08&quot;
           }
         },
         {
           &quot;component&quot;: &quot;TextContent&quot;,
           &quot;props&quot;: {
-            &quot;textMarkdown&quot;: &quot;A concise view of current seating versus occupancy to highlight underutilized areas.&quot;
+            &quot;textMarkdown&quot;: &quot;Reviewing workspace allocation for Engineering by floor and seat type.&quot;
           }
         },
         {
@@ -31,11 +31,68 @@
             },
             &quot;tableBody&quot;: {
               &quot;rows&quot;: [
-                { &quot;children&quot;: [&quot;Floor 07&quot;, &quot;Office Cellular&quot;, &quot;1&quot;, &quot;7&quot;, &quot;6&quot;] },
-                { &quot;children&quot;: [&quot;Floor 07&quot;, &quot;Workstation&quot;, &quot;0&quot;, &quot;7&quot;, &quot;7&quot;] },
-                { &quot;children&quot;: [&quot;Floor 08&quot;, &quot;Workstation&quot;, &quot;8&quot;, &quot;9&quot;, &quot;1&quot;] }
+                {
+                  &quot;children&quot;: [
+                    &quot;07&quot;,
+                    &quot;Office Cellular&quot;,
+                    &quot;1&quot;,
+                    &quot;7&quot;,
+                    &quot;6&quot;
+                  ]
+                },
+                {
+                  &quot;children&quot;: [
+                    &quot;07&quot;,
+                    &quot;Workstation&quot;,
+                    &quot;0&quot;,
+                    &quot;7&quot;,
+                    &quot;7&quot;
+                  ]
+                },
+                {
+                  &quot;children&quot;: [
+                    &quot;08&quot;,
+                    &quot;Workstation&quot;,
+                    &quot;8&quot;,
+                    &quot;9&quot;,
+                    &quot;1&quot;
+                  ]
+                }
               ]
             }
+          }
+        },
+        {
+          &quot;component&quot;: &quot;BarChartV2&quot;,
+          &quot;props&quot;: {
+            &quot;variant&quot;: &quot;grouped&quot;,
+            &quot;type&quot;: &quot;normal&quot;,
+            &quot;chartData&quot;: {
+              &quot;header&quot;: {
+                &quot;component&quot;: &quot;InlineHeader&quot;,
+                &quot;props&quot;: {
+                  &quot;heading&quot;: &quot;Vacant Workstations by Floor and Room Use&quot;
+                }
+              },
+              &quot;data&quot;: {
+                &quot;labels&quot;: [
+                  &quot;Floor 07 • Office Cellular&quot;,
+                  &quot;Floor 07 • Workstation&quot;,
+                  &quot;Floor 08 • Workstation&quot;
+                ],
+                &quot;series&quot;: [
+                  {
+                    &quot;category&quot;: &quot;Vacant Workstations&quot;,
+                    &quot;values&quot;: [6, 7, 1]
+                  },
+                  {
+                    &quot;category&quot;: &quot;Employees&quot;,
+                    &quot;values&quot;: [1, 0, 8]
+                  }
+                ]
+              }
+            },
+            &quot;yAxisLabel&quot;: &quot;Count&quot;
           }
         },
         {
@@ -50,41 +107,69 @@
                   {
                     &quot;component&quot;: &quot;List&quot;,
                     &quot;props&quot;: {
-                      &quot;heading&quot;: &quot;Key observations&quot;,
                       &quot;variant&quot;: &quot;icon&quot;,
                       &quot;items&quot;: [
                         {
                           &quot;title&quot;: &quot;Floor 07 is significantly underutilised&quot;,
-                          &quot;iconName&quot;: &quot;trending-down&quot;,
-                          &quot;iconCategory&quot;: &quot;charts&quot;
+                          &quot;iconName&quot;: &quot;alert-triangle&quot;,
+                          &quot;iconCategory&quot;: &quot;notifications&quot;
                         },
                         {
                           &quot;title&quot;: &quot;Floor 07 contains 14 workstations but only 1 employee.&quot;,
-                          &quot;iconName&quot;: &quot;users&quot;,
-                          &quot;iconCategory&quot;: &quot;people&quot;
-                        },
-                        {
-                          &quot;title&quot;: &quot;13 of 14 workstations are vacant (92.9%)&quot;,
-                          &quot;iconName&quot;: &quot;pie-chart&quot;,
-                          &quot;iconCategory&quot;: &quot;charts&quot;
-                        },
-                        {
-                          &quot;title&quot;: &quot;The cellular offices are only 14.3% occupied&quot;,
                           &quot;iconName&quot;: &quot;building-2&quot;,
                           &quot;iconCategory&quot;: &quot;buildings&quot;
                         },
                         {
+                          &quot;title&quot;: &quot;13 of 14 workstations are vacant (92.9%)&quot;,
+                          &quot;iconName&quot;: &quot;percent&quot;,
+                          &quot;iconCategory&quot;: &quot;math&quot;
+                        },
+                        {
+                          &quot;title&quot;: &quot;The cellular offices are only 14.3% occupied&quot;,
+                          &quot;iconName&quot;: &quot;briefcase&quot;,
+                          &quot;iconCategory&quot;: &quot;work&quot;
+                        },
+                        {
                           &quot;title&quot;: &quot;The open workstation area has no occupants at all&quot;,
-                          &quot;iconName&quot;: &quot;square-x&quot;,
-                          &quot;iconCategory&quot;: &quot;shapes&quot;
+                          &quot;iconName&quot;: &quot;user-x&quot;,
+                          &quot;iconCategory&quot;: &quot;people&quot;
                         }
                       ]
                     }
-                  },
+                  }
+                ]
+              },
+              {
+                &quot;value&quot;: &quot;section2&quot;,
+                &quot;trigger&quot;: &quot;Opportunities&quot;,
+                &quot;content&quot;: [
                   {
                     &quot;component&quot;: &quot;TextContent&quot;,
                     &quot;props&quot;: {
-                      &quot;textMarkdown&quot;: &quot;**Recommendation**: Floor 07 is largely unused and may represent an opportunity to **consolidate staff onto other floors**, **reduce operational costs**, and **repurpose or decommission space**.&quot;
+                      &quot;textMarkdown&quot;: &quot;Floor 07 is largely unused and may represent an opportunity to:&quot;
+                    }
+                  },
+                  {
+                    &quot;component&quot;: &quot;List&quot;,
+                    &quot;props&quot;: {
+                      &quot;variant&quot;: &quot;icon&quot;,
+                      &quot;items&quot;: [
+                        {
+                          &quot;title&quot;: &quot;consolidate staff onto other floors,&quot;,
+                          &quot;iconName&quot;: &quot;users&quot;,
+                          &quot;iconCategory&quot;: &quot;people&quot;
+                        },
+                        {
+                          &quot;title&quot;: &quot;reduce operational costs,&quot;,
+                          &quot;iconName&quot;: &quot;piggy-bank&quot;,
+                          &quot;iconCategory&quot;: &quot;finance&quot;
+                        },
+                        {
+                          &quot;title&quot;: &quot;repurpose or decommission space.&quot;,
+                          &quot;iconName&quot;: &quot;recycle&quot;,
+                          &quot;iconCategory&quot;: &quot;sustainability&quot;
+                        }
+                      ]
                     }
                   }
                 ]

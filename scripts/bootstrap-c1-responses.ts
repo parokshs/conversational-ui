@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import OpenAI from "openai";
-import { demoResponseJobs } from "../src/demo/buildPrompts";
+import { demoResponseJobs } from "../src/demo/flows/registry";
 
 function loadEnvFile() {
   const envPath = path.join(process.cwd(), ".env");

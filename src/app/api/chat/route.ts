@@ -5,7 +5,11 @@ import { makeC1Response } from "@thesysai/genui-sdk/server";
 import { DBMessage, getMessageStore } from "./messageStore";
 import { startStagedResponse, isDemoModeEnabled } from "../../../demo/flows/buildStagedResponse";
 import { matchStagedFlow } from "../../../demo/flows/matchPrompt";
-import { stagedFlows } from "../../../demo/flows/registry";
+import { demoFlows } from "../../../demo/flows/registry";
+import {
+  handlePresentationExport,
+  isPresentationExportRequest,
+} from "../../../demo/presentation/presentationFlow";
 
 function getPromptText(prompt: DBMessage): string {
   if (typeof prompt.content === "string") {
@@ -52,6 +56,7 @@ async function handleStagedResponse(
       role: "assistant",
       content: c1Response.getAssistantMessage().content,
       id: responseId,
+      flowId: flow.id,
     });
   });
 
@@ -69,9 +74,19 @@ export async function POST(req: NextRequest) {
 
   const messageStore = getMessageStore(threadId);
   messageStore.addMessage(prompt);
+  const userQuestion = getPromptText(prompt);
+
+  if (isDemoModeEnabled() && isPresentationExportRequest(userQuestion)) {
+    return handlePresentationExport({
+      question: userQuestion,
+      threadId,
+      responseId,
+      messageStore,
+    });
+  }
 
   if (isDemoModeEnabled()) {
-    const matchedFlow = matchStagedFlow(getPromptText(prompt), stagedFlows);
+    const matchedFlow = matchStagedFlow(userQuestion, demoFlows);
     if (matchedFlow) {
       return handleStagedResponse(matchedFlow, responseId, messageStore);
     }

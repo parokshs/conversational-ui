@@ -1,11 +1,11 @@
 import fs from "fs";
 import path from "path";
 import { makeC1Response } from "@thesysai/genui-sdk/server";
-import type { StagedFlow } from "./types";
+import type { DemoFlowDefinition } from "./types";
 
 const responsesDir = path.join(process.cwd(), "src/demo/responses");
 
-function loadResponseContent(flow: StagedFlow): string {
+function loadResponseContent(flow: DemoFlowDefinition): string {
   const filePath = path.join(responsesDir, flow.responseFile);
   if (!fs.existsSync(filePath)) {
     throw new Error(`Missing staged response file: ${flow.responseFile}`);
@@ -14,7 +14,7 @@ function loadResponseContent(flow: StagedFlow): string {
   return fs.readFileSync(filePath, "utf8");
 }
 
-export function startStagedResponse(flow: StagedFlow) {
+export function startStagedResponse(flow: DemoFlowDefinition) {
   const c1Response = makeC1Response();
   const content = loadResponseContent(flow);
 

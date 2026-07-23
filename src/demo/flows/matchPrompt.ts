@@ -1,4 +1,4 @@
-import type { StagedFlow } from "./types";
+import type { DemoFlowDefinition } from "./types";
 
 function normalizePrompt(prompt: string): string {
   return prompt
@@ -8,7 +8,7 @@ function normalizePrompt(prompt: string): string {
     .trim();
 }
 
-function scoreFlow(normalizedPrompt: string, flow: StagedFlow): number {
+function scoreFlow(normalizedPrompt: string, flow: DemoFlowDefinition): number {
   const words = normalizedPrompt.split(" ").filter(Boolean);
   if (words.length === 0) {
     return 0;
@@ -37,14 +37,14 @@ function scoreFlow(normalizedPrompt: string, flow: StagedFlow): number {
 
 export function matchStagedFlow(
   prompt: string,
-  flows: StagedFlow[]
-): StagedFlow | null {
+  flows: DemoFlowDefinition[]
+): DemoFlowDefinition | null {
   const normalizedPrompt = normalizePrompt(prompt);
   if (!normalizedPrompt) {
     return null;
   }
 
-  let bestFlow: StagedFlow | null = null;
+  let bestFlow: DemoFlowDefinition | null = null;
   let bestScore = 0;
 
   for (const flow of flows) {

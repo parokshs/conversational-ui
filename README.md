@@ -28,15 +28,44 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Staged demo data
 
-Demo content lives in `src/demo/data/`. The chat API serves pre-generated C1 responses from `src/demo/responses/`.
+Demo content lives in `src/demo/data/`. Each demo step is registered in `src/demo/flows/definitions/` and listed in `src/demo/flows/registry.ts`.
 
-If you change any demo data (tables, numbers, intro text, flags, summaries, etc.), regenerate the response files:
+The chat API serves pre-generated C1 responses from `src/demo/responses/` for matched questions. Presentation export reads the same TypeScript data directly at runtime, so slides stay aligned with the demo data without a second bootstrap step.
+
+See `src/demo/README.md` for the full workflow.
+
+### When you edit demo data
+
+If you change numbers, intro text, flags, summaries, or other values in `src/demo/data/`:
+
+1. Save the file
+2. Regenerate the in-chat response files:
 
 ```bash
 npm run bootstrap:demo
 ```
 
-This requires `THESYS_API_KEY` in `.env`. See `src/demo/README.md` for more details on adding new flows.
+This requires `THESYS_API_KEY` in `.env`.
+
+Presentation export picks up data changes immediately after save. Only the in-chat `.c1.txt` files need bootstrapping.
+
+### When you add a new demo step
+
+1. Add a data file under `src/demo/data/`
+2. Add a flow definition under `src/demo/flows/definitions/` with:
+   - `buildChatPrompt()` for the in-chat response
+   - `buildPresentationSection()` for presentation export
+3. Register the flow in `src/demo/flows/registry.ts`
+4. Run `npm run bootstrap:demo`
+
+### Exporting a presentation
+
+In demo mode, after the user asks one or more matched demo questions in a thread, they can request a presentation with natural language such as:
+
+- "Export a presentation"
+- "Create slides from this conversation"
+
+The app generates a slide artifact from the analyses already shown in that thread, opens it in the native Thesys artifact viewer, and lets the user download PPTX through the built-in export action.
 
 ## Learn More
 

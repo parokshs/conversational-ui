@@ -3,6 +3,7 @@
 import { C1Chat, ArtifactViewMode, ThemeProvider } from "@thesysai/genui-sdk";
 import "@crayonai/react-ui/styles/index.css";
 import { useCallback, useMemo, useRef } from "react";
+import { APP_BRAND, brandTheme } from "@/config/branding";
 import { useAnomalyChatManagers } from "@/hooks/useAnomalyChatManagers";
 
 export default function Home() {
@@ -67,16 +68,11 @@ export default function Home() {
   });
 
   return (
-    <ThemeProvider
-      mode="light"
-      theme={{
-        chatUserResponseBg: "#0070E0",
-        chatUserResponseText: "#FFFFFF",
-      }}
-    >
+    <ThemeProvider mode="light" theme={brandTheme}>
       <C1Chat
         apiUrl="/api/chat"
-        agentName="Conversational UI"
+        agentName={APP_BRAND.name}
+        logoUrl={APP_BRAND.logoUrl}
         disableThemeProvider
         threadListManager={threadListManager}
         threadManager={threadManager}

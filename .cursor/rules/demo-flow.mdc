@@ -1,0 +1,43 @@
+---
+description: Staged 6-step demo flow — data, matching, latency, presentation export
+globs: src/demo/**,src/app/api/chat/**
+alwaysApply: false
+---
+
+# Demo flow system
+
+Six-step portfolio demo in `src/demo/`. Read `src/demo/README.md` for full workflow.
+
+## Steps
+
+| # | Flow id | Data file |
+|---|---------|-----------|
+| 1 | `americas-occupancy` | `data/americasBuildings.ts` |
+| 2 | `jefferson-costs` | `data/jeffersonHouseCosts.ts` |
+| 3 | `engineering-workspace` | `data/engineeringWorkspace.ts` |
+| 4 | `floor-plan` | `data/floorPlan.ts` |
+| 5 | presentation export | `presentation/presentationFlow.ts` |
+| 6 | PPTX download | `/api/export-pptx` (SDK export button) |
+
+## Architecture
+
+- **Not a database.** Steps 1–4 replay pre-generated `responses/*.c1.txt` files (instant unless latency is configured).
+- **Source of truth:** `data/*.ts` → flow definitions in `flows/definitions/*.ts` → registered in `flows/registry.ts`.
+- **Prompt matching:** keyword scoring in `flows/matchPrompt.ts` (min score 2). Prompts are NOT hardcoded — extend `keywords` on each flow definition.
+- **Presentation:** regex in `isPresentationExportRequest()`; bundle built from `flowId`s already answered in the thread.
+
+## Editing checklist
+
+| Change | Action |
+|--------|--------|
+| Numbers/text in `data/*.ts` | Save; run `npm run bootstrap:demo` for in-chat UI |
+| Keywords | Edit flow definition only |
+| New step | data file + flow definition + `registry.ts` + `bootstrap:demo` |
+| Slide content | `buildPresentationSection()` — no bootstrap needed |
+| Artificial delay | `.env`: `DEMO_LATENCY_MS`, or per-flow `latencyMs` |
+
+## Key files
+
+- `flows/buildStagedResponse.ts` — streams `.c1.txt` after optional thinking + latency
+- `demoLatency.ts` — env-driven delay (`DEMO_LATENCY_MS`, min/max jitter, `DEMO_PRESENTATION_LATENCY_MS`)
+- `presentation/buildBundle.ts` — collects answered steps for slide export

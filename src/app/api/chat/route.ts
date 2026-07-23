@@ -79,7 +79,6 @@ export async function POST(req: NextRequest) {
   if (isDemoModeEnabled() && isPresentationExportRequest(userQuestion)) {
     return handlePresentationExport({
       question: userQuestion,
-      threadId,
       responseId,
       messageStore,
     });

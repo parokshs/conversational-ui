@@ -42,12 +42,10 @@ function closeArtifactTag() {
 
 export async function handlePresentationExport({
   question,
-  threadId,
   responseId,
   messageStore,
 }: {
   question: string;
-  threadId: string;
   responseId: string;
   messageStore: ReturnType<
     typeof import("../../app/api/chat/messageStore").getMessageStore

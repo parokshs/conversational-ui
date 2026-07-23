@@ -67,9 +67,16 @@ export default function Home() {
   });
 
   return (
-    <ThemeProvider mode="light">
+    <ThemeProvider
+      mode="light"
+      theme={{
+        chatUserResponseBg: "#0070E0",
+        chatUserResponseText: "#FFFFFF",
+      }}
+    >
       <C1Chat
         apiUrl="/api/chat"
+        agentName="Conversational UI"
         disableThemeProvider
         threadListManager={threadListManager}
         threadManager={threadManager}

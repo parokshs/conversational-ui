@@ -12,7 +12,7 @@ export type AnomalySeedTurn = {
 
 export const anomalyThread = {
   threadId: ANOMALY_THREAD_ID,
-  title: "Anomaly",
+  title: "Proactive Insights",
   createdAt: new Date("2026-07-20T09:00:00.000Z"),
 };
 

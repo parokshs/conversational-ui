@@ -127,4 +127,5 @@ No extra presentation wiring is needed. The new step is included automatically w
 | Numbers, intro text, flags, summaries in `data/*.ts` | Save the file. Presentation export updates immediately. Run `npm run bootstrap:demo` to refresh the in-chat response. |
 | Keywords or response filename | Edit the flow definition and registry only |
 | Chat layout instructions | Update `buildChatPrompt()` in the flow definition, then run `npm run bootstrap:demo` |
+| Table vs chart layout | Use `format/buildDataViewLayout.ts` — Tabs with "Table view" / "Graph view" |
 | Slide layout instructions | Update `buildPresentationSection()` and/or `presentation/artifactPrompt.ts` |

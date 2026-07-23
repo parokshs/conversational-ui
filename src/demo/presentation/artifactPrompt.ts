@@ -16,6 +16,7 @@ SLIDE STRUCTURE:
   3) Bullet / recommendation slides grouped logically (max 4 bullets per slide)
 - Render every table in each section as a readable table component with the section heading above it.
 - Render every chart in each section using the specified chartType, categories, and series values exactly as provided.
+- Prefer chart variety across sections: pie for share/distribution, line for multi-series trends, area for cumulative comparisons, bar only when ranking long category lists.
 - Render callouts with tone-appropriate styling: red for Red Flags, green for Green Flag.
 - Render bullet sections as callout cards, not plain paragraph text.
 - Render section images when present, using a large readable image component with the provided caption.

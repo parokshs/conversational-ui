@@ -148,8 +148,8 @@ export const jeffersonObservations = buildJeffersonObservations();
 export function getJeffersonCharts(): PresentationChart[] {
   return [
     {
-      heading: "Vacant Cost % by Business Unit",
-      chartType: "horizontalBar",
+      heading: "Vacant Cost % Share by Business Unit",
+      chartType: "pie",
       categories: jeffersonBusinessUnits.map((row) => row.businessUnit),
       series: [
         {

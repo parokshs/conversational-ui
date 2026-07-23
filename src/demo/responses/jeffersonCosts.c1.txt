@@ -7,8 +7,8 @@
         {
           &quot;component&quot;: &quot;Header&quot;,
           &quot;props&quot;: {
-            &quot;title&quot;: &quot;Jefferson House — Building Cost Analysis&quot;,
-            &quot;subtitle&quot;: &quot;Vacant vs Allocated by Business Unit&quot;
+            &quot;title&quot;: &quot;Jefferson House — Vacant vs Allocated by Business Unit&quot;,
+            &quot;subtitle&quot;: &quot;Professional Building Cost Analysis&quot;
           }
         },
         {
@@ -18,93 +18,107 @@
           }
         },
         {
-          &quot;component&quot;: &quot;Table&quot;,
+          &quot;component&quot;: &quot;Tabs&quot;,
           &quot;props&quot;: {
-            &quot;tableHeader&quot;: {
-              &quot;rows&quot;: [
-                { &quot;children&quot;: &quot;Business Unit&quot;, &quot;type&quot;: &quot;string&quot; },
-                { &quot;children&quot;: &quot;Vacancy Cost ($)&quot;, &quot;type&quot;: &quot;number&quot; },
-                { &quot;children&quot;: &quot;Allocated Cost ($)&quot;, &quot;type&quot;: &quot;number&quot; },
-                { &quot;children&quot;: &quot;Vacant Cost %&quot;, &quot;type&quot;: &quot;number&quot; }
-              ]
-            },
-            &quot;tableBody&quot;: {
-              &quot;rows&quot;: [
-                { &quot;children&quot;: [&quot;Engineering&quot;, &quot;30831.9&quot;, &quot;20915.2&quot;, &quot;59.6&quot;] },
-                { &quot;children&quot;: [&quot;Operations&quot;, &quot;31812.51&quot;, &quot;46414.37&quot;, &quot;40.7&quot;] },
-                { &quot;children&quot;: [&quot;Travel&quot;, &quot;72618.88&quot;, &quot;120546.64&quot;, &quot;37.6&quot;] },
-                { &quot;children&quot;: [&quot;Utilities&quot;, &quot;35523.11&quot;, &quot;89817.82&quot;, &quot;28.3&quot;] },
-                { &quot;children&quot;: [&quot;Human Resources&quot;, &quot;15553.77&quot;, &quot;42172.88&quot;, &quot;26.9&quot;] },
-                { &quot;children&quot;: [&quot;Finance&quot;, &quot;15219.98&quot;, &quot;106906.88&quot;, &quot;12.5&quot;] }
-              ]
-            }
-          }
-        },
-        {
-          &quot;component&quot;: &quot;BarChartV2&quot;,
-          &quot;props&quot;: {
-            &quot;type&quot;: &quot;horizontal&quot;,
-            &quot;chartData&quot;: {
-              &quot;header&quot;: {
-                &quot;component&quot;: &quot;InlineHeader&quot;,
-                &quot;props&quot;: {
-                  &quot;heading&quot;: &quot;Vacant Cost % by Business Unit&quot;
-                }
-              },
-              &quot;data&quot;: {
-                &quot;labels&quot;: [
-                  &quot;Engineering&quot;,
-                  &quot;Operations&quot;,
-                  &quot;Travel&quot;,
-                  &quot;Utilities&quot;,
-                  &quot;Human Resources&quot;,
-                  &quot;Finance&quot;
-                ],
-                &quot;series&quot;: [
+            &quot;children&quot;: [
+              {
+                &quot;value&quot;: &quot;table&quot;,
+                &quot;trigger&quot;: { &quot;text&quot;: &quot;Table view&quot; },
+                &quot;content&quot;: [
                   {
-                    &quot;category&quot;: &quot;Vacant Cost %&quot;,
-                    &quot;values&quot;: [59.6, 40.7, 37.6, 28.3, 26.9, 12.5]
+                    &quot;component&quot;: &quot;Table&quot;,
+                    &quot;props&quot;: {
+                      &quot;tableHeader&quot;: {
+                        &quot;rows&quot;: [
+                          { &quot;children&quot;: &quot;Business Unit&quot;, &quot;type&quot;: &quot;string&quot; },
+                          { &quot;children&quot;: &quot;Vacancy Cost ($)&quot;, &quot;type&quot;: &quot;number&quot; },
+                          { &quot;children&quot;: &quot;Allocated Cost ($)&quot;, &quot;type&quot;: &quot;number&quot; },
+                          { &quot;children&quot;: &quot;Vacant Cost %&quot;, &quot;type&quot;: &quot;number&quot; }
+                        ]
+                      },
+                      &quot;tableBody&quot;: {
+                        &quot;rows&quot;: [
+                          {
+                            &quot;children&quot;: [
+                              &quot;Engineering&quot;,
+                              &quot;30831.9&quot;,
+                              &quot;20915.2&quot;,
+                              &quot;59.6&quot;
+                            ]
+                          },
+                          {
+                            &quot;children&quot;: [
+                              &quot;Operations&quot;,
+                              &quot;31812.51&quot;,
+                              &quot;46414.37&quot;,
+                              &quot;40.7&quot;
+                            ]
+                          },
+                          {
+                            &quot;children&quot;: [
+                              &quot;Travel&quot;,
+                              &quot;72618.88&quot;,
+                              &quot;120546.64&quot;,
+                              &quot;37.6&quot;
+                            ]
+                          },
+                          {
+                            &quot;children&quot;: [
+                              &quot;Utilities&quot;,
+                              &quot;35523.11&quot;,
+                              &quot;89817.82&quot;,
+                              &quot;28.3&quot;
+                            ]
+                          },
+                          {
+                            &quot;children&quot;: [
+                              &quot;Human Resources&quot;,
+                              &quot;15553.77&quot;,
+                              &quot;42172.88&quot;,
+                              &quot;26.9&quot;
+                            ]
+                          },
+                          {
+                            &quot;children&quot;: [
+                              &quot;Finance&quot;,
+                              &quot;15219.98&quot;,
+                              &quot;106906.88&quot;,
+                              &quot;12.5&quot;
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                &quot;value&quot;: &quot;graph&quot;,
+                &quot;trigger&quot;: { &quot;text&quot;: &quot;Graph view&quot; },
+                &quot;content&quot;: [
+                  {
+                    &quot;component&quot;: &quot;PieChartV2&quot;,
+                    &quot;props&quot;: {
+                      &quot;variant&quot;: &quot;pie&quot;,
+                      &quot;chartData&quot;: {
+                        &quot;header&quot;: {
+                          &quot;component&quot;: &quot;InlineHeader&quot;,
+                          &quot;props&quot;: { &quot;heading&quot;: &quot;Vacant Cost % Share by Business Unit&quot; }
+                        },
+                        &quot;data&quot;: [
+                          { &quot;category&quot;: &quot;Engineering&quot;, &quot;value&quot;: 59.6 },
+                          { &quot;category&quot;: &quot;Operations&quot;, &quot;value&quot;: 40.7 },
+                          { &quot;category&quot;: &quot;Travel&quot;, &quot;value&quot;: 37.6 },
+                          { &quot;category&quot;: &quot;Utilities&quot;, &quot;value&quot;: 28.3 },
+                          { &quot;category&quot;: &quot;Human Resources&quot;, &quot;value&quot;: 26.9 },
+                          { &quot;category&quot;: &quot;Finance&quot;, &quot;value&quot;: 12.5 }
+                        ]
+                      }
+                    }
                   }
                 ]
               }
-            },
-            &quot;xAxisLabel&quot;: &quot;Vacant Cost %&quot;
-          }
-        },
-        {
-          &quot;component&quot;: &quot;BarChartV2&quot;,
-          &quot;props&quot;: {
-            &quot;variant&quot;: &quot;grouped&quot;,
-            &quot;type&quot;: &quot;normal&quot;,
-            &quot;chartData&quot;: {
-              &quot;header&quot;: {
-                &quot;component&quot;: &quot;InlineHeader&quot;,
-                &quot;props&quot;: {
-                  &quot;heading&quot;: &quot;Vacancy Cost vs Allocated Cost&quot;
-                }
-              },
-              &quot;data&quot;: {
-                &quot;labels&quot;: [
-                  &quot;Engineering&quot;,
-                  &quot;Operations&quot;,
-                  &quot;Travel&quot;,
-                  &quot;Utilities&quot;,
-                  &quot;Human Resources&quot;,
-                  &quot;Finance&quot;
-                ],
-                &quot;series&quot;: [
-                  {
-                    &quot;category&quot;: &quot;Vacancy Cost ($)&quot;,
-                    &quot;values&quot;: [30831.9, 31812.51, 72618.88, 35523.11, 15553.77, 15219.98]
-                  },
-                  {
-                    &quot;category&quot;: &quot;Allocated Cost ($)&quot;,
-                    &quot;values&quot;: [20915.2, 46414.37, 120546.64, 89817.82, 42172.88, 106906.88]
-                  }
-                ]
-              }
-            },
-            &quot;yAxisLabel&quot;: &quot;USD&quot;
+            ]
           }
         },
         {
@@ -127,21 +141,9 @@
                     &quot;props&quot;: {
                       &quot;variant&quot;: &quot;icon&quot;,
                       &quot;items&quot;: [
-                        {
-                          &quot;title&quot;: &quot;significant unfilled positions,&quot;,
-                          &quot;iconName&quot;: &quot;alert-triangle&quot;,
-                          &quot;iconCategory&quot;: &quot;notifications&quot;
-                        },
-                        {
-                          &quot;title&quot;: &quot;delayed recruitment,&quot;,
-                          &quot;iconName&quot;: &quot;timer&quot;,
-                          &quot;iconCategory&quot;: &quot;time&quot;
-                        },
-                        {
-                          &quot;title&quot;: &quot;or a department that&#39;s operating well below planned staffing.&quot;,
-                          &quot;iconName&quot;: &quot;users&quot;,
-                          &quot;iconCategory&quot;: &quot;people&quot;
-                        }
+                        { &quot;title&quot;: &quot;significant unfilled positions,&quot;, &quot;iconName&quot;: &quot;alert-triangle&quot;, &quot;iconCategory&quot;: &quot;notifications&quot; },
+                        { &quot;title&quot;: &quot;delayed recruitment,&quot;, &quot;iconName&quot;: &quot;hourglass&quot;, &quot;iconCategory&quot;: &quot;time&quot; },
+                        { &quot;title&quot;: &quot;or a department that&#39;s operating well below planned staffing.&quot;, &quot;iconName&quot;: &quot;users&quot;, &quot;iconCategory&quot;: &quot;people&quot; }
                       ]
                     }
                   }
@@ -162,16 +164,8 @@
                     &quot;props&quot;: {
                       &quot;variant&quot;: &quot;icon&quot;,
                       &quot;items&quot;: [
-                        {
-                          &quot;title&quot;: &quot;the highest Vacancy Cost ($72.6k)&quot;,
-                          &quot;iconName&quot;: &quot;dollar-sign&quot;,
-                          &quot;iconCategory&quot;: &quot;finance&quot;
-                        },
-                        {
-                          &quot;title&quot;: &quot;the highest Allocated Cost ($120.5k)&quot;,
-                          &quot;iconName&quot;: &quot;wallet&quot;,
-                          &quot;iconCategory&quot;: &quot;finance&quot;
-                        }
+                        { &quot;title&quot;: &quot;the highest Vacancy Cost ($72.6k)&quot;, &quot;iconName&quot;: &quot;trending-up&quot;, &quot;iconCategory&quot;: &quot;charts&quot; },
+                        { &quot;title&quot;: &quot;the highest Allocated Cost ($120.5k)&quot;, &quot;iconName&quot;: &quot;wallet&quot;, &quot;iconCategory&quot;: &quot;finance&quot; }
                       ]
                     }
                   },
@@ -198,16 +192,8 @@
                     &quot;props&quot;: {
                       &quot;variant&quot;: &quot;icon&quot;,
                       &quot;items&quot;: [
-                        {
-                          &quot;title&quot;: &quot;Vacancy Cost: $31.8k&quot;,
-                          &quot;iconName&quot;: &quot;chart-column&quot;,
-                          &quot;iconCategory&quot;: &quot;charts&quot;
-                        },
-                        {
-                          &quot;title&quot;: &quot;Vacancy %: 40.7%&quot;,
-                          &quot;iconName&quot;: &quot;percent&quot;,
-                          &quot;iconCategory&quot;: &quot;math&quot;
-                        }
+                        { &quot;title&quot;: &quot;Vacancy Cost: $31.8k&quot;, &quot;iconName&quot;: &quot;coins&quot;, &quot;iconCategory&quot;: &quot;finance&quot; },
+                        { &quot;title&quot;: &quot;Vacancy %: 40.7%&quot;, &quot;iconName&quot;: &quot;pie-chart&quot;, &quot;iconCategory&quot;: &quot;charts&quot; }
                       ]
                     }
                   },
@@ -234,16 +220,8 @@
                     &quot;props&quot;: {
                       &quot;variant&quot;: &quot;icon&quot;,
                       &quot;items&quot;: [
-                        {
-                          &quot;title&quot;: &quot;lowest vacancy percentage (12.5%)&quot;,
-                          &quot;iconName&quot;: &quot;shield-check&quot;,
-                          &quot;iconCategory&quot;: &quot;security&quot;
-                        },
-                        {
-                          &quot;title&quot;: &quot;one of the largest allocated costs ($106.9k)&quot;,
-                          &quot;iconName&quot;: &quot;banknote&quot;,
-                          &quot;iconCategory&quot;: &quot;finance&quot;
-                        }
+                        { &quot;title&quot;: &quot;lowest vacancy percentage (12.5%)&quot;, &quot;iconName&quot;: &quot;badge-check&quot;, &quot;iconCategory&quot;: &quot;security&quot; },
+                        { &quot;title&quot;: &quot;one of the largest allocated costs ($106.9k)&quot;, &quot;iconName&quot;: &quot;banknote&quot;, &quot;iconCategory&quot;: &quot;finance&quot; }
                       ]
                     }
                   },
@@ -254,9 +232,17 @@
                     }
                   }
                 ]
-              },
+              }
+            ]
+          }
+        },
+        {
+          &quot;component&quot;: &quot;SectionBlock&quot;,
+          &quot;props&quot;: {
+            &quot;isFoldable&quot;: false,
+            &quot;sections&quot;: [
               {
-                &quot;value&quot;: &quot;section5&quot;,
+                &quot;value&quot;: &quot;recommendations&quot;,
                 &quot;trigger&quot;: &quot;Recommendations&quot;,
                 &quot;content&quot;: [
                   {

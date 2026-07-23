@@ -38,7 +38,11 @@ export const floorPlanFlow: DemoFlowDefinition = {
       },
       layout: [
         "Start with DATA.intro exactly.",
-        "Display DATA.image.url using a large readable image component with caption DATA.image.caption.",
+        "Render DATA.image using an ImageGallery component (NOT Layout, NOT Image, NOT ImageBlock).",
+        "Set imagesSrc to [DATA.image.url] and imagesAlt to [DATA.image.caption].",
+        "The gallery must be full width inside the card so the floor plan is sharp and readable.",
+        "ImageGallery opens a lightbox on click so users can inspect the plan at full size.",
+        "Add a short TextContent caption below the gallery using DATA.image.caption.",
       ],
     });
   },

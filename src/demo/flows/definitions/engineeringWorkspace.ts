@@ -2,6 +2,7 @@ import {
   getEngineeringCharts,
   getEngineeringPromptData,
 } from "../../data/engineeringWorkspace";
+import { buildTableGraphTabsLayout } from "../../format/buildDataViewLayout";
 import { buildPromptFromData } from "../../format/buildPromptFromData";
 import type { PresentationSection } from "../../presentation/types";
 import type { DemoFlowDefinition } from "../types";
@@ -30,8 +31,11 @@ export const engineeringWorkspaceFlow: DemoFlowDefinition = {
       task: "Create a professional workspace allocation analysis response.",
       data,
       layout: [
-        "Render a data table from DATA.allocations with columns: Floor, Room Use, Employees, Workstations, Vacant Workstations.",
-        "After the table, render DATA.charts[0] as a grouped bar chart.",
+        ...buildTableGraphTabsLayout({
+          tableSource: "DATA.allocations",
+          tableColumns:
+            "Floor, Room Use, Employees, Workstations, Vacant Workstations",
+        }),
         "Add a Key observations section from DATA.observations.",
         "Add a short paragraph that Floor 07 is largely unused and may represent an opportunity to, followed by bullets from DATA.opportunities.",
       ],

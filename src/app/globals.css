@@ -24,3 +24,18 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Floor plan and other single-image galleries: show full diagram, not cropped cover */
+.crayon-gallery--single .crayon-gallery__grid {
+  max-height: none;
+}
+
+.crayon-gallery--single .crayon-gallery__image {
+  cursor: zoom-in;
+  max-height: 520px;
+}
+
+.crayon-gallery--single .crayon-gallery__image img {
+  object-fit: contain;
+  background: #fff;
+}

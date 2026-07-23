@@ -27,12 +27,12 @@
                   &quot;lhs&quot;: {
                     &quot;component&quot;: &quot;ProfileTile&quot;,
                     &quot;props&quot;: {
-                      &quot;title&quot;: &quot;Highest Vacant %&quot;,
-                      &quot;label&quot;: &quot;Jefferson House&quot;,
+                      &quot;title&quot;: &quot;Jefferson House&quot;,
+                      &quot;label&quot;: &quot;Highest Vacant %&quot;,
                       &quot;child&quot;: {
                         &quot;component&quot;: &quot;Icon&quot;,
                         &quot;props&quot;: {
-                          &quot;name&quot;: &quot;bar-chart-2&quot;,
+                          &quot;name&quot;: &quot;trending-up&quot;,
                           &quot;category&quot;: &quot;charts&quot;
                         }
                       }
@@ -42,7 +42,7 @@
                     &quot;component&quot;: &quot;Stats&quot;,
                     &quot;props&quot;: {
                       &quot;number&quot;: &quot;30%&quot;,
-                      &quot;label&quot;: &quot;Portfolio leader&quot;
+                      &quot;label&quot;: &quot;Top in portfolio&quot;
                     }
                   }
                 }
@@ -51,13 +51,14 @@
           }
         },
         {
-          &quot;component&quot;: &quot;SectionBlock&quot;,
+          &quot;component&quot;: &quot;Tabs&quot;,
           &quot;props&quot;: {
-            &quot;isFoldable&quot;: false,
-            &quot;sections&quot;: [
+            &quot;children&quot;: [
               {
-                &quot;value&quot;: &quot;section1&quot;,
-                &quot;trigger&quot;: &quot;Buildings Detail&quot;,
+                &quot;value&quot;: &quot;table&quot;,
+                &quot;trigger&quot;: {
+                  &quot;text&quot;: &quot;Table view&quot;
+                },
                 &quot;content&quot;: [
                   {
                     &quot;component&quot;: &quot;Table&quot;,
@@ -85,7 +86,15 @@
                         ]
                       }
                     }
-                  },
+                  }
+                ]
+              },
+              {
+                &quot;value&quot;: &quot;graph&quot;,
+                &quot;trigger&quot;: {
+                  &quot;text&quot;: &quot;Graph view&quot;
+                },
+                &quot;content&quot;: [
                   {
                     &quot;component&quot;: &quot;BarChartV2&quot;,
                     &quot;props&quot;: {

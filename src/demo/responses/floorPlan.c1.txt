@@ -3,6 +3,7 @@
   &quot;component&quot;: {
     &quot;component&quot;: &quot;Card&quot;,
     &quot;props&quot;: {
+      &quot;width&quot;: &quot;full&quot;,
       &quot;children&quot;: [
         {
           &quot;component&quot;: &quot;Header&quot;,
@@ -17,11 +18,21 @@
           }
         },
         {
-          &quot;component&quot;: &quot;Image&quot;,
+          &quot;component&quot;: &quot;ImageGallery&quot;,
           &quot;props&quot;: {
-            &quot;src&quot;: &quot;https://res.cloudinary.com/zdhgzz00/image/upload/v1784785651/floor-plan_ddlqm6.png&quot;,
-            &quot;alt&quot;: &quot;Floor 07 — Business Unit allocation with occupied and vacant workstation legend&quot;,
-            &quot;aspectRatio&quot;: &quot;16:9&quot;
+            &quot;imagesSrc&quot;: [
+              &quot;https://res.cloudinary.com/zdhgzz00/image/upload/q_auto:best,w_1400,f_auto/v1784785651/floor-plan_ddlqm6.png&quot;
+            ],
+            &quot;imagesAlt&quot;: [
+              &quot;Floor 07 — Business Unit allocation with occupied and vacant workstation legend&quot;
+            ]
+          }
+        },
+        {
+          &quot;component&quot;: &quot;TextContent&quot;,
+          &quot;props&quot;: {
+            &quot;variant&quot;: &quot;clear&quot;,
+            &quot;textMarkdown&quot;: &quot;Floor 07 — Business Unit allocation with occupied and vacant workstation legend&quot;
           }
         }
       ]

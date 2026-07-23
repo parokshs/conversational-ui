@@ -1,4 +1,5 @@
 import { getAmericasCharts, getAmericasPromptData } from "../../data/americasBuildings";
+import { buildTableGraphTabsLayout } from "../../format/buildDataViewLayout";
 import { buildPromptFromData } from "../../format/buildPromptFromData";
 import type { PresentationSection } from "../../presentation/types";
 import type { DemoFlowDefinition } from "../types";
@@ -27,9 +28,11 @@ export const americasOccupancyFlow: DemoFlowDefinition = {
       task: "Create a professional portfolio analytics response.",
       data,
       layout: [
-        `Start with DATA.intro exactly.`,
-        "Render a sortable data table from DATA.buildings with columns: Building, Employees, Seats, Vacant %.",
-        "After the table, render DATA.charts[0] as a horizontal bar chart titled \"Vacant % by Building\".",
+        "Start with DATA.intro exactly.",
+        ...buildTableGraphTabsLayout({
+          tableSource: "DATA.buildings",
+          tableColumns: "Building, Employees, Seats, Vacant %",
+        }),
       ],
     });
   },

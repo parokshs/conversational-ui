@@ -3,6 +3,7 @@ import {
   getJeffersonCharts,
   getJeffersonPromptData,
 } from "../../data/jeffersonHouseCosts";
+import { buildTableGraphTabsLayout } from "../../format/buildDataViewLayout";
 import { buildPromptFromData } from "../../format/buildPromptFromData";
 import type { PresentationSection } from "../../presentation/types";
 import type { DemoFlowDefinition } from "../types";
@@ -31,10 +32,12 @@ export const jeffersonCostsFlow: DemoFlowDefinition = {
       task: "Create a professional building cost analysis response.",
       data,
       layout: [
-        `Start with DATA.intro exactly.`,
-        "Render a data table from DATA.businessUnits with columns: Business Unit, Vacancy Cost ($), Allocated Cost ($), Vacant Cost %.",
-        "After the table, render DATA.charts[0] as a horizontal bar chart for Vacant Cost % by Business Unit.",
-        "Then render DATA.charts[1] as a grouped bar chart comparing Vacancy Cost ($) and Allocated Cost ($).",
+        "Start with DATA.intro exactly.",
+        ...buildTableGraphTabsLayout({
+          tableSource: "DATA.businessUnits",
+          tableColumns:
+            "Business Unit, Vacancy Cost ($), Allocated Cost ($), Vacant Cost %",
+        }),
         "Add clearly numbered analysis sections from DATA.observations (title, paragraphs, bullets, closingParagraphs).",
         "End with a Recommendations section from DATA.recommendations.",
       ],

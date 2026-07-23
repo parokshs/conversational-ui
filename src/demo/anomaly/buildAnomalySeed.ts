@@ -28,7 +28,6 @@ export function buildAnomalyServerMessages(): DBMessage[] {
       id: turn.assistantMessageId,
       role: "assistant",
       content: loadResponseContent(turn.responseFile),
-      flowId: turn.flowId,
     });
   }
 

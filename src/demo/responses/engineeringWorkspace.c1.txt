@@ -8,13 +8,13 @@
           &quot;component&quot;: &quot;Header&quot;,
           &quot;props&quot;: {
             &quot;title&quot;: &quot;Workspace Allocation Analysis&quot;,
-            &quot;subtitle&quot;: &quot;Utilization snapshot by floor and room use&quot;
+            &quot;subtitle&quot;: &quot;Utilization by floor and room use&quot;
           }
         },
         {
           &quot;component&quot;: &quot;TextContent&quot;,
           &quot;props&quot;: {
-            &quot;textMarkdown&quot;: &quot;Executive-ready overview of current seating and utilization.&quot;
+            &quot;textMarkdown&quot;: &quot;A concise view of current seating versus occupancy to highlight underutilized areas.&quot;
           }
         },
         {
@@ -31,33 +31,9 @@
             },
             &quot;tableBody&quot;: {
               &quot;rows&quot;: [
-                {
-                  &quot;children&quot;: [
-                    &quot;Floor 07&quot;,
-                    &quot;Office Cellular&quot;,
-                    &quot;1&quot;,
-                    &quot;7&quot;,
-                    &quot;6&quot;
-                  ]
-                },
-                {
-                  &quot;children&quot;: [
-                    &quot;Floor 07&quot;,
-                    &quot;Workstation&quot;,
-                    &quot;0&quot;,
-                    &quot;7&quot;,
-                    &quot;7&quot;
-                  ]
-                },
-                {
-                  &quot;children&quot;: [
-                    &quot;Floor 08&quot;,
-                    &quot;Workstation&quot;,
-                    &quot;8&quot;,
-                    &quot;9&quot;,
-                    &quot;1&quot;
-                  ]
-                }
+                { &quot;children&quot;: [&quot;Floor 07&quot;, &quot;Office Cellular&quot;, &quot;1&quot;, &quot;7&quot;, &quot;6&quot;] },
+                { &quot;children&quot;: [&quot;Floor 07&quot;, &quot;Workstation&quot;, &quot;0&quot;, &quot;7&quot;, &quot;7&quot;] },
+                { &quot;children&quot;: [&quot;Floor 08&quot;, &quot;Workstation&quot;, &quot;8&quot;, &quot;9&quot;, &quot;1&quot;] }
               ]
             }
           }
@@ -74,22 +50,23 @@
                   {
                     &quot;component&quot;: &quot;List&quot;,
                     &quot;props&quot;: {
+                      &quot;heading&quot;: &quot;Key observations&quot;,
                       &quot;variant&quot;: &quot;icon&quot;,
                       &quot;items&quot;: [
                         {
                           &quot;title&quot;: &quot;Floor 07 is significantly underutilised&quot;,
-                          &quot;iconName&quot;: &quot;alert-triangle&quot;,
-                          &quot;iconCategory&quot;: &quot;notifications&quot;
-                        },
-                        {
-                          &quot;title&quot;: &quot;Floor 07 contains 14 workstations but only 1 employee.&quot;,
-                          &quot;iconName&quot;: &quot;gantt-chart&quot;,
+                          &quot;iconName&quot;: &quot;trending-down&quot;,
                           &quot;iconCategory&quot;: &quot;charts&quot;
                         },
                         {
+                          &quot;title&quot;: &quot;Floor 07 contains 14 workstations but only 1 employee.&quot;,
+                          &quot;iconName&quot;: &quot;users&quot;,
+                          &quot;iconCategory&quot;: &quot;people&quot;
+                        },
+                        {
                           &quot;title&quot;: &quot;13 of 14 workstations are vacant (92.9%)&quot;,
-                          &quot;iconName&quot;: &quot;percent&quot;,
-                          &quot;iconCategory&quot;: &quot;math&quot;
+                          &quot;iconName&quot;: &quot;pie-chart&quot;,
+                          &quot;iconCategory&quot;: &quot;charts&quot;
                         },
                         {
                           &quot;title&quot;: &quot;The cellular offices are only 14.3% occupied&quot;,
@@ -98,22 +75,16 @@
                         },
                         {
                           &quot;title&quot;: &quot;The open workstation area has no occupants at all&quot;,
-                          &quot;iconName&quot;: &quot;ban&quot;,
+                          &quot;iconName&quot;: &quot;square-x&quot;,
                           &quot;iconCategory&quot;: &quot;shapes&quot;
                         }
                       ]
                     }
-                  }
-                ]
-              },
-              {
-                &quot;value&quot;: &quot;section2&quot;,
-                &quot;trigger&quot;: &quot;Recommendation&quot;,
-                &quot;content&quot;: [
+                  },
                   {
                     &quot;component&quot;: &quot;TextContent&quot;,
                     &quot;props&quot;: {
-                      &quot;textMarkdown&quot;: &quot;Floor 07 is largely unused and may represent an opportunity to:\n- consolidate staff onto other floors,\n- reduce operational costs,\n- repurpose or decommission space.&quot;
+                      &quot;textMarkdown&quot;: &quot;**Recommendation**: Floor 07 is largely unused and may represent an opportunity to **consolidate staff onto other floors**, **reduce operational costs**, and **repurpose or decommission space**.&quot;
                     }
                   }
                 ]

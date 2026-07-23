@@ -1,6 +1,10 @@
 import fs from "fs";
 import path from "path";
 import OpenAI from "openai";
+import {
+  anomalyResponseFile,
+  buildAnomalyChatPrompt,
+} from "../src/demo/anomaly/buildAnomalyChatPrompt";
 import { demoResponseJobs } from "../src/demo/flows/registry";
 
 function loadEnvFile() {
@@ -58,7 +62,15 @@ async function main() {
     apiKey: process.env.THESYS_API_KEY,
   });
 
-  for (const job of demoResponseJobs) {
+  const bootstrapJobs = [
+    ...demoResponseJobs,
+    {
+      file: anomalyResponseFile,
+      buildPrompt: buildAnomalyChatPrompt,
+    },
+  ];
+
+  for (const job of bootstrapJobs) {
     console.log(`Generating ${job.file}...`);
     const content = await generateC1Response(client, job.buildPrompt());
     fs.writeFileSync(path.join(responsesDir, job.file), content, "utf8");

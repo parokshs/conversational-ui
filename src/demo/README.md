@@ -13,12 +13,12 @@ Six-step demo flow for portfolio occupancy analysis through executive presentati
 
 ## Pre-created Anomaly thread
 
-On app load, the app opens a **New Chat** welcome screen. The sidebar also lists a pre-created thread named **Anomaly** with the first three demo analyses already loaded — select it to continue that investigation.
+On app load, the app opens a **New Chat** welcome screen. The sidebar also lists a pre-created thread named **Anomaly** with a pre-loaded anomaly report — select it to review Sanam cost-per-sqft and Boltro Road occupancy issues.
 
 - Seed config: `anomaly/anomalyThread.ts`
+- Data source: `data/anomalyFindings.ts`
 - Response assembly: `anomaly/buildAnomalySeed.ts`
-- Client wiring: `src/hooks/useAnomalyChatManagers.ts`
-- Server seed API: `GET /api/demo/anomaly-thread` (also seeds in-memory chat history for presentation export)
+- C1 response file: `responses/anomalyFindings.c1.txt` (regenerate via `npm run bootstrap:demo`)
 
 Users can still create new chats normally. The Anomaly thread cannot be deleted from the sidebar.
 

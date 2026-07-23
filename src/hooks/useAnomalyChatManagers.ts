@@ -2,7 +2,7 @@
 
 import type { Message } from "@crayonai/react-core";
 import {
-  fromOpenAIMessages,
+  toOpenAIMessages,
   useThreadListManager,
   useThreadManager,
   type ArtifactViewMode,
@@ -19,28 +19,29 @@ type OpenAIMessage = {
   id: string;
   role: "user" | "assistant";
   content?: string;
-  flowId?: string;
 };
 
-const threadMessageCache = new Map<string, Message[]>();
-let anomalyMessagesPromise: Promise<Message[]> | null = null;
+const anomalyMessageCache = new Map<string, OpenAIMessage[]>();
+const userThreadMessageCache = new Map<string, Message[]>();
+let anomalyMessagesPromise: Promise<OpenAIMessage[]> | null = null;
 
-async function loadAnomalyMessages(): Promise<Message[]> {
-  if (threadMessageCache.has(ANOMALY_THREAD_ID)) {
-    return threadMessageCache.get(ANOMALY_THREAD_ID)!;
+async function loadAnomalyMessages(): Promise<OpenAIMessage[]> {
+  const cached = anomalyMessageCache.get(ANOMALY_THREAD_ID);
+  if (cached && cached.length > 0) {
+    return cached;
   }
 
   if (!anomalyMessagesPromise) {
     anomalyMessagesPromise = fetch("/api/demo/anomaly-thread")
       .then(async (response) => {
         if (!response.ok) {
-          throw new Error("Failed to load the Anomaly thread.");
+          const detail = await response.text().catch(() => "");
+          throw new Error(detail || "Failed to load the Anomaly thread.");
         }
 
         const data = (await response.json()) as { messages: OpenAIMessage[] };
-        const messages = fromOpenAIMessages(data.messages);
-        threadMessageCache.set(ANOMALY_THREAD_ID, messages);
-        return messages;
+        anomalyMessageCache.set(ANOMALY_THREAD_ID, data.messages);
+        return data.messages;
       })
       .finally(() => {
         anomalyMessagesPromise = null;
@@ -70,7 +71,7 @@ export function useAnomalyChatManagers({
         return;
       }
 
-      threadMessageCache.delete(threadId);
+      userThreadMessageCache.delete(threadId);
     },
     updateThread: async (thread) => thread,
     onSwitchToNew: () => {},
@@ -86,10 +87,12 @@ export function useAnomalyChatManagers({
     threadListManager,
     loadThread: async (threadId) => {
       if (threadId === ANOMALY_THREAD_ID) {
+        // useThreadManager from @thesysai/genui-sdk converts OpenAI messages internally.
         return loadAnomalyMessages();
       }
 
-      return threadMessageCache.get(threadId) ?? [];
+      const cached = userThreadMessageCache.get(threadId);
+      return cached ? toOpenAIMessages(cached) : [];
     },
     onUpdateMessage: () => {},
     apiUrl,
@@ -102,11 +105,14 @@ export function useAnomalyChatManagers({
   }, []);
 
   useEffect(() => {
-    if (threadListManager.selectedThreadId) {
-      threadMessageCache.set(
-        threadListManager.selectedThreadId,
-        threadManager.messages
-      );
+    const threadId = threadListManager.selectedThreadId;
+
+    if (!threadId || threadId === ANOMALY_THREAD_ID) {
+      return;
+    }
+
+    if (threadManager.messages.length > 0) {
+      userThreadMessageCache.set(threadId, threadManager.messages);
     }
   }, [threadListManager.selectedThreadId, threadManager.messages]);
 

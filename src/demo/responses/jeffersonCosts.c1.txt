@@ -7,8 +7,8 @@
         {
           &quot;component&quot;: &quot;Header&quot;,
           &quot;props&quot;: {
-            &quot;title&quot;: &quot;Building Cost Analysis — Jefferson House&quot;,
-            &quot;subtitle&quot;: &quot;Vacant vs Allocated by Business Unit&quot;
+            &quot;title&quot;: &quot;Jefferson House • Vacancy vs Allocated by Business Unit&quot;,
+            &quot;subtitle&quot;: &quot;Executive Summary and Analysis&quot;
           }
         },
         {

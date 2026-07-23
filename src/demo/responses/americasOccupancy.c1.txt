@@ -7,7 +7,8 @@
         {
           &quot;component&quot;: &quot;Header&quot;,
           &quot;props&quot;: {
-            &quot;title&quot;: &quot;Portfolio Analytics — Americas&quot;
+            &quot;title&quot;: &quot;Portfolio Analytics&quot;,
+            &quot;subtitle&quot;: &quot;Americas · Top 10 buildings by Vacant %&quot;
           }
         },
         {

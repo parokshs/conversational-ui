@@ -8,7 +8,7 @@
         {
           &quot;component&quot;: &quot;Header&quot;,
           &quot;props&quot;: {
-            &quot;title&quot;: &quot;Floor 07 — Floor Plan&quot;
+            &quot;title&quot;: &quot;Floor 07 — Workspace Allocation&quot;
           }
         },
         {
@@ -31,7 +31,49 @@
         {
           &quot;component&quot;: &quot;TextContent&quot;,
           &quot;props&quot;: {
-            &quot;textMarkdown&quot;: &quot;Floor 07 — Business Unit allocation with occupied and vacant workstation legend&quot;
+            &quot;textMarkdown&quot;: &quot;Highlighted Floor 07 workspace allocation by Business Unit. Red dots indicate Vacant Workstations and orange dots indicate Reserved Desks.&quot;
+          }
+        },
+        {
+          &quot;component&quot;: &quot;SectionBlock&quot;,
+          &quot;props&quot;: {
+            &quot;isFoldable&quot;: false,
+            &quot;sections&quot;: [
+              {
+                &quot;value&quot;: &quot;section1&quot;,
+                &quot;trigger&quot;: &quot;Key insights&quot;,
+                &quot;content&quot;: [
+                  {
+                    &quot;component&quot;: &quot;List&quot;,
+                    &quot;props&quot;: {
+                      &quot;variant&quot;: &quot;icon&quot;,
+                      &quot;items&quot;: [
+                        {
+                          &quot;title&quot;: &quot;Travel (14) and Technologies (9) occupy the largest share of workstations.&quot;,
+                          &quot;iconName&quot;: &quot;circle-check&quot;,
+                          &quot;iconCategory&quot;: &quot;notifications&quot;
+                        },
+                        {
+                          &quot;title&quot;: &quot;Engineering has the highest vacancy, with 13 vacant and 1 occupied workstation.&quot;,
+                          &quot;iconName&quot;: &quot;circle-check&quot;,
+                          &quot;iconCategory&quot;: &quot;notifications&quot;
+                        },
+                        {
+                          &quot;title&quot;: &quot;Retail and Utilities each have 1 vacant workstation and no occupied workstations.&quot;,
+                          &quot;iconName&quot;: &quot;circle-check&quot;,
+                          &quot;iconCategory&quot;: &quot;notifications&quot;
+                        },
+                        {
+                          &quot;title&quot;: &quot;Overall, 38 workstations are occupied and 15 are vacant on Floor 07.&quot;,
+                          &quot;iconName&quot;: &quot;circle-check&quot;,
+                          &quot;iconCategory&quot;: &quot;notifications&quot;
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
           }
         }
       ]

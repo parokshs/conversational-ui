@@ -24,7 +24,7 @@
             &quot;sections&quot;: [
               {
                 &quot;value&quot;: &quot;section1&quot;,
-                &quot;trigger&quot;: &quot;Sanam · Cost per SQFT Spike&quot;,
+                &quot;trigger&quot;: &quot;Sanam · Cost per SQFT&quot;,
                 &quot;content&quot;: [
                   {
                     &quot;component&quot;: &quot;TextContent&quot;,

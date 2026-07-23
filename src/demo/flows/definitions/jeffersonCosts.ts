@@ -38,8 +38,8 @@ export const jeffersonCostsFlow: DemoFlowDefinition = {
           tableColumns:
             "Business Unit, Vacancy Cost ($), Allocated Cost ($), Vacant Cost %",
         }),
-        "Add clearly numbered analysis sections from DATA.observations (title, paragraphs, bullets, closingParagraphs).",
-        "End with a Recommendations section from DATA.recommendations.",
+        "Add a Key insights section with bullets from DATA.keyInsights exactly — keep concise, no numbered sub-sections.",
+        "End with a single line: Recommendation: followed by DATA.recommendation exactly.",
       ],
     });
   },
@@ -69,17 +69,13 @@ export const jeffersonCostsFlow: DemoFlowDefinition = {
       ],
       charts: getJeffersonCharts(),
       bullets: [
-        ...data.observations.map((observation) => ({
-          label: observation.title,
-          items: [
-            ...observation.paragraphs,
-            ...(observation.bullets ?? []),
-            ...(observation.closingParagraphs ?? []),
-          ],
-        })),
         {
-          label: "Recommendations",
-          items: data.recommendations,
+          label: "Key insights",
+          items: data.keyInsights,
+        },
+        {
+          label: "Recommendation",
+          items: [data.recommendation],
         },
       ],
     };

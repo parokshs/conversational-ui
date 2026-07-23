@@ -1,19 +1,10 @@
-import type {
-  PresentationChart,
-} from "../presentation/types";
+import type { PresentationChart } from "../presentation/types";
 
 export type BusinessUnitCost = {
   businessUnit: string;
   vacancyCost: number;
   allocatedCost: number;
   vacantCostPct: number;
-};
-
-export type CostObservation = {
-  title: string;
-  paragraphs: string[];
-  bullets?: string[];
-  closingParagraphs?: string[];
 };
 
 export const jeffersonIntro =
@@ -58,10 +49,6 @@ export const jeffersonBusinessUnits: BusinessUnitCost[] = [
   },
 ];
 
-export const jeffersonRecommendations = [
-  "Review workspace assignments for Engineering, Travel and Operations to determine whether the vacancy is intentional (for example, project-based seating or temporary moves) or whether workspace should be reallocated.",
-];
-
 const formatCurrency = (value: number) =>
   value.toLocaleString("en-US", {
     minimumFractionDigits: 2,
@@ -85,65 +72,36 @@ function getUnit(units: BusinessUnitCost[], businessUnit: string) {
   return unit;
 }
 
-export function buildJeffersonObservations(
+function getHighestVacancyRateUnit(units: BusinessUnitCost[]) {
+  return [...units].sort((a, b) => b.vacantCostPct - a.vacantCostPct)[0];
+}
+
+function getLargestVacantCostUnit(units: BusinessUnitCost[]) {
+  return [...units].sort((a, b) => b.vacancyCost - a.vacancyCost)[0];
+}
+
+function getLowestVacancyRateUnit(units: BusinessUnitCost[]) {
+  return [...units].sort((a, b) => a.vacantCostPct - b.vacantCostPct)[0];
+}
+
+export function buildJeffersonKeyInsights(
   units: BusinessUnitCost[] = jeffersonBusinessUnits
-): CostObservation[] {
-  const engineering = getUnit(units, "Engineering");
-  const travel = getUnit(units, "Travel");
+) {
+  const travel = getLargestVacantCostUnit(units);
   const operations = getUnit(units, "Operations");
-  const finance = getUnit(units, "Finance");
+  const finance = getLowestVacancyRateUnit(units);
+  const highestVacancy = getHighestVacancyRateUnit(units);
 
   return [
-    {
-      title: "Engineering is the clear outlier",
-      paragraphs: [
-        `Engineering has the highest vacancy rate at ${engineering.vacantCostPct}%, meaning almost 60 cents of every dollar of Engineering budget is vacant.`,
-        `What's interesting is that although its vacancy cost (${formatCurrencyShort(engineering.vacancyCost)}) is only the third highest, its allocated budget is relatively small (${formatCurrencyShort(engineering.allocatedCost)}), making the vacancy proportion extremely high.`,
-        "This suggests:",
-      ],
-      bullets: [
-        "significant unfilled positions,",
-        "delayed recruitment,",
-        "or a department that's operating well below planned staffing.",
-      ],
-    },
-    {
-      title: "Travel has the largest financial impact",
-      paragraphs: ["Travel has:"],
-      bullets: [
-        `the highest Vacancy Cost (${formatCurrencyShort(travel.vacancyCost)})`,
-        `the highest Allocated Cost (${formatCurrencyShort(travel.allocatedCost)})`,
-      ],
-      closingParagraphs: [
-        `Although its vacancy percentage (${travel.vacantCostPct}%) is lower than Engineering and Operations, it represents the largest absolute value of vacant budget, so reducing vacancies here would likely have the biggest financial impact.`,
-      ],
-    },
-    {
-      title: "Operations is also relatively high",
-      paragraphs: ["Operations has:"],
-      bullets: [
-        `Vacancy Cost: ${formatCurrencyShort(operations.vacancyCost)}`,
-        `Vacancy %: ${operations.vacantCostPct}%`,
-      ],
-      closingParagraphs: [
-        "Anything above about 40% generally warrants investigation, particularly if vacancies are affecting service delivery.",
-      ],
-    },
-    {
-      title: "Finance appears well staffed",
-      paragraphs: ["Finance has:"],
-      bullets: [
-        `lowest vacancy percentage (${finance.vacantCostPct}%)`,
-        `one of the largest allocated costs (${formatCurrencyShort(finance.allocatedCost)})`,
-      ],
-      closingParagraphs: [
-        "This suggests staffing is relatively close to plan.",
-      ],
-    },
+    `${highestVacancy.businessUnit} has the highest vacancy rate (${highestVacancy.vacantCostPct}%).`,
+    `${travel.businessUnit} has the largest vacant cost (${formatCurrencyShort(travel.vacancyCost)}).`,
+    `${operations.businessUnit} also shows elevated vacancy (${operations.vacantCostPct}%).`,
+    `${finance.businessUnit} is the best utilized (${finance.vacantCostPct}% vacancy).`,
   ];
 }
 
-export const jeffersonObservations = buildJeffersonObservations();
+export const jeffersonRecommendation =
+  "Prioritize reviewing space allocation for Engineering, Travel, and Operations.";
 
 export function getJeffersonCharts(): PresentationChart[] {
   return [
@@ -182,8 +140,8 @@ export function getJeffersonPromptData() {
   return {
     intro: jeffersonIntro,
     businessUnits: jeffersonBusinessUnits,
-    observations: buildJeffersonObservations(),
-    recommendations: jeffersonRecommendations,
+    keyInsights: buildJeffersonKeyInsights(),
+    recommendation: jeffersonRecommendation,
     charts: getJeffersonCharts(),
   };
 }

@@ -8,98 +8,13 @@
           &quot;component&quot;: &quot;Header&quot;,
           &quot;props&quot;: {
             &quot;title&quot;: &quot;Workspace Allocation Analysis&quot;,
-            &quot;subtitle&quot;: &quot;Reviewing workspace allocation for Engineering by floor and seat type.&quot;
+            &quot;subtitle&quot;: &quot;Engineering · By floor and seat type&quot;
           }
         },
         {
           &quot;component&quot;: &quot;TextContent&quot;,
           &quot;props&quot;: {
-            &quot;textMarkdown&quot;: &quot;Explore the dataset in table or graph form, then review key observations and opportunities.&quot;
-          }
-        },
-        {
-          &quot;component&quot;: &quot;MiniCardBlock&quot;,
-          &quot;props&quot;: {
-            &quot;children&quot;: [
-              {
-                &quot;component&quot;: &quot;MiniCard&quot;,
-                &quot;props&quot;: {
-                  &quot;lhs&quot;: {
-                    &quot;component&quot;: &quot;ProfileTile&quot;,
-                    &quot;props&quot;: {
-                      &quot;title&quot;: &quot;Floor 07 · Office Cellular&quot;,
-                      &quot;label&quot;: &quot;Employees 1 · Vacant WS 6&quot;,
-                      &quot;child&quot;: {
-                        &quot;component&quot;: &quot;Icon&quot;,
-                        &quot;props&quot;: {
-                          &quot;name&quot;: &quot;building-2&quot;,
-                          &quot;category&quot;: &quot;buildings&quot;
-                        }
-                      }
-                    }
-                  },
-                  &quot;rhs&quot;: {
-                    &quot;component&quot;: &quot;Stats&quot;,
-                    &quot;props&quot;: {
-                      &quot;number&quot;: &quot;7&quot;,
-                      &quot;label&quot;: &quot;Workstations&quot;
-                    }
-                  }
-                }
-              },
-              {
-                &quot;component&quot;: &quot;MiniCard&quot;,
-                &quot;props&quot;: {
-                  &quot;lhs&quot;: {
-                    &quot;component&quot;: &quot;ProfileTile&quot;,
-                    &quot;props&quot;: {
-                      &quot;title&quot;: &quot;Floor 07 · Workstation&quot;,
-                      &quot;label&quot;: &quot;Employees 0 · Vacant WS 7&quot;,
-                      &quot;child&quot;: {
-                        &quot;component&quot;: &quot;Icon&quot;,
-                        &quot;props&quot;: {
-                          &quot;name&quot;: &quot;building-2&quot;,
-                          &quot;category&quot;: &quot;buildings&quot;
-                        }
-                      }
-                    }
-                  },
-                  &quot;rhs&quot;: {
-                    &quot;component&quot;: &quot;Stats&quot;,
-                    &quot;props&quot;: {
-                      &quot;number&quot;: &quot;7&quot;,
-                      &quot;label&quot;: &quot;Workstations&quot;
-                    }
-                  }
-                }
-              },
-              {
-                &quot;component&quot;: &quot;MiniCard&quot;,
-                &quot;props&quot;: {
-                  &quot;lhs&quot;: {
-                    &quot;component&quot;: &quot;ProfileTile&quot;,
-                    &quot;props&quot;: {
-                      &quot;title&quot;: &quot;Floor 08 · Workstation&quot;,
-                      &quot;label&quot;: &quot;Employees 8 · Vacant WS 1&quot;,
-                      &quot;child&quot;: {
-                        &quot;component&quot;: &quot;Icon&quot;,
-                        &quot;props&quot;: {
-                          &quot;name&quot;: &quot;building-2&quot;,
-                          &quot;category&quot;: &quot;buildings&quot;
-                        }
-                      }
-                    }
-                  },
-                  &quot;rhs&quot;: {
-                    &quot;component&quot;: &quot;Stats&quot;,
-                    &quot;props&quot;: {
-                      &quot;number&quot;: &quot;9&quot;,
-                      &quot;label&quot;: &quot;Workstations&quot;
-                    }
-                  }
-                }
-              }
-            ]
+            &quot;textMarkdown&quot;: &quot;Reviewing workspace allocation for Engineering by floor and seat type.&quot;
           }
         },
         {
@@ -127,13 +42,31 @@
                       &quot;tableBody&quot;: {
                         &quot;rows&quot;: [
                           {
-                            &quot;children&quot;: [&quot;07&quot;, &quot;Office Cellular&quot;, &quot;1&quot;, &quot;7&quot;, &quot;6&quot;]
+                            &quot;children&quot;: [
+                              &quot;07&quot;,
+                              &quot;Office Cellular&quot;,
+                              &quot;1&quot;,
+                              &quot;7&quot;,
+                              &quot;6&quot;
+                            ]
                           },
                           {
-                            &quot;children&quot;: [&quot;07&quot;, &quot;Workstation&quot;, &quot;0&quot;, &quot;7&quot;, &quot;7&quot;]
+                            &quot;children&quot;: [
+                              &quot;07&quot;,
+                              &quot;Workstation&quot;,
+                              &quot;0&quot;,
+                              &quot;7&quot;,
+                              &quot;7&quot;
+                            ]
                           },
                           {
-                            &quot;children&quot;: [&quot;08&quot;, &quot;Workstation&quot;, &quot;8&quot;, &quot;9&quot;, &quot;1&quot;]
+                            &quot;children&quot;: [
+                              &quot;08&quot;,
+                              &quot;Workstation&quot;,
+                              &quot;8&quot;,
+                              &quot;9&quot;,
+                              &quot;1&quot;
+                            ]
                           }
                         ]
                       }
@@ -192,73 +125,27 @@
             &quot;sections&quot;: [
               {
                 &quot;value&quot;: &quot;section1&quot;,
-                &quot;trigger&quot;: &quot;Key observations&quot;,
+                &quot;trigger&quot;: &quot;Key insights&quot;,
                 &quot;content&quot;: [
                   {
                     &quot;component&quot;: &quot;List&quot;,
                     &quot;props&quot;: {
-                      &quot;heading&quot;: &quot;Observations&quot;,
                       &quot;variant&quot;: &quot;icon&quot;,
                       &quot;items&quot;: [
                         {
-                          &quot;title&quot;: &quot;Floor 07 is significantly underutilised&quot;,
+                          &quot;title&quot;: &quot;Floor 07 is heavily underutilized (13 of 14 workstations vacant, 92.9%).&quot;,
                           &quot;iconName&quot;: &quot;info&quot;,
                           &quot;iconCategory&quot;: &quot;notifications&quot;
                         },
                         {
-                          &quot;title&quot;: &quot;Floor 07 contains 14 workstations but only 1 employee.&quot;,
-                          &quot;iconName&quot;: &quot;bar-chart-3&quot;,
-                          &quot;iconCategory&quot;: &quot;charts&quot;
-                        },
-                        {
-                          &quot;title&quot;: &quot;13 of 14 workstations are vacant (92.9%)&quot;,
-                          &quot;iconName&quot;: &quot;trending-down&quot;,
-                          &quot;iconCategory&quot;: &quot;charts&quot;
-                        },
-                        {
-                          &quot;title&quot;: &quot;The cellular offices are only 14.3% occupied&quot;,
-                          &quot;iconName&quot;: &quot;alert-triangle&quot;,
-                          &quot;iconCategory&quot;: &quot;notifications&quot;
-                        },
-                        {
-                          &quot;title&quot;: &quot;The open workstation area has no occupants at all&quot;,
-                          &quot;iconName&quot;: &quot;x-circle&quot;,
-                          &quot;iconCategory&quot;: &quot;notifications&quot;
-                        }
-                      ]
-                    }
-                  }
-                ]
-              },
-              {
-                &quot;value&quot;: &quot;section2&quot;,
-                &quot;trigger&quot;: &quot;Opportunities&quot;,
-                &quot;content&quot;: [
-                  {
-                    &quot;component&quot;: &quot;TextContent&quot;,
-                    &quot;props&quot;: {
-                      &quot;textMarkdown&quot;: &quot;Floor 07 is largely unused and may represent an opportunity to:&quot;
-                    }
-                  },
-                  {
-                    &quot;component&quot;: &quot;List&quot;,
-                    &quot;props&quot;: {
-                      &quot;variant&quot;: &quot;icon&quot;,
-                      &quot;items&quot;: [
-                        {
-                          &quot;title&quot;: &quot;consolidate staff onto other floors,&quot;,
-                          &quot;iconName&quot;: &quot;users&quot;,
+                          &quot;title&quot;: &quot;Cellular offices on Floor 07 have only 1 occupant.&quot;,
+                          &quot;iconName&quot;: &quot;user&quot;,
                           &quot;iconCategory&quot;: &quot;people&quot;
                         },
                         {
-                          &quot;title&quot;: &quot;reduce operational costs,&quot;,
-                          &quot;iconName&quot;: &quot;piggy-bank&quot;,
-                          &quot;iconCategory&quot;: &quot;finance&quot;
-                        },
-                        {
-                          &quot;title&quot;: &quot;repurpose or decommission space.&quot;,
-                          &quot;iconName&quot;: &quot;recycle&quot;,
-                          &quot;iconCategory&quot;: &quot;sustainability&quot;
+                          &quot;title&quot;: &quot;Floor 08 is nearly fully occupied (8 of 9 workstations in use).&quot;,
+                          &quot;iconName&quot;: &quot;bar-chart-3&quot;,
+                          &quot;iconCategory&quot;: &quot;charts&quot;
                         }
                       ]
                     }
@@ -266,6 +153,12 @@
                 ]
               }
             ]
+          }
+        },
+        {
+          &quot;component&quot;: &quot;TextContent&quot;,
+          &quot;props&quot;: {
+            &quot;textMarkdown&quot;: &quot;Recommendation: Consider consolidating Engineering staff from Floor 07 and repurposing or reducing the unused space.&quot;
           }
         }
       ]

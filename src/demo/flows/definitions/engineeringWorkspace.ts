@@ -36,8 +36,8 @@ export const engineeringWorkspaceFlow: DemoFlowDefinition = {
           tableColumns:
             "Floor, Room Use, Employees, Workstations, Vacant Workstations",
         }),
-        "Add a Key observations section from DATA.observations.",
-        "Add a short paragraph that Floor 07 is largely unused and may represent an opportunity to, followed by bullets from DATA.opportunities.",
+        "Add a Key insights section with bullets from DATA.keyInsights exactly — keep concise, no extra paragraphs.",
+        "End with a single line: Recommendation: followed by DATA.recommendation exactly.",
       ],
     });
   },
@@ -70,15 +70,12 @@ export const engineeringWorkspaceFlow: DemoFlowDefinition = {
       charts: getEngineeringCharts(),
       bullets: [
         {
-          label: "Key Observations",
-          items: data.observations,
+          label: "Key insights",
+          items: data.keyInsights,
         },
         {
-          label: "Opportunities",
-          items: [
-            "Floor 07 is largely unused and may represent an opportunity to:",
-            ...data.opportunities,
-          ],
+          label: "Recommendation",
+          items: [data.recommendation],
         },
       ],
     };

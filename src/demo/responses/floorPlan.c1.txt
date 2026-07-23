@@ -8,7 +8,7 @@
         {
           &quot;component&quot;: &quot;Header&quot;,
           &quot;props&quot;: {
-            &quot;title&quot;: &quot;Floor 07 — Workspace Allocation&quot;
+            &quot;title&quot;: &quot;Floor 07 — Floor Plan&quot;
           }
         },
         {
@@ -31,7 +31,6 @@
         {
           &quot;component&quot;: &quot;TextContent&quot;,
           &quot;props&quot;: {
-            &quot;variant&quot;: &quot;clear&quot;,
             &quot;textMarkdown&quot;: &quot;Floor 07 — Business Unit allocation with occupied and vacant workstation legend&quot;
           }
         }

@@ -8,7 +8,7 @@
           &quot;component&quot;: &quot;Header&quot;,
           &quot;props&quot;: {
             &quot;title&quot;: &quot;Portfolio Analytics&quot;,
-            &quot;subtitle&quot;: &quot;Americas · Vacant % Top 10 Buildings&quot;
+            &quot;subtitle&quot;: &quot;Americas · Vacancy Focus&quot;
           }
         },
         {
@@ -27,8 +27,8 @@
                   &quot;lhs&quot;: {
                     &quot;component&quot;: &quot;ProfileTile&quot;,
                     &quot;props&quot;: {
-                      &quot;title&quot;: &quot;Jefferson House&quot;,
-                      &quot;label&quot;: &quot;Highest Vacant %&quot;,
+                      &quot;title&quot;: &quot;Highest Vacant %&quot;,
+                      &quot;label&quot;: &quot;Jefferson House leads the Americas portfolio&quot;,
                       &quot;child&quot;: {
                         &quot;component&quot;: &quot;Icon&quot;,
                         &quot;props&quot;: {
@@ -42,7 +42,7 @@
                     &quot;component&quot;: &quot;Stats&quot;,
                     &quot;props&quot;: {
                       &quot;number&quot;: &quot;30%&quot;,
-                      &quot;label&quot;: &quot;Top in portfolio&quot;
+                      &quot;label&quot;: &quot;Top value&quot;
                     }
                   }
                 }

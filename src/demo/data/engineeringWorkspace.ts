@@ -35,53 +35,39 @@ export const engineeringAllocations: EngineeringAllocationRow[] = [
   },
 ];
 
-export const engineeringOpportunities = [
-  "consolidate staff onto other floors,",
-  "reduce operational costs,",
-  "repurpose or decommission space.",
-];
-
 function rowsForFloor(rows: EngineeringAllocationRow[], floor: string) {
   return rows.filter((row) => row.floor === floor);
 }
 
-export function buildEngineeringObservations(
+function sum(rows: EngineeringAllocationRow[], key: keyof EngineeringAllocationRow) {
+  return rows.reduce((total, row) => total + Number(row[key]), 0);
+}
+
+export function buildEngineeringKeyInsights(
   rows: EngineeringAllocationRow[] = engineeringAllocations
 ) {
   const floor07Rows = rowsForFloor(rows, "07");
-  const floor07Workstations = floor07Rows.reduce(
-    (total, row) => total + row.workstations,
-    0
-  );
-  const floor07Employees = floor07Rows.reduce(
-    (total, row) => total + row.employees,
-    0
-  );
-  const floor07Vacant = floor07Rows.reduce(
-    (total, row) => total + row.vacantWorkstations,
-    0
-  );
+  const floor08Rows = rowsForFloor(rows, "08");
+  const floor07Workstations = sum(floor07Rows, "workstations");
+  const floor07Vacant = sum(floor07Rows, "vacantWorkstations");
   const floor07VacantPct = ((floor07Vacant / floor07Workstations) * 100).toFixed(
     1
   );
-  const cellularRow = floor07Rows.find((row) => row.roomUse === "Office Cellular");
-  const workstationRow = floor07Rows.find((row) => row.roomUse === "Workstation");
-  const cellularOccupancy = cellularRow
-    ? ((cellularRow.employees / cellularRow.workstations) * 100).toFixed(1)
-    : "0.0";
+  const floor07CellularEmployees = floor07Rows.find(
+    (row) => row.roomUse === "Office Cellular"
+  )?.employees;
+  const floor08Workstations = sum(floor08Rows, "workstations");
+  const floor08Employees = sum(floor08Rows, "employees");
 
   return [
-    "Floor 07 is significantly underutilised",
-    `Floor 07 contains ${floor07Workstations} workstations but only ${floor07Employees} employee${floor07Employees === 1 ? "" : "s"}.`,
-    `${floor07Vacant} of ${floor07Workstations} workstations are vacant (${floor07VacantPct}%)`,
-    `The cellular offices are only ${cellularOccupancy}% occupied`,
-    workstationRow?.employees === 0
-      ? "The open workstation area has no occupants at all"
-      : "The open workstation area remains mostly vacant",
+    `Floor 07 is heavily underutilized (${floor07Vacant} of ${floor07Workstations} workstations vacant, ${floor07VacantPct}%).`,
+    `Cellular offices on Floor 07 have only ${floor07CellularEmployees} occupant${floor07CellularEmployees === 1 ? "" : "s"}.`,
+    `Floor 08 is nearly fully occupied (${floor08Employees} of ${floor08Workstations} workstations in use).`,
   ];
 }
 
-export const engineeringObservations = buildEngineeringObservations();
+export const engineeringRecommendation =
+  "Consider consolidating Engineering staff from Floor 07 and repurposing or reducing the unused space.";
 
 export function getEngineeringCharts(): PresentationChart[] {
   return [
@@ -110,8 +96,8 @@ export function getEngineeringPromptData() {
   return {
     intro: engineeringIntro,
     allocations: engineeringAllocations,
-    observations: buildEngineeringObservations(),
-    opportunities: engineeringOpportunities,
+    keyInsights: buildEngineeringKeyInsights(),
+    recommendation: engineeringRecommendation,
     charts: getEngineeringCharts(),
   };
 }

@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { makeC1Response } from "@thesysai/genui-sdk/server";
+import { waitForDemoLatency } from "../demoLatency";
 import type { DemoFlowDefinition } from "./types";
 
 const responsesDir = path.join(process.cwd(), "src/demo/responses");
@@ -26,6 +27,8 @@ export function startStagedResponse(flow: DemoFlowDefinition) {
         ephemeral: true,
       });
     }
+
+    await waitForDemoLatency({ ms: flow.latencyMs });
 
     await c1Response.writeContent(content);
     await c1Response.end();

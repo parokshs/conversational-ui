@@ -50,6 +50,34 @@ Presentation export does **not** need bootstrapping. It reads the TypeScript dat
 
 The chat API serves the `.c1.txt` files for matched demo questions. It also tracks which demo steps were answered in each thread so presentation export can include only the analyses the user actually requested.
 
+Responses are instant by default because they replay pre-generated files rather than querying a database. To simulate fetch/analysis time, configure artificial latency in `.env`:
+
+```bash
+# Fixed delay for every staged step (milliseconds)
+DEMO_LATENCY_MS=2000
+
+# Or a random range per step (overrides DEMO_LATENCY_MS)
+DEMO_LATENCY_MIN_MS=1500
+DEMO_LATENCY_MAX_MS=3000
+
+# Optional separate delay before presentation export starts
+DEMO_PRESENTATION_LATENCY_MS=4000
+```
+
+During the delay, the existing `thinking` item stays visible (for example, "Analysing portfolio data"). Set `DEMO_LATENCY_MS=0` or leave it unset to disable.
+
+For a longer delay on one step only, add `latencyMs` to that flow definition:
+
+```ts
+export const floorPlanFlow: DemoFlowDefinition = {
+  id: "floor-plan",
+  latencyMs: 3500,
+  // ...
+};
+```
+
+Per-step `latencyMs` overrides `DEMO_LATENCY_MS` for that step only.
+
 ## Exporting a presentation (step 5)
 
 After asking one or more demo questions in a thread, the user can type a natural request such as:

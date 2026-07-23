@@ -8,6 +8,8 @@ export type DemoFlowDefinition = {
     title: string;
     description: string;
   };
+  /** Optional per-step delay in ms before the staged response is shown. Overrides DEMO_LATENCY_MS. */
+  latencyMs?: number;
   buildChatPrompt: () => string;
   buildPresentationSection: () => PresentationSection;
 };

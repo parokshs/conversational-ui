@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
 import { makeC1Response } from "@thesysai/genui-sdk/server";
+import { getPresentationDemoLatencyMs, waitForDemoLatency } from "../demoLatency";
 import {
   buildArtifactSystemPrompt,
   buildArtifactUserPrompt,
@@ -115,6 +116,14 @@ export async function handlePresentationExport({
 
   const c1Response = makeC1Response();
   const ready = (async () => {
+    await c1Response.writeThinkItem({
+      title: "Preparing executive presentation",
+      description: "Compiling portfolio analytics into slide format.",
+      ephemeral: true,
+    });
+
+    await waitForDemoLatency({ ms: getPresentationDemoLatencyMs() });
+
     await c1Response.writeContent(openArtifactTag(artifactId));
 
     for await (const chunk of artifactStream) {

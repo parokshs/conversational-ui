@@ -7,14 +7,14 @@
         {
           &quot;component&quot;: &quot;Header&quot;,
           &quot;props&quot;: {
-            &quot;title&quot;: &quot;Jefferson House Building — Cost Analysis&quot;,
-            &quot;subtitle&quot;: &quot;Actual vs Allocated by Exec Org Detail&quot;
+            &quot;title&quot;: &quot;Building Cost Analysis — Jefferson House&quot;,
+            &quot;subtitle&quot;: &quot;Vacant vs Allocated by Business Unit&quot;
           }
         },
         {
           &quot;component&quot;: &quot;TextContent&quot;,
           &quot;props&quot;: {
-            &quot;textMarkdown&quot;: &quot;I&#39;ve compared the Actual versus Allocated values by Exec Org Detail for Jefferson House Building.&quot;
+            &quot;textMarkdown&quot;: &quot;I&#39;ve compared the Vacant versus Allocated values by Business Unit for Jefferson House.&quot;
           }
         },
         {
@@ -23,19 +23,19 @@
             &quot;tableHeader&quot;: {
               &quot;rows&quot;: [
                 { &quot;children&quot;: &quot;Business Unit&quot;, &quot;type&quot;: &quot;string&quot; },
-                { &quot;children&quot;: &quot;Vacancy Cost ($)&quot;, &quot;type&quot;: &quot;number&quot; },
-                { &quot;children&quot;: &quot;Allocated Cost ($)&quot;, &quot;type&quot;: &quot;number&quot; },
-                { &quot;children&quot;: &quot;Vacant Cost %&quot;, &quot;type&quot;: &quot;number&quot; }
+                { &quot;children&quot;: &quot;Vacancy Cost ($)&quot;, &quot;type&quot;: &quot;string&quot; },
+                { &quot;children&quot;: &quot;Allocated Cost ($)&quot;, &quot;type&quot;: &quot;string&quot; },
+                { &quot;children&quot;: &quot;Vacant Cost %&quot;, &quot;type&quot;: &quot;string&quot; }
               ]
             },
             &quot;tableBody&quot;: {
               &quot;rows&quot;: [
-                { &quot;children&quot;: [&quot;Engineering&quot;, &quot;30831.90&quot;, &quot;20915.20&quot;, &quot;59.6&quot;] },
-                { &quot;children&quot;: [&quot;Operations&quot;, &quot;31812.51&quot;, &quot;46414.37&quot;, &quot;40.7&quot;] },
-                { &quot;children&quot;: [&quot;Travel&quot;, &quot;72618.88&quot;, &quot;120546.64&quot;, &quot;37.6&quot;] },
-                { &quot;children&quot;: [&quot;Utilities&quot;, &quot;35523.11&quot;, &quot;89817.82&quot;, &quot;28.3&quot;] },
-                { &quot;children&quot;: [&quot;Human Resources&quot;, &quot;15553.77&quot;, &quot;42172.88&quot;, &quot;26.9&quot;] },
-                { &quot;children&quot;: [&quot;Finance&quot;, &quot;15219.98&quot;, &quot;106906.88&quot;, &quot;12.5&quot;] }
+                { &quot;children&quot;: [&quot;Engineering&quot;, &quot;$30,831.90&quot;, &quot;$20,915.20&quot;, &quot;59.6%&quot;] },
+                { &quot;children&quot;: [&quot;Operations&quot;, &quot;$31,812.51&quot;, &quot;$46,414.37&quot;, &quot;40.7%&quot;] },
+                { &quot;children&quot;: [&quot;Travel&quot;, &quot;$72,618.88&quot;, &quot;$120,546.64&quot;, &quot;37.6%&quot;] },
+                { &quot;children&quot;: [&quot;Utilities&quot;, &quot;$35,523.11&quot;, &quot;$89,817.82&quot;, &quot;28.3%&quot;] },
+                { &quot;children&quot;: [&quot;Human Resources&quot;, &quot;$15,553.77&quot;, &quot;$42,172.88&quot;, &quot;26.9%&quot;] },
+                { &quot;children&quot;: [&quot;Finance&quot;, &quot;$15,219.98&quot;, &quot;$106,906.88&quot;, &quot;12.5%&quot;] }
               ]
             }
           }
@@ -46,102 +46,61 @@
             &quot;isFoldable&quot;: false,
             &quot;sections&quot;: [
               {
-                &quot;value&quot;: &quot;section_red_flags&quot;,
-                &quot;trigger&quot;: &quot;Red Flags&quot;,
-                &quot;content&quot;: [
-                  {
-                    &quot;component&quot;: &quot;TagBlock&quot;,
-                    &quot;props&quot;: {
-                      &quot;children&quot;: [
-                        { &quot;text&quot;: &quot;Attention&quot;, &quot;iconName&quot;: &quot;alert-triangle&quot;, &quot;iconCategory&quot;: &quot;notifications&quot; }
-                      ]
-                    }
-                  },
-                  {
-                    &quot;component&quot;: &quot;List&quot;,
-                    &quot;props&quot;: {
-                      &quot;heading&quot;: &quot;Red Flags&quot;,
-                      &quot;variant&quot;: &quot;icon&quot;,
-                      &quot;items&quot;: [
-                        {
-                          &quot;title&quot;: &quot;Engineering 60% owned space is not being utilized.&quot;,
-                          &quot;iconName&quot;: &quot;x-circle&quot;,
-                          &quot;iconCategory&quot;: &quot;notifications&quot;
-                        },
-                        {
-                          &quot;title&quot;: &quot;Travel $72,618.88 is paying for vacant space, this is more than double of any other Business Unit in the building.&quot;,
-                          &quot;iconName&quot;: &quot;x-circle&quot;,
-                          &quot;iconCategory&quot;: &quot;notifications&quot;
-                        }
-                      ]
-                    }
-                  },
-                  {
-                    &quot;component&quot;: &quot;CalloutV2&quot;,
-                    &quot;props&quot;: {
-                      &quot;variant&quot;: &quot;danger&quot;,
-                      &quot;title&quot;: &quot;Red Flags&quot;,
-                      &quot;description&quot;: &quot;- Engineering 60% owned space is not being utilized.\n- Travel $72,618.88 is paying for vacant space, this is more than double of any other Business Unit in the building.&quot;
-                    }
-                  }
-                ]
-              },
-              {
-                &quot;value&quot;: &quot;section_green_flag&quot;,
-                &quot;trigger&quot;: &quot;Green Flag&quot;,
-                &quot;content&quot;: [
-                  {
-                    &quot;component&quot;: &quot;TagBlock&quot;,
-                    &quot;props&quot;: {
-                      &quot;children&quot;: [
-                        { &quot;text&quot;: &quot;Positive&quot;, &quot;iconName&quot;: &quot;check-circle&quot;, &quot;iconCategory&quot;: &quot;notifications&quot; }
-                      ]
-                    }
-                  },
-                  {
-                    &quot;component&quot;: &quot;List&quot;,
-                    &quot;props&quot;: {
-                      &quot;heading&quot;: &quot;Green Flag&quot;,
-                      &quot;variant&quot;: &quot;icon&quot;,
-                      &quot;items&quot;: [
-                        {
-                          &quot;title&quot;: &quot;Finance has the lowest cost as well as the lowest Vacant Cost %. &quot;,
-                          &quot;iconName&quot;: &quot;check-circle&quot;,
-                          &quot;iconCategory&quot;: &quot;notifications&quot;
-                        }
-                      ]
-                    }
-                  },
-                  {
-                    &quot;component&quot;: &quot;CalloutV2&quot;,
-                    &quot;props&quot;: {
-                      &quot;variant&quot;: &quot;success&quot;,
-                      &quot;title&quot;: &quot;Green Flag&quot;,
-                      &quot;description&quot;: &quot;Finance has the lowest cost as well as the lowest Vacant Cost %.&quot;
-                    }
-                  }
-                ]
-              },
-              {
-                &quot;value&quot;: &quot;section_summary&quot;,
-                &quot;trigger&quot;: &quot;Summary&quot;,
+                &quot;value&quot;: &quot;section1&quot;,
+                &quot;trigger&quot;: &quot;1. Engineering is the clear outlier&quot;,
                 &quot;content&quot;: [
                   {
                     &quot;component&quot;: &quot;TextContent&quot;,
                     &quot;props&quot;: {
-                      &quot;textMarkdown&quot;: &quot;- The average alignment across Jefferson House Building is 89%.\n- WCX is the only significant outlier, with 32% of employees occupying workspace allocated to another Exec Org Detail.\n- All other organisations demonstrate alignment of 89% or higher, suggesting workspace allocation is generally consistent with organisational ownership.&quot;
+                      &quot;textMarkdown&quot;: &quot;Engineering has the highest vacancy rate at 59.6%, meaning almost 60 cents of every dollar of Engineering budget is vacant.\n\nWhat&#39;s interesting is that although its vacancy cost ($30.8k) is only the third highest, its allocated budget is relatively small ($20.9k), making the vacancy proportion extremely high.\n\nThis suggests:\n- significant unfilled positions,\n- delayed recruitment,\n- or a department that&#39;s operating well below planned staffing.&quot;
                     }
                   }
                 ]
               },
               {
-                &quot;value&quot;: &quot;section_recommendations&quot;,
+                &quot;value&quot;: &quot;section2&quot;,
+                &quot;trigger&quot;: &quot;2. Travel has the largest financial impact&quot;,
+                &quot;content&quot;: [
+                  {
+                    &quot;component&quot;: &quot;TextContent&quot;,
+                    &quot;props&quot;: {
+                      &quot;textMarkdown&quot;: &quot;Travel has:\n- the highest Vacancy Cost ($72.6k)\n- the highest Allocated Cost ($120.5k)\n\nAlthough its vacancy percentage (37.6%) is lower than Engineering and Operations, it represents the largest absolute value of vacant budget, so reducing vacancies here would likely have the biggest financial impact.&quot;
+                    }
+                  }
+                ]
+              },
+              {
+                &quot;value&quot;: &quot;section3&quot;,
+                &quot;trigger&quot;: &quot;3. Operations is also relatively high&quot;,
+                &quot;content&quot;: [
+                  {
+                    &quot;component&quot;: &quot;TextContent&quot;,
+                    &quot;props&quot;: {
+                      &quot;textMarkdown&quot;: &quot;Operations has:\n- Vacancy Cost: $31.8k\n- Vacancy %: 40.7%\n\nAnything above about 40% generally warrants investigation, particularly if vacancies are affecting service delivery.&quot;
+                    }
+                  }
+                ]
+              },
+              {
+                &quot;value&quot;: &quot;section4&quot;,
+                &quot;trigger&quot;: &quot;4. Finance appears well staffed&quot;,
+                &quot;content&quot;: [
+                  {
+                    &quot;component&quot;: &quot;TextContent&quot;,
+                    &quot;props&quot;: {
+                      &quot;textMarkdown&quot;: &quot;Finance has:\n- lowest vacancy percentage (12.5%)\n- one of the largest allocated costs ($106.9k)\n\nThis suggests staffing is relatively close to plan.&quot;
+                    }
+                  }
+                ]
+              },
+              {
+                &quot;value&quot;: &quot;section5&quot;,
                 &quot;trigger&quot;: &quot;Recommendations&quot;,
                 &quot;content&quot;: [
                   {
                     &quot;component&quot;: &quot;TextContent&quot;,
                     &quot;props&quot;: {
-                      &quot;textMarkdown&quot;: &quot;- Review workspace assignments for WCX to determine whether the misalignment is intentional (for example, project-based seating or temporary moves) or whether workspace should be reallocated.&quot;
+                      &quot;textMarkdown&quot;: &quot;- Review workspace assignments for Engineering, Travel and Operations to determine whether the vacancy is intentional (for example, project-based seating or temporary moves) or whether workspace should be reallocated.&quot;
                     }
                   }
                 ]

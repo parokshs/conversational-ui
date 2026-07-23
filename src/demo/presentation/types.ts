@@ -15,6 +15,12 @@ export type PresentationBullets = {
   items: string[];
 };
 
+export type PresentationImage = {
+  url: string;
+  alt?: string;
+  caption?: string;
+};
+
 export type PresentationSection = {
   id: string;
   title: string;
@@ -22,6 +28,7 @@ export type PresentationSection = {
   tables?: PresentationTable[];
   callouts?: PresentationCallout[];
   bullets?: PresentationBullets[];
+  images?: PresentationImage[];
 };
 
 export type DemoPresentationBundle = {

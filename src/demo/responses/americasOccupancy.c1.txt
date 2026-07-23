@@ -7,149 +7,44 @@
         {
           &quot;component&quot;: &quot;Header&quot;,
           &quot;props&quot;: {
-            &quot;title&quot;: &quot;Americas Portfolio Analytics&quot;,
-            &quot;subtitle&quot;: &quot;Executive summary and occupancy insights&quot;
+            &quot;title&quot;: &quot;Portfolio Analytics — Americas&quot;
           }
         },
         {
           &quot;component&quot;: &quot;TextContent&quot;,
           &quot;props&quot;: {
-            &quot;textMarkdown&quot;: &quot;I&#39;ve analysed the Americas portfolio and found 10 buildings.&quot;
+            &quot;textMarkdown&quot;: &quot;I&#39;ve analysed the Americas portfolio. Here are the top 10 buildings with the highest Vacant percentage figures.&quot;
           }
         },
         {
-          &quot;component&quot;: &quot;MiniCardBlock&quot;,
+          &quot;component&quot;: &quot;Table&quot;,
           &quot;props&quot;: {
-            &quot;children&quot;: [
-              {
-                &quot;component&quot;: &quot;MiniCard&quot;,
-                &quot;props&quot;: {
-                  &quot;lhs&quot;: {
-                    &quot;component&quot;: &quot;DataTile&quot;,
-                    &quot;props&quot;: {
-                      &quot;amount&quot;: &quot;4,099&quot;,
-                      &quot;description&quot;: &quot;Total Employees&quot;,
-                      &quot;child&quot;: {
-                        &quot;component&quot;: &quot;Icon&quot;,
-                        &quot;props&quot;: {
-                          &quot;name&quot;: &quot;users&quot;,
-                          &quot;category&quot;: &quot;people&quot;
-                        }
-                      }
-                    }
-                  },
-                  &quot;rhs&quot;: {
-                    &quot;component&quot;: &quot;MiniChart&quot;,
-                    &quot;props&quot;: {
-                      &quot;type&quot;: &quot;bar&quot;,
-                      &quot;data&quot;: [839, 723, 333, 320, 306, 294, 292, 237, 232, 223]
-                    }
-                  }
-                }
-              },
-              {
-                &quot;component&quot;: &quot;MiniCard&quot;,
-                &quot;props&quot;: {
-                  &quot;lhs&quot;: {
-                    &quot;component&quot;: &quot;DataTile&quot;,
-                    &quot;props&quot;: {
-                      &quot;amount&quot;: &quot;3,012&quot;,
-                      &quot;description&quot;: &quot;Total Seats&quot;,
-                      &quot;child&quot;: {
-                        &quot;component&quot;: &quot;Icon&quot;,
-                        &quot;props&quot;: {
-                          &quot;name&quot;: &quot;chair&quot;,
-                          &quot;category&quot;: &quot;home&quot;
-                        }
-                      }
-                    }
-                  },
-                  &quot;rhs&quot;: {
-                    &quot;component&quot;: &quot;MiniChart&quot;,
-                    &quot;props&quot;: {
-                      &quot;type&quot;: &quot;bar&quot;,
-                      &quot;data&quot;: [664, 510, 250, 250, 250, 250, 245, 245, 174, 174]
-                    }
-                  }
-                }
-              },
-              {
-                &quot;component&quot;: &quot;MiniCard&quot;,
-                &quot;props&quot;: {
-                  &quot;lhs&quot;: {
-                    &quot;component&quot;: &quot;DataTile&quot;,
-                    &quot;props&quot;: {
-                      &quot;amount&quot;: &quot;11.0%&quot;,
-                      &quot;description&quot;: &quot;Avg. Vacant %&quot;,
-                      &quot;child&quot;: {
-                        &quot;component&quot;: &quot;Icon&quot;,
-                        &quot;props&quot;: {
-                          &quot;name&quot;: &quot;percent&quot;,
-                          &quot;category&quot;: &quot;math&quot;
-                        }
-                      }
-                    }
-                  },
-                  &quot;rhs&quot;: {
-                    &quot;component&quot;: &quot;MiniChart&quot;,
-                    &quot;props&quot;: {
-                      &quot;type&quot;: &quot;line&quot;,
-                      &quot;data&quot;: [30.0, 18.4, 18.2, 9.8, 8.4, 7.3, 3.3, 2.9, 2.4, 1.2]
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        {
-          &quot;component&quot;: &quot;SectionBlock&quot;,
-          &quot;props&quot;: {
-            &quot;isFoldable&quot;: false,
-            &quot;sections&quot;: [
-              {
-                &quot;value&quot;: &quot;section1&quot;,
-                &quot;trigger&quot;: &quot;Portfolio Details&quot;,
-                &quot;content&quot;: [
-                  {
-                    &quot;component&quot;: &quot;Table&quot;,
-                    &quot;props&quot;: {
-                      &quot;tableHeader&quot;: {
-                        &quot;rows&quot;: [
-                          { &quot;children&quot;: &quot;Building&quot;, &quot;type&quot;: &quot;string&quot; },
-                          { &quot;children&quot;: &quot;Employees&quot;, &quot;type&quot;: &quot;number&quot; },
-                          { &quot;children&quot;: &quot;Seats&quot;, &quot;type&quot;: &quot;number&quot; },
-                          { &quot;children&quot;: &quot;Vacant %&quot;, &quot;type&quot;: &quot;number&quot; }
-                        ]
-                      },
-                      &quot;tableBody&quot;: {
-                        &quot;rows&quot;: [
-                          { &quot;children&quot;: [&quot;Jefferson House&quot;, &quot;232&quot;, &quot;250&quot;, &quot;30&quot;] },
-                          { &quot;children&quot;: [&quot;Murindo&quot;, &quot;294&quot;, &quot;250&quot;, &quot;18.4&quot;] },
-                          { &quot;children&quot;: [&quot;Eastgate Tower&quot;, &quot;839&quot;, &quot;664&quot;, &quot;18.2&quot;] },
-                          { &quot;children&quot;: [&quot;Harrison Block&quot;, &quot;320&quot;, &quot;174&quot;, &quot;9.8&quot;] },
-                          { &quot;children&quot;: [&quot;Steveston&quot;, &quot;237&quot;, &quot;250&quot;, &quot;8.4&quot;] },
-                          { &quot;children&quot;: [&quot;Maxville Place&quot;, &quot;723&quot;, &quot;510&quot;, &quot;7.3&quot;] },
-                          { &quot;children&quot;: [&quot;San Justo Building&quot;, &quot;292&quot;, &quot;245&quot;, &quot;3.3&quot;] },
-                          { &quot;children&quot;: [&quot;Melia House&quot;, &quot;223&quot;, &quot;174&quot;, &quot;2.9&quot;] },
-                          { &quot;children&quot;: [&quot;Fisher&quot;, &quot;333&quot;, &quot;245&quot;, &quot;2.4&quot;] },
-                          { &quot;children&quot;: [&quot;Pelican House&quot;, &quot;306&quot;, &quot;250&quot;, &quot;1.2&quot;] }
-                        ]
-                      }
-                    }
-                  },
-                  {
-                    &quot;component&quot;: &quot;TextContent&quot;,
-                    &quot;props&quot;: {
-                      &quot;textMarkdown&quot;: &quot;Tip: Sort by Vacant % to quickly spot optimization opportunities.&quot;
-                    }
-                  }
-                ]
-              }
-            ]
+            &quot;tableHeader&quot;: {
+              &quot;rows&quot;: [
+                { &quot;children&quot;: &quot;Building&quot;, &quot;type&quot;: &quot;string&quot; },
+                { &quot;children&quot;: &quot;Employees&quot;, &quot;type&quot;: &quot;number&quot; },
+                { &quot;children&quot;: &quot;Seats&quot;, &quot;type&quot;: &quot;number&quot; },
+                { &quot;children&quot;: &quot;Vacant %&quot;, &quot;type&quot;: &quot;number&quot; }
+              ]
+            },
+            &quot;tableBody&quot;: {
+              &quot;rows&quot;: [
+                { &quot;children&quot;: [&quot;Jefferson House&quot;, &quot;232&quot;, &quot;250&quot;, &quot;30&quot;] },
+                { &quot;children&quot;: [&quot;Murindo&quot;, &quot;294&quot;, &quot;250&quot;, &quot;18.4&quot;] },
+                { &quot;children&quot;: [&quot;Eastgate Tower&quot;, &quot;839&quot;, &quot;664&quot;, &quot;18.2&quot;] },
+                { &quot;children&quot;: [&quot;Harrison Block&quot;, &quot;320&quot;, &quot;174&quot;, &quot;9.8&quot;] },
+                { &quot;children&quot;: [&quot;Steveston&quot;, &quot;237&quot;, &quot;250&quot;, &quot;8.4&quot;] },
+                { &quot;children&quot;: [&quot;Maxville Place&quot;, &quot;723&quot;, &quot;510&quot;, &quot;7.3&quot;] },
+                { &quot;children&quot;: [&quot;San Justo Building&quot;, &quot;292&quot;, &quot;245&quot;, &quot;3.3&quot;] },
+                { &quot;children&quot;: [&quot;Melia House&quot;, &quot;223&quot;, &quot;174&quot;, &quot;2.9&quot;] },
+                { &quot;children&quot;: [&quot;Fisher&quot;, &quot;333&quot;, &quot;245&quot;, &quot;2.4&quot;] },
+                { &quot;children&quot;: [&quot;Pelican House&quot;, &quot;306&quot;, &quot;250&quot;, &quot;1.2&quot;] }
+              ]
+            }
           }
         }
-      ]
+      ],
+      &quot;sources&quot;: []
     }
   },
   &quot;error&quot;: null

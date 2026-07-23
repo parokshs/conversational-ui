@@ -1,0 +1,80 @@
+<content thesys="true">
+{
+  &quot;component&quot;: {
+    &quot;component&quot;: &quot;Card&quot;,
+    &quot;props&quot;: {
+      &quot;children&quot;: [
+        {
+          &quot;component&quot;: &quot;Header&quot;,
+          &quot;props&quot;: {
+            &quot;title&quot;: &quot;Floor 07 — Workspace Allocation&quot;,
+            &quot;subtitle&quot;: &quot;Executive overview&quot;
+          }
+        },
+        {
+          &quot;component&quot;: &quot;TextContent&quot;,
+          &quot;props&quot;: {
+            &quot;textMarkdown&quot;: &quot;Floor 07 workspace allocation by Business Unit, with occupied and vacant workstation counts in the legend.&quot;
+          }
+        },
+        {
+          &quot;component&quot;: &quot;Image&quot;,
+          &quot;props&quot;: {
+            &quot;src&quot;: &quot;https://res.cloudinary.com/zdhgzz00/image/upload/v1784785651/floor-plan_ddlqm6.png&quot;,
+            &quot;alt&quot;: &quot;Floor 07 — Business Unit allocation with occupied and vacant workstation legend&quot;,
+            &quot;aspectRatio&quot;: &quot;16:9&quot;
+          }
+        },
+        {
+          &quot;component&quot;: &quot;TextContent&quot;,
+          &quot;props&quot;: {
+            &quot;textMarkdown&quot;: &quot;_Floor 07 — Business Unit allocation with occupied and vacant workstation legend_&quot;
+          }
+        },
+        {
+          &quot;component&quot;: &quot;SectionBlock&quot;,
+          &quot;props&quot;: {
+            &quot;isFoldable&quot;: false,
+            &quot;sections&quot;: [
+              {
+                &quot;value&quot;: &quot;section1&quot;,
+                &quot;trigger&quot;: &quot;Legend&quot;,
+                &quot;content&quot;: [
+                  {
+                    &quot;component&quot;: &quot;List&quot;,
+                    &quot;props&quot;: {
+                      &quot;heading&quot;: &quot;Legend&quot;,
+                      &quot;variant&quot;: &quot;icon&quot;,
+                      &quot;items&quot;: [
+                        {
+                          &quot;title&quot;: &quot;Occupied Workstations&quot;,
+                          &quot;subtitle&quot;: &quot;Currently assigned seats&quot;,
+                          &quot;iconName&quot;: &quot;circle-check&quot;,
+                          &quot;iconCategory&quot;: &quot;shapes&quot;
+                        },
+                        {
+                          &quot;title&quot;: &quot;Vacant Workstations&quot;,
+                          &quot;subtitle&quot;: &quot;Available for allocation&quot;,
+                          &quot;iconName&quot;: &quot;circle&quot;,
+                          &quot;iconCategory&quot;: &quot;shapes&quot;
+                        },
+                        {
+                          &quot;title&quot;: &quot;Business Unit Zones&quot;,
+                          &quot;subtitle&quot;: &quot;Color-coded areas by BU&quot;,
+                          &quot;iconName&quot;: &quot;layout-grid&quot;,
+                          &quot;iconCategory&quot;: &quot;layout&quot;
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  &quot;error&quot;: null
+}
+</content>

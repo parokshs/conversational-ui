@@ -13,6 +13,7 @@ SLIDE STRUCTURE:
 - Render every table in each section as a readable table component with the section heading above it.
 - Render callouts with tone-appropriate styling: red for Red Flags, green for Green Flag.
 - Render bullet sections as callout cards, not plain paragraph text.
+- Render section images when present, using a large readable image component with the provided caption.
 - End with recommendations when present in the final section.
 
 LAYOUT:

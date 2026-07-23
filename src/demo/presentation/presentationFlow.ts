@@ -20,7 +20,10 @@ export function isPresentationExportRequest(question: string) {
     /create\s+(a\s+)?presentation/.test(q) ||
     /generate\s+(a\s+)?(presentation|slides|deck)/.test(q) ||
     /make\s+(a\s+)?(presentation|slides|deck)/.test(q) ||
-    /build\s+(a\s+)?(presentation|slides|deck)/.test(q)
+    /build\s+(a\s+)?(presentation|slides|deck)/.test(q) ||
+    /prepare\s+(a\s+)?presentation/.test(q) ||
+    /presentation\s+.*executives/.test(q) ||
+    /share\s+with\s+(the\s+)?executives/.test(q)
   );
 }
 

@@ -19,4 +19,4 @@ export const americasBuildings: BuildingOccupancy[] = [
 ];
 
 export const americasIntro =
-  "I've analysed the Americas portfolio and found 10 buildings.";
+  "I've analysed the Americas portfolio. Here are the top 10 buildings with the highest Vacant percentage figures.";

@@ -1,10 +1,8 @@
 import {
   jeffersonBusinessUnits,
-  jeffersonGreenFlags,
   jeffersonIntro,
+  jeffersonObservations,
   jeffersonRecommendations,
-  jeffersonRedFlags,
-  jeffersonSummary,
 } from "../../data/jeffersonHouseCosts";
 import type { PresentationSection } from "../../presentation/types";
 import type { DemoFlowDefinition } from "../types";
@@ -15,6 +13,27 @@ const formatCurrency = (value: number) =>
     maximumFractionDigits: 2,
   });
 
+function formatObservation(
+  observation: (typeof jeffersonObservations)[number],
+  index: number
+): string {
+  const lines = [`${index + 1}. ${observation.title}`];
+
+  for (const paragraph of observation.paragraphs) {
+    lines.push(paragraph);
+  }
+
+  if (observation.bullets?.length) {
+    lines.push(...observation.bullets.map((item) => `- ${item}`));
+  }
+
+  if (observation.closingParagraphs?.length) {
+    lines.push(...observation.closingParagraphs);
+  }
+
+  return lines.join("\n");
+}
+
 export const jeffersonCostsFlow: DemoFlowDefinition = {
   id: "jefferson-costs",
   keywords: [
@@ -23,8 +42,8 @@ export const jeffersonCostsFlow: DemoFlowDefinition = {
     "vacant cost",
     "allocated cost",
     "business unit",
-    "exec org",
     "vacancy cost",
+    "vacant vs allocated",
   ],
   responseFile: "jeffersonCosts.c1.txt",
   thinking: {
@@ -40,6 +59,10 @@ export const jeffersonCostsFlow: DemoFlowDefinition = {
       )
       .join("\n");
 
+    const analysis = jeffersonObservations
+      .map((observation, index) => formatObservation(observation, index))
+      .join("\n\n");
+
     return `Create a professional building cost analysis response.
 
 Start with this exact sentence:
@@ -50,21 +73,13 @@ Then render a data table with exactly these columns: Business Unit, Vacancy Cost
 Use exactly this data:
 ${rows}
 
-After the table, add clearly labeled sections:
+After the table, add clearly numbered analysis sections using this exact content:
+${analysis}
 
-Red Flags:
-${jeffersonRedFlags.map((item) => `- ${item}`).join("\n")}
-
-Green Flag:
-${jeffersonGreenFlags.map((item) => `- ${item}`).join("\n")}
-
-Summary:
-${jeffersonSummary.map((item) => `- ${item}`).join("\n")}
-
-Recommendations:
+End with a Recommendations section:
 ${jeffersonRecommendations.map((item) => `- ${item}`).join("\n")}
 
-Do not mention that this is a demo or staged. Use red styling for red flags and green styling for green flags where appropriate.`;
+Do not mention that this is a demo or staged. Keep the layout clean and executive-ready.`;
   },
   buildPresentationSection(): PresentationSection {
     return {
@@ -73,7 +88,7 @@ Do not mention that this is a demo or staged. Use red styling for red flags and 
       intro: jeffersonIntro,
       tables: [
         {
-          heading: "Business Unit Costs",
+          heading: "Vacant vs Allocated by Business Unit",
           columns: [
             "Business Unit",
             "Vacancy Cost ($)",
@@ -88,23 +103,15 @@ Do not mention that this is a demo or staged. Use red styling for red flags and 
           ]),
         },
       ],
-      callouts: [
-        {
-          label: "Red Flags",
-          tone: "red",
-          items: jeffersonRedFlags,
-        },
-        {
-          label: "Green Flag",
-          tone: "green",
-          items: jeffersonGreenFlags,
-        },
-      ],
       bullets: [
-        {
-          label: "Summary",
-          items: jeffersonSummary,
-        },
+        ...jeffersonObservations.map((observation) => ({
+          label: observation.title,
+          items: [
+            ...observation.paragraphs,
+            ...(observation.bullets ?? []),
+            ...(observation.closingParagraphs ?? []),
+          ],
+        })),
         {
           label: "Recommendations",
           items: jeffersonRecommendations,

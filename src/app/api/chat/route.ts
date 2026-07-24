@@ -10,6 +10,7 @@ import {
   handlePresentationExport,
   isPresentationExportRequest,
 } from "../../../demo/presentation/presentationFlow";
+import { buildSimpleTextCard } from "../../../demo/format/buildSimpleTextCard";
 
 function getPromptText(prompt: DBMessage): string {
   if (typeof prompt.content === "string") {
@@ -71,8 +72,8 @@ async function handleUnmatchedDemoPrompt(
 ) {
   const c1Response = makeC1Response();
   const ready = (async () => {
-    await c1Response.writeCustomMarkdown(
-      "Sorry, I couldn't process that. Please try again."
+    await c1Response.writeContent(
+      buildSimpleTextCard("Sorry, I couldn't process that. Please try again.")
     );
     await c1Response.end();
   })();

@@ -7,6 +7,7 @@ import {
   buildArtifactUserPrompt,
 } from "./artifactPrompt";
 import { buildDemoPresentationBundle } from "./buildBundle";
+import { buildSimpleTextCard } from "../format/buildSimpleTextCard";
 import { getMatchedFlowIds } from "../../app/api/chat/messageStore";
 
 function createArtifactId() {
@@ -63,8 +64,10 @@ export async function handlePresentationExport({
   if (!bundle) {
     const c1Response = makeC1Response();
     const ready = (async () => {
-      await c1Response.writeCustomMarkdown(
-        "Ask about portfolio occupancy or building costs first, then request a presentation export."
+      await c1Response.writeContent(
+        buildSimpleTextCard(
+          "Ask about portfolio occupancy or building costs first, then request a presentation export."
+        )
       );
       await c1Response.end();
     })();

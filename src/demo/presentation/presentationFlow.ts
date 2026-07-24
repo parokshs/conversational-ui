@@ -9,26 +9,41 @@ import {
 import { buildDemoPresentationBundle } from "./buildBundle";
 import { buildSimpleTextCard } from "../format/buildSimpleTextCard";
 import { getMatchedFlowIds } from "../../app/api/chat/messageStore";
+import { logDemoRouting } from "../logDemoRouting";
+
+const presentationExportPatterns: Array<{ name: string; pattern: RegExp }> = [
+  { name: "export_presentation", pattern: /export\s+(a\s+)?presentation/ },
+  { name: "export_as_presentation_or_pptx", pattern: /export\s+(as\s+)?(a\s+)?(presentation|pptx?)/ },
+  { name: "create_presentation_or_pptx", pattern: /create\s+(a\s+)?(presentation|pptx?)/ },
+  { name: "generate_presentation_or_pptx", pattern: /generate\s+(a\s+)?(presentation|slides|deck|pptx?)/ },
+  { name: "make_presentation_or_pptx", pattern: /make\s+(a\s+)?(presentation|slides|deck|pptx?)/ },
+  { name: "build_presentation_or_pptx", pattern: /build\s+(a\s+)?(presentation|slides|deck|pptx?)/ },
+  { name: "prepare_presentation_or_pptx", pattern: /prepare\s+(a\s+)?(presentation|pptx?)/ },
+  { name: "presentation_for_executives", pattern: /presentation\s+.*executives/ },
+  { name: "share_with_executives", pattern: /share\s+with\s+(the\s+)?executives/ },
+  { name: "as_pptx", pattern: /\bas\s+pptx?\b/ },
+];
 
 function createArtifactId() {
   return crypto.randomUUID().replace(/-/g, "").slice(0, 10);
 }
 
-export function isPresentationExportRequest(question: string) {
-  const q = question.toLowerCase();
+export function evaluatePresentationExportRequest(question: string) {
+  const normalizedQuestion = question.toLowerCase();
+  const matchedPatterns = presentationExportPatterns
+    .filter(({ pattern }) => pattern.test(normalizedQuestion))
+    .map(({ name }) => name);
 
-  return (
-    /export\s+(a\s+)?presentation/.test(q) ||
-    /export\s+(as\s+)?(a\s+)?(presentation|pptx?)/.test(q) ||
-    /create\s+(a\s+)?(presentation|pptx?)/.test(q) ||
-    /generate\s+(a\s+)?(presentation|slides|deck|pptx?)/.test(q) ||
-    /make\s+(a\s+)?(presentation|slides|deck|pptx?)/.test(q) ||
-    /build\s+(a\s+)?(presentation|slides|deck|pptx?)/.test(q) ||
-    /prepare\s+(a\s+)?(presentation|pptx?)/.test(q) ||
-    /presentation\s+.*executives/.test(q) ||
-    /share\s+with\s+(the\s+)?executives/.test(q) ||
-    /\bas\s+pptx?\b/.test(q)
-  );
+  return {
+    rawQuestion: question,
+    normalizedQuestion,
+    matched: matchedPatterns.length > 0,
+    matchedPatterns,
+  };
+}
+
+export function isPresentationExportRequest(question: string) {
+  return evaluatePresentationExportRequest(question).matched;
 }
 
 function streamHeaders() {
@@ -60,6 +75,13 @@ export async function handlePresentationExport({
 }) {
   const flowIds = getMatchedFlowIds(messageStore.messageList);
   const bundle = buildDemoPresentationBundle(flowIds);
+
+  logDemoRouting("presentation_export", {
+    question,
+    matchedFlowIds: flowIds,
+    sectionCount: bundle?.sections.length ?? 0,
+    outcome: bundle ? "artifact_stream" : "missing_prior_steps",
+  });
 
   if (!bundle) {
     const c1Response = makeC1Response();

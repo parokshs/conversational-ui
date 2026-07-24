@@ -1,5 +1,21 @@
 import type { DemoFlowDefinition } from "./types";
 
+export const STAGED_FLOW_MATCH_THRESHOLD = 2;
+
+export type StagedFlowScore = {
+  flowId: string;
+  score: number;
+};
+
+export type StagedFlowMatchEvaluation = {
+  rawPrompt: string;
+  normalizedPrompt: string;
+  threshold: number;
+  flowScores: StagedFlowScore[];
+  matchedFlow: DemoFlowDefinition | null;
+  reason: string;
+};
+
 function normalizePrompt(prompt: string): string {
   return prompt
     .toLowerCase()
@@ -35,25 +51,58 @@ function scoreFlow(normalizedPrompt: string, flow: DemoFlowDefinition): number {
   return score;
 }
 
+function describeMatchReason(
+  normalizedPrompt: string,
+  bestScore: number,
+  bestFlow: DemoFlowDefinition | null
+): string {
+  if (!normalizedPrompt) {
+    return "Prompt was empty after normalization.";
+  }
+
+  if (!bestFlow) {
+    return "No flow received a score above zero.";
+  }
+
+  if (bestScore < STAGED_FLOW_MATCH_THRESHOLD) {
+    return `Best flow "${bestFlow.id}" scored ${bestScore}, below threshold ${STAGED_FLOW_MATCH_THRESHOLD}.`;
+  }
+
+  return `Matched flow "${bestFlow.id}" with score ${bestScore} (threshold ${STAGED_FLOW_MATCH_THRESHOLD}).`;
+}
+
+export function evaluateStagedFlowMatch(
+  prompt: string,
+  flows: DemoFlowDefinition[]
+): StagedFlowMatchEvaluation {
+  const normalizedPrompt = normalizePrompt(prompt);
+  const flowScores = flows
+    .map((flow) => ({
+      flowId: flow.id,
+      score: scoreFlow(normalizedPrompt, flow),
+    }))
+    .sort((a, b) => b.score - a.score);
+
+  const bestScore = flowScores[0]?.score ?? 0;
+  const bestFlowId = flowScores[0]?.flowId;
+  const bestFlow =
+    bestScore >= STAGED_FLOW_MATCH_THRESHOLD
+      ? flows.find((flow) => flow.id === bestFlowId) ?? null
+      : null;
+
+  return {
+    rawPrompt: prompt,
+    normalizedPrompt,
+    threshold: STAGED_FLOW_MATCH_THRESHOLD,
+    flowScores,
+    matchedFlow: bestFlow,
+    reason: describeMatchReason(normalizedPrompt, bestScore, bestFlow),
+  };
+}
+
 export function matchStagedFlow(
   prompt: string,
   flows: DemoFlowDefinition[]
 ): DemoFlowDefinition | null {
-  const normalizedPrompt = normalizePrompt(prompt);
-  if (!normalizedPrompt) {
-    return null;
-  }
-
-  let bestFlow: DemoFlowDefinition | null = null;
-  let bestScore = 0;
-
-  for (const flow of flows) {
-    const score = scoreFlow(normalizedPrompt, flow);
-    if (score > bestScore) {
-      bestScore = score;
-      bestFlow = flow;
-    }
-  }
-
-  return bestScore >= 2 ? bestFlow : null;
+  return evaluateStagedFlowMatch(prompt, flows).matchedFlow;
 }

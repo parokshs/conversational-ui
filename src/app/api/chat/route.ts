@@ -4,13 +4,14 @@ import { transformStream } from "@crayonai/stream";
 import { makeC1Response } from "@thesysai/genui-sdk/server";
 import { DBMessage, getMessageStore } from "./messageStore";
 import { startStagedResponse, isDemoModeEnabled } from "../../../demo/flows/buildStagedResponse";
-import { matchStagedFlow } from "../../../demo/flows/matchPrompt";
+import { evaluateStagedFlowMatch } from "../../../demo/flows/matchPrompt";
 import { demoFlows } from "../../../demo/flows/registry";
 import {
+  evaluatePresentationExportRequest,
   handlePresentationExport,
-  isPresentationExportRequest,
 } from "../../../demo/presentation/presentationFlow";
 import { buildSimpleTextCard } from "../../../demo/format/buildSimpleTextCard";
+import { logDemoRouting } from "../../../demo/logDemoRouting";
 
 function getPromptText(prompt: DBMessage): string {
   if (typeof prompt.content === "string") {
@@ -46,7 +47,7 @@ function streamHeaders() {
 }
 
 async function handleStagedResponse(
-  flow: NonNullable<ReturnType<typeof matchStagedFlow>>,
+  flow: NonNullable<ReturnType<typeof evaluateStagedFlowMatch>["matchedFlow"]>,
   responseId: string,
   messageStore: ReturnType<typeof getMessageStore>
 ) {
@@ -102,22 +103,57 @@ export async function POST(req: NextRequest) {
   messageStore.addMessage(prompt);
   const userQuestion = getPromptText(prompt);
 
-  if (isDemoModeEnabled() && isPresentationExportRequest(userQuestion)) {
-    return handlePresentationExport({
-      question: userQuestion,
-      responseId,
-      messageStore,
-    });
-  }
+  logDemoRouting("chat_request", {
+    threadId,
+    responseId,
+    demoMode: isDemoModeEnabled(),
+    userQuestion,
+  });
 
   if (isDemoModeEnabled()) {
-    const matchedFlow = matchStagedFlow(userQuestion, demoFlows);
-    if (matchedFlow) {
-      return handleStagedResponse(matchedFlow, responseId, messageStore);
+    const presentationMatch = evaluatePresentationExportRequest(userQuestion);
+
+    logDemoRouting("presentation_export_check", {
+      threadId,
+      userQuestion,
+      matched: presentationMatch.matched,
+      matchedPatterns: presentationMatch.matchedPatterns,
+    });
+
+    if (presentationMatch.matched) {
+      return handlePresentationExport({
+        question: userQuestion,
+        responseId,
+        messageStore,
+      });
+    }
+
+    const stagedMatch = evaluateStagedFlowMatch(userQuestion, demoFlows);
+
+    logDemoRouting("staged_flow_match", {
+      threadId,
+      userQuestion,
+      normalizedPrompt: stagedMatch.normalizedPrompt,
+      threshold: stagedMatch.threshold,
+      flowScores: stagedMatch.flowScores,
+      matchedFlowId: stagedMatch.matchedFlow?.id ?? null,
+      responseFile: stagedMatch.matchedFlow?.responseFile ?? null,
+      reason: stagedMatch.reason,
+      outcome: stagedMatch.matchedFlow ? "staged_response" : "unmatched_prompt",
+    });
+
+    if (stagedMatch.matchedFlow) {
+      return handleStagedResponse(stagedMatch.matchedFlow, responseId, messageStore);
     }
 
     return handleUnmatchedDemoPrompt(responseId, messageStore);
   }
+
+  logDemoRouting("live_llm_fallback", {
+    threadId,
+    userQuestion,
+    reason: "DEMO_MODE is disabled.",
+  });
 
   const client = new OpenAI({
     baseURL: "https://api.thesys.dev/v1/embed/",

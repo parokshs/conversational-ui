@@ -65,6 +65,31 @@ async function handleStagedResponse(
   });
 }
 
+async function handleUnmatchedDemoPrompt(
+  responseId: string,
+  messageStore: ReturnType<typeof getMessageStore>
+) {
+  const c1Response = makeC1Response();
+  const ready = (async () => {
+    await c1Response.writeCustomMarkdown(
+      "Sorry, I couldn't process that. Please try again."
+    );
+    await c1Response.end();
+  })();
+
+  void ready.then(() => {
+    messageStore.addMessage({
+      role: "assistant",
+      content: c1Response.getAssistantMessage().content,
+      id: responseId,
+    });
+  });
+
+  return new NextResponse(c1Response.responseStream, {
+    headers: streamHeaders(),
+  });
+}
+
 export async function POST(req: NextRequest) {
   const { prompt, threadId, responseId } = (await req.json()) as {
     prompt: DBMessage;
@@ -89,6 +114,8 @@ export async function POST(req: NextRequest) {
     if (matchedFlow) {
       return handleStagedResponse(matchedFlow, responseId, messageStore);
     }
+
+    return handleUnmatchedDemoPrompt(responseId, messageStore);
   }
 
   const client = new OpenAI({

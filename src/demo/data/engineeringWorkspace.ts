@@ -73,7 +73,7 @@ export function getEngineeringCharts(): PresentationChart[] {
   return [
     {
       heading: "Vacant Workstations by Floor and Room Use",
-      chartType: "line",
+      chartType: "groupedBar",
       categories: engineeringAllocations.map(
         (row) => `Floor ${row.floor} • ${row.roomUse}`
       ),

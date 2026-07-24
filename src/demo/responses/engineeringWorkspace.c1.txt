@@ -81,10 +81,10 @@
                 },
                 &quot;content&quot;: [
                   {
-                    &quot;component&quot;: &quot;LineChartV2&quot;,
+                    &quot;component&quot;: &quot;BarChartV2&quot;,
                     &quot;props&quot;: {
+                      &quot;variant&quot;: &quot;grouped&quot;,
                       &quot;type&quot;: &quot;normal&quot;,
-                      &quot;variant&quot;: &quot;linear&quot;,
                       &quot;chartData&quot;: {
                         &quot;header&quot;: {
                           &quot;component&quot;: &quot;InlineHeader&quot;,

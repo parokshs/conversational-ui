@@ -3,18 +3,78 @@
   &quot;component&quot;: {
     &quot;component&quot;: &quot;Card&quot;,
     &quot;props&quot;: {
+      &quot;width&quot;: &quot;full&quot;,
       &quot;children&quot;: [
         {
           &quot;component&quot;: &quot;Header&quot;,
           &quot;props&quot;: {
-            &quot;title&quot;: &quot;Data Anomaly Report&quot;,
-            &quot;subtitle&quot;: &quot;Executive Summary&quot;
+            &quot;title&quot;: &quot;Proactive Insights&quot;,
+            &quot;subtitle&quot;: &quot;2 anomalies detected&quot;
           }
         },
         {
           &quot;component&quot;: &quot;TextContent&quot;,
           &quot;props&quot;: {
-            &quot;textMarkdown&quot;: &quot;Some anomalies have been found in the data&quot;
+            &quot;textMarkdown&quot;: &quot;Some anomalies have been found in the data. Review the highlighted findings below.&quot;
+          }
+        },
+        {
+          &quot;component&quot;: &quot;MiniCardBlock&quot;,
+          &quot;props&quot;: {
+            &quot;children&quot;: [
+              {
+                &quot;component&quot;: &quot;MiniCard&quot;,
+                &quot;props&quot;: {
+                  &quot;lhs&quot;: {
+                    &quot;component&quot;: &quot;ProfileTile&quot;,
+                    &quot;props&quot;: {
+                      &quot;title&quot;: &quot;Cost spike&quot;,
+                      &quot;label&quot;: &quot;Sanam Floor 07&quot;,
+                      &quot;child&quot;: {
+                        &quot;component&quot;: &quot;Icon&quot;,
+                        &quot;props&quot;: {
+                          &quot;name&quot;: &quot;trending-up&quot;,
+                          &quot;category&quot;: &quot;charts&quot;
+                        }
+                      }
+                    }
+                  },
+                  &quot;rhs&quot;: {
+                    &quot;component&quot;: &quot;Stats&quot;,
+                    &quot;props&quot;: {
+                      &quot;number&quot;: &quot;+79.7%&quot;,
+                      &quot;label&quot;: &quot;Cost per SQFT vs prior&quot;
+                    }
+                  }
+                }
+              },
+              {
+                &quot;component&quot;: &quot;MiniCard&quot;,
+                &quot;props&quot;: {
+                  &quot;lhs&quot;: {
+                    &quot;component&quot;: &quot;ProfileTile&quot;,
+                    &quot;props&quot;: {
+                      &quot;title&quot;: &quot;Occupancy mismatch&quot;,
+                      &quot;label&quot;: &quot;Boltro Road · 01A0705E&quot;,
+                      &quot;child&quot;: {
+                        &quot;component&quot;: &quot;Icon&quot;,
+                        &quot;props&quot;: {
+                          &quot;name&quot;: &quot;alert-triangle&quot;,
+                          &quot;category&quot;: &quot;notifications&quot;
+                        }
+                      }
+                    }
+                  },
+                  &quot;rhs&quot;: {
+                    &quot;component&quot;: &quot;Stats&quot;,
+                    &quot;props&quot;: {
+                      &quot;number&quot;: &quot;21:1&quot;,
+                      &quot;label&quot;: &quot;Employees per workstation&quot;
+                    }
+                  }
+                }
+              }
+            ]
           }
         },
         {
@@ -23,9 +83,17 @@
             &quot;isFoldable&quot;: false,
             &quot;sections&quot;: [
               {
-                &quot;value&quot;: &quot;section1&quot;,
+                &quot;value&quot;: &quot;sanam&quot;,
                 &quot;trigger&quot;: &quot;Sanam · Cost per SQFT&quot;,
                 &quot;content&quot;: [
+                  {
+                    &quot;component&quot;: &quot;Callout&quot;,
+                    &quot;props&quot;: {
+                      &quot;variant&quot;: &quot;warning&quot;,
+                      &quot;title&quot;: &quot;Cost spike detected&quot;,
+                      &quot;description&quot;: &quot;Cost per SQFT is up **79.7%** versus the prior period.&quot;
+                    }
+                  },
                   {
                     &quot;component&quot;: &quot;TextContent&quot;,
                     &quot;props&quot;: {
@@ -33,36 +101,91 @@
                     }
                   },
                   {
-                    &quot;component&quot;: &quot;Table&quot;,
+                    &quot;component&quot;: &quot;Tabs&quot;,
                     &quot;props&quot;: {
-                      &quot;tableHeader&quot;: {
-                        &quot;rows&quot;: [
-                          { &quot;children&quot;: &quot;Building&quot;, &quot;type&quot;: &quot;string&quot; },
-                          { &quot;children&quot;: &quot;Floor&quot;, &quot;type&quot;: &quot;string&quot; },
-                          { &quot;children&quot;: &quot;Current Cost per SQFT&quot;, &quot;type&quot;: &quot;number&quot; },
-                          { &quot;children&quot;: &quot;Previous Cost per SQFT&quot;, &quot;type&quot;: &quot;number&quot; }
-                        ]
-                      },
-                      &quot;tableBody&quot;: {
-                        &quot;rows&quot;: [
-                          {
-                            &quot;children&quot;: [
-                              &quot;Sanam&quot;,
-                              &quot;07&quot;,
-                              &quot;67.84&quot;,
-                              &quot;37.76&quot;
-                            ]
-                          }
-                        ]
-                      }
+                      &quot;children&quot;: [
+                        {
+                          &quot;value&quot;: &quot;table&quot;,
+                          &quot;trigger&quot;: {
+                            &quot;text&quot;: &quot;Table view&quot;
+                          },
+                          &quot;content&quot;: [
+                            {
+                              &quot;component&quot;: &quot;Table&quot;,
+                              &quot;props&quot;: {
+                                &quot;tableHeader&quot;: {
+                                  &quot;rows&quot;: [
+                                    { &quot;children&quot;: &quot;Building&quot;, &quot;type&quot;: &quot;string&quot; },
+                                    { &quot;children&quot;: &quot;Floor&quot;, &quot;type&quot;: &quot;string&quot; },
+                                    { &quot;children&quot;: &quot;Current Cost per SQFT&quot;, &quot;type&quot;: &quot;number&quot; },
+                                    { &quot;children&quot;: &quot;Previous Cost per SQFT&quot;, &quot;type&quot;: &quot;number&quot; }
+                                  ]
+                                },
+                                &quot;tableBody&quot;: {
+                                  &quot;rows&quot;: [
+                                    {
+                                      &quot;children&quot;: [&quot;Sanam&quot;, &quot;07&quot;, &quot;67.84&quot;, &quot;37.76&quot;]
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          &quot;value&quot;: &quot;graph&quot;,
+                          &quot;trigger&quot;: {
+                            &quot;text&quot;: &quot;Graph view&quot;
+                          },
+                          &quot;content&quot;: [
+                            {
+                              &quot;component&quot;: &quot;BarChartV2&quot;,
+                              &quot;props&quot;: {
+                                &quot;variant&quot;: &quot;grouped&quot;,
+                                &quot;type&quot;: &quot;normal&quot;,
+                                &quot;chartData&quot;: {
+                                  &quot;header&quot;: {
+                                    &quot;component&quot;: &quot;InlineHeader&quot;,
+                                    &quot;props&quot;: {
+                                      &quot;heading&quot;: &quot;Sanam Floor 07 · Cost per SQFT&quot;
+                                    }
+                                  },
+                                  &quot;data&quot;: {
+                                    &quot;labels&quot;: [&quot;Sanam Floor 07&quot;],
+                                    &quot;series&quot;: [
+                                      {
+                                        &quot;category&quot;: &quot;Previous Cost per SQFT&quot;,
+                                        &quot;values&quot;: [37.76]
+                                      },
+                                      {
+                                        &quot;category&quot;: &quot;Current Cost per SQFT&quot;,
+                                        &quot;values&quot;: [67.84]
+                                      }
+                                    ]
+                                  }
+                                },
+                                &quot;yAxisLabel&quot;: &quot;USD per SQFT&quot;
+                              }
+                            }
+                          ]
+                        }
+                      ]
                     }
                   }
                 ]
               },
               {
-                &quot;value&quot;: &quot;section2&quot;,
+                &quot;value&quot;: &quot;boltro&quot;,
                 &quot;trigger&quot;: &quot;Boltro Road · Room Occupancy&quot;,
                 &quot;content&quot;: [
+                  {
+                    &quot;component&quot;: &quot;Callout&quot;,
+                    &quot;props&quot;: {
+                      &quot;variant&quot;: &quot;warning&quot;,
+                      &quot;title&quot;: &quot;Occupancy mismatch detected&quot;,
+                      &quot;description&quot;: &quot;**21** employees assigned to **1** workstation in room 01A0705E.&quot;
+                    }
+                  },
                   {
                     &quot;component&quot;: &quot;TextContent&quot;,
                     &quot;props&quot;: {
@@ -70,30 +193,76 @@
                     }
                   },
                   {
-                    &quot;component&quot;: &quot;Table&quot;,
+                    &quot;component&quot;: &quot;Tabs&quot;,
                     &quot;props&quot;: {
-                      &quot;tableHeader&quot;: {
-                        &quot;rows&quot;: [
-                          { &quot;children&quot;: &quot;Building&quot;, &quot;type&quot;: &quot;string&quot; },
-                          { &quot;children&quot;: &quot;Floor&quot;, &quot;type&quot;: &quot;string&quot; },
-                          { &quot;children&quot;: &quot;Room&quot;, &quot;type&quot;: &quot;string&quot; },
-                          { &quot;children&quot;: &quot;Employee Count&quot;, &quot;type&quot;: &quot;number&quot; },
-                          { &quot;children&quot;: &quot;Workstations&quot;, &quot;type&quot;: &quot;number&quot; }
-                        ]
-                      },
-                      &quot;tableBody&quot;: {
-                        &quot;rows&quot;: [
-                          {
-                            &quot;children&quot;: [
-                              &quot;Boltro Road&quot;,
-                              &quot;1&quot;,
-                              &quot;01A0705E&quot;,
-                              &quot;21&quot;,
-                              &quot;1&quot;
-                            ]
-                          }
-                        ]
-                      }
+                      &quot;children&quot;: [
+                        {
+                          &quot;value&quot;: &quot;table&quot;,
+                          &quot;trigger&quot;: {
+                            &quot;text&quot;: &quot;Table view&quot;
+                          },
+                          &quot;content&quot;: [
+                            {
+                              &quot;component&quot;: &quot;Table&quot;,
+                              &quot;props&quot;: {
+                                &quot;tableHeader&quot;: {
+                                  &quot;rows&quot;: [
+                                    { &quot;children&quot;: &quot;Building&quot;, &quot;type&quot;: &quot;string&quot; },
+                                    { &quot;children&quot;: &quot;Floor&quot;, &quot;type&quot;: &quot;string&quot; },
+                                    { &quot;children&quot;: &quot;Room&quot;, &quot;type&quot;: &quot;string&quot; },
+                                    { &quot;children&quot;: &quot;Employee Count&quot;, &quot;type&quot;: &quot;number&quot; },
+                                    { &quot;children&quot;: &quot;Workstations&quot;, &quot;type&quot;: &quot;number&quot; }
+                                  ]
+                                },
+                                &quot;tableBody&quot;: {
+                                  &quot;rows&quot;: [
+                                    {
+                                      &quot;children&quot;: [&quot;Boltro Road&quot;, &quot;1&quot;, &quot;01A0705E&quot;, &quot;21&quot;, &quot;1&quot;]
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          &quot;value&quot;: &quot;graph&quot;,
+                          &quot;trigger&quot;: {
+                            &quot;text&quot;: &quot;Graph view&quot;
+                          },
+                          &quot;content&quot;: [
+                            {
+                              &quot;component&quot;: &quot;BarChartV2&quot;,
+                              &quot;props&quot;: {
+                                &quot;variant&quot;: &quot;grouped&quot;,
+                                &quot;type&quot;: &quot;normal&quot;,
+                                &quot;chartData&quot;: {
+                                  &quot;header&quot;: {
+                                    &quot;component&quot;: &quot;InlineHeader&quot;,
+                                    &quot;props&quot;: {
+                                      &quot;heading&quot;: &quot;Boltro Road · Room Occupancy&quot;
+                                    }
+                                  },
+                                  &quot;data&quot;: {
+                                    &quot;labels&quot;: [&quot;01A0705E&quot;],
+                                    &quot;series&quot;: [
+                                      {
+                                        &quot;category&quot;: &quot;Employees&quot;,
+                                        &quot;values&quot;: [21]
+                                      },
+                                      {
+                                        &quot;category&quot;: &quot;Workstations&quot;,
+                                        &quot;values&quot;: [1]
+                                      }
+                                    ]
+                                  }
+                                },
+                                &quot;yAxisLabel&quot;: &quot;Count&quot;
+                              }
+                            }
+                          ]
+                        }
+                      ]
                     }
                   }
                 ]

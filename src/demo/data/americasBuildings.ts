@@ -26,6 +26,8 @@ export const americasBuildings: BuildingOccupancy[] = [
 export const americasIntro =
   "I've analysed the Americas portfolio. Here are the top 10 buildings with the highest Vacant percentage figures.";
 
+export const americasUtilizationThresholdPct = 10;
+
 export function getAmericasHighlights(): PresentationHighlight[] {
   const topBuilding = americasBuildings[0];
 
@@ -36,6 +38,24 @@ export function getAmericasHighlights(): PresentationHighlight[] {
       caption: `${topBuilding.building} leads the Americas portfolio`,
     },
   ];
+}
+
+export function buildAmericasObservation(
+  buildings: BuildingOccupancy[] = americasBuildings,
+  { highlight = true }: { highlight?: boolean } = {}
+) {
+  const topBuilding = buildings[0];
+  const buildingName = highlight
+    ? `**${topBuilding.building}**`
+    : topBuilding.building;
+  const vacancyRate = highlight
+    ? `**${topBuilding.vacantPct}%**`
+    : `${topBuilding.vacantPct}%`;
+  const utilizationThreshold = highlight
+    ? `**${americasUtilizationThresholdPct}%**`
+    : `${americasUtilizationThresholdPct}%`;
+
+  return `${buildingName} is a clear outlier with the highest vacancy rate (${vacancyRate}), well above the rest of the Americas portfolio. Most other buildings have vacancy below ${utilizationThreshold}, indicating generally high space utilization across the region.`;
 }
 
 export function getAmericasCharts(): PresentationChart[] {
@@ -59,6 +79,7 @@ export function getAmericasPromptData() {
   return {
     intro: americasIntro,
     buildings: americasBuildings,
+    observation: buildAmericasObservation(),
     highlights: getAmericasHighlights(),
     charts: getAmericasCharts(),
   };

@@ -1,4 +1,4 @@
-import { getAmericasCharts, getAmericasPromptData } from "../../data/americasBuildings";
+import { getAmericasCharts, getAmericasPromptData, buildAmericasObservation } from "../../data/americasBuildings";
 import { buildTableGraphTabsLayout } from "../../format/buildDataViewLayout";
 import { buildPromptFromData } from "../../format/buildPromptFromData";
 import type { PresentationSection } from "../../presentation/types";
@@ -33,12 +33,12 @@ export const americasOccupancyFlow: DemoFlowDefinition = {
           tableSource: "DATA.buildings",
           tableColumns: "Building, Employees, Seats, Vacant %",
         }),
+        "After the Tabs block, add DATA.observation as a TextContent paragraph exactly, using textMarkdown so **bold** markers render as emphasis on the building name, vacancy rate, and utilization threshold.",
       ],
     });
   },
   buildPresentationSection(): PresentationSection {
     const data = getAmericasPromptData();
-    const topBuilding = data.buildings[0];
 
     return {
       id: "americas-occupancy",
@@ -59,10 +59,8 @@ export const americasOccupancyFlow: DemoFlowDefinition = {
       charts: getAmericasCharts(),
       bullets: [
         {
-          label: "Key Insight",
-          items: [
-            `${topBuilding.building} leads the portfolio with ${topBuilding.vacantPct}% vacant — the highest among Americas buildings.`,
-          ],
+          label: "Observation",
+          items: [buildAmericasObservation(undefined, { highlight: false })],
         },
       ],
     };

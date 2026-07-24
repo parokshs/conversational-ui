@@ -135,6 +135,12 @@
               }
             ]
           }
+        },
+        {
+          &quot;component&quot;: &quot;TextContent&quot;,
+          &quot;props&quot;: {
+            &quot;textMarkdown&quot;: &quot;**Jefferson House** is a clear outlier with the highest vacancy rate (**30%**), well above the rest of the Americas portfolio. Most other buildings have vacancy below **10%**, indicating generally high space utilization across the region.&quot;
+          }
         }
       ]
     }

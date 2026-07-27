@@ -1,0 +1,230 @@
+<content thesys="true">
+{
+  &quot;component&quot;: {
+    &quot;component&quot;: &quot;Card&quot;,
+    &quot;props&quot;: {
+      &quot;children&quot;: [
+        {
+          &quot;component&quot;: &quot;Header&quot;,
+          &quot;props&quot;: {
+            &quot;title&quot;: &quot;Building Alignment Analysis&quot;,
+            &quot;subtitle&quot;: &quot;Building F&quot;
+          }
+        },
+        {
+          &quot;component&quot;: &quot;TextContent&quot;,
+          &quot;props&quot;: {
+            &quot;textMarkdown&quot;: &quot;I&#39;ve compared the Actual versus Allocated values by Business Unit for Building F.&quot;
+          }
+        },
+        {
+          &quot;component&quot;: &quot;MiniCardBlock&quot;,
+          &quot;props&quot;: {
+            &quot;children&quot;: [
+              {
+                &quot;component&quot;: &quot;MiniCard&quot;,
+                &quot;props&quot;: {
+                  &quot;lhs&quot;: {
+                    &quot;component&quot;: &quot;DataTile&quot;,
+                    &quot;props&quot;: {
+                      &quot;amount&quot;: &quot;89%&quot;,
+                      &quot;description&quot;: &quot;Building F avg alignment&quot;,
+                      &quot;child&quot;: {
+                        &quot;component&quot;: &quot;Icon&quot;,
+                        &quot;props&quot;: {
+                          &quot;name&quot;: &quot;gauge&quot;,
+                          &quot;category&quot;: &quot;charts&quot;
+                        }
+                      }
+                    }
+                  },
+                  &quot;rhs&quot;: {
+                    &quot;component&quot;: &quot;MiniChart&quot;,
+                    &quot;props&quot;: {
+                      &quot;type&quot;: &quot;bar&quot;,
+                      &quot;data&quot;: [89, 11, 0, 0, 0, 0]
+                    }
+                  }
+                }
+              },
+              {
+                &quot;component&quot;: &quot;MiniCard&quot;,
+                &quot;props&quot;: {
+                  &quot;lhs&quot;: {
+                    &quot;component&quot;: &quot;DataTile&quot;,
+                    &quot;props&quot;: {
+                      &quot;amount&quot;: &quot;98%&quot;,
+                      &quot;description&quot;: &quot;Best BU: Human Resources&quot;,
+                      &quot;child&quot;: {
+                        &quot;component&quot;: &quot;Icon&quot;,
+                        &quot;props&quot;: {
+                          &quot;name&quot;: &quot;trophy&quot;,
+                          &quot;category&quot;: &quot;sports&quot;
+                        }
+                      }
+                    }
+                  },
+                  &quot;rhs&quot;: {
+                    &quot;component&quot;: &quot;MiniChart&quot;,
+                    &quot;props&quot;: {
+                      &quot;type&quot;: &quot;bar&quot;,
+                      &quot;data&quot;: [98, 2, 0, 0, 0, 0]
+                    }
+                  }
+                }
+              },
+              {
+                &quot;component&quot;: &quot;MiniCard&quot;,
+                &quot;props&quot;: {
+                  &quot;lhs&quot;: {
+                    &quot;component&quot;: &quot;DataTile&quot;,
+                    &quot;props&quot;: {
+                      &quot;amount&quot;: &quot;68%&quot;,
+                      &quot;description&quot;: &quot;Outlier: Retail alignment&quot;,
+                      &quot;child&quot;: {
+                        &quot;component&quot;: &quot;Icon&quot;,
+                        &quot;props&quot;: {
+                          &quot;name&quot;: &quot;alert-triangle&quot;,
+                          &quot;category&quot;: &quot;notifications&quot;
+                        }
+                      }
+                    }
+                  },
+                  &quot;rhs&quot;: {
+                    &quot;component&quot;: &quot;MiniChart&quot;,
+                    &quot;props&quot;: {
+                      &quot;type&quot;: &quot;bar&quot;,
+                      &quot;data&quot;: [68, 32, 0, 0, 0, 0]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          &quot;component&quot;: &quot;Tabs&quot;,
+          &quot;props&quot;: {
+            &quot;children&quot;: [
+              {
+                &quot;value&quot;: &quot;table&quot;,
+                &quot;trigger&quot;: { &quot;text&quot;: &quot;Table view&quot; },
+                &quot;content&quot;: [
+                  {
+                    &quot;component&quot;: &quot;Table&quot;,
+                    &quot;props&quot;: {
+                      &quot;tableHeader&quot;: {
+                        &quot;rows&quot;: [
+                          { &quot;children&quot;: &quot;Business Unit&quot;, &quot;type&quot;: &quot;string&quot; },
+                          { &quot;children&quot;: &quot;Actual = Allocated %&quot;, &quot;type&quot;: &quot;number&quot; },
+                          { &quot;children&quot;: &quot;Actual ≠ Allocated %&quot;, &quot;type&quot;: &quot;number&quot; },
+                          { &quot;children&quot;: &quot;Status&quot;, &quot;type&quot;: &quot;string&quot; }
+                        ]
+                      },
+                      &quot;tableBody&quot;: {
+                        &quot;rows&quot;: [
+                          { &quot;children&quot;: [&quot;Engineering&quot;, &quot;92&quot;, &quot;8&quot;, &quot;Healthy&quot;] },
+                          { &quot;children&quot;: [&quot;Finance&quot;, &quot;89&quot;, &quot;11&quot;, &quot;Healthy&quot;] },
+                          { &quot;children&quot;: [&quot;Human Resources&quot;, &quot;98&quot;, &quot;2&quot;, &quot;Excellent&quot;] },
+                          { &quot;children&quot;: [&quot;Staff Groups&quot;, &quot;96&quot;, &quot;4&quot;, &quot;Excellent&quot;] },
+                          { &quot;children&quot;: [&quot;Operations&quot;, &quot;90&quot;, &quot;10&quot;, &quot;Healthy&quot;] },
+                          { &quot;children&quot;: [&quot;Retail&quot;, &quot;68&quot;, &quot;32&quot;, &quot;To investigate&quot;] }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                &quot;value&quot;: &quot;graph&quot;,
+                &quot;trigger&quot;: { &quot;text&quot;: &quot;Graph view&quot; },
+                &quot;content&quot;: [
+                  {
+                    &quot;component&quot;: &quot;BarChartV2&quot;,
+                    &quot;props&quot;: {
+                      &quot;type&quot;: &quot;horizontal&quot;,
+                      &quot;chartData&quot;: {
+                        &quot;header&quot;: {
+                          &quot;component&quot;: &quot;InlineHeader&quot;,
+                          &quot;props&quot;: { &quot;heading&quot;: &quot;Actual = Allocated % by Business Unit&quot; }
+                        },
+                        &quot;data&quot;: {
+                          &quot;labels&quot;: [
+                            &quot;Retail&quot;,
+                            &quot;Finance&quot;,
+                            &quot;Operations&quot;,
+                            &quot;Engineering&quot;,
+                            &quot;Staff Groups&quot;,
+                            &quot;Human Resources&quot;
+                          ],
+                          &quot;series&quot;: [
+                            {
+                              &quot;category&quot;: &quot;Actual = Allocated %&quot;,
+                              &quot;values&quot;: [68, 89, 90, 92, 96, 98]
+                            }
+                          ]
+                        }
+                      },
+                      &quot;xAxisLabel&quot;: &quot;Alignment %&quot;,
+                      &quot;yAxisLabel&quot;: &quot;Business Unit&quot;
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          &quot;component&quot;: &quot;SectionBlock&quot;,
+          &quot;props&quot;: {
+            &quot;isFoldable&quot;: false,
+            &quot;sections&quot;: [
+              {
+                &quot;value&quot;: &quot;section1&quot;,
+                &quot;trigger&quot;: &quot;Insights&quot;,
+                &quot;content&quot;: [
+                  {
+                    &quot;component&quot;: &quot;List&quot;,
+                    &quot;props&quot;: {
+                      &quot;variant&quot;: &quot;icon&quot;,
+                      &quot;items&quot;: [
+                        {
+                          &quot;title&quot;: &quot;Building F avg: 89% alignment — healthy overall.&quot;,
+                          &quot;iconName&quot;: &quot;dot&quot;,
+                          &quot;iconCategory&quot;: &quot;shapes&quot;
+                        },
+                        {
+                          &quot;title&quot;: &quot;Retail outlier: 68% alignment, 32% misallocated — nearly 3x the building average.&quot;,
+                          &quot;iconName&quot;: &quot;dot&quot;,
+                          &quot;iconCategory&quot;: &quot;shapes&quot;
+                        },
+                        {
+                          &quot;title&quot;: &quot;Human Resources Team leads: 98% alignment, best in building.&quot;,
+                          &quot;iconName&quot;: &quot;dot&quot;,
+                          &quot;iconCategory&quot;: &quot;shapes&quot;
+                        },
+                        {
+                          &quot;title&quot;: &quot;Rest of BUs: 89–96%, all Healthy/Excellent.&quot;,
+                          &quot;iconName&quot;: &quot;dot&quot;,
+                          &quot;iconCategory&quot;: &quot;shapes&quot;
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          &quot;component&quot;: &quot;TextContent&quot;,
+          &quot;props&quot;: {
+            &quot;textMarkdown&quot;: &quot;**Recommendation:** Investigate Retail — confirm if misalignment is intentional (project seating, temp moves) or needs reallocation.&quot;
+          }
+        }
+      ]
+    }
+  },
+  &quot;error&quot;: null
+}
+</content>

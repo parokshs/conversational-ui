@@ -41,8 +41,8 @@ Demo mode is controlled by `isDemoModeEnabled()` in `buildStagedResponse.ts`: **
 
 This is the part of the codebase most likely to need edits day-to-day. Read `src/demo/README.md` for the full workflow; summary:
 
-- **Six-step demo**: (1) Americas occupancy, (2) Jefferson costs, (3) Engineering workspace, (4) Floor 07 plan image, (5) presentation export, (6) PPTX download. See `src/demo/README.md`.
-- **Data**: `src/demo/data/*.ts` — plain TypeScript source-of-truth for numbers/text (e.g. `americasBuildings.ts`, `jeffersonHouseCosts.ts`, `engineeringWorkspace.ts`, `floorPlan.ts`).
+- **Six-step demo**: (1) Americas occupancy, (2) Building F alignment, (3) Retail workspace, (4) Floor 1 plan, (5) presentation export, (6) PPTX download. See `src/demo/README.md`.
+- **Data**: `src/demo/data/*.ts` — plain TypeScript source-of-truth for numbers/text (e.g. `americasBuildings.ts`, `buildingFAlignment.ts`, `retailWorkspace.ts`, `floorPlan.ts`).
 - **Flow definitions**: `src/demo/flows/definitions/*.ts` implement `DemoFlowDefinition` (`src/demo/flows/types.ts`): `keywords` for matching, `responseFile` naming the staged `.c1.txt`, optional `thinking` (title/description shown as an ephemeral "thinking" step), `buildChatPrompt()` (prompt used to bootstrap the staged in-chat response), and `buildPresentationSection()` (structured slide content built directly from the data files, no LLM involved).
 - **Registry**: `src/demo/flows/registry.ts` lists every flow — a new flow must be registered here or it's invisible to matching, bootstrapping, and presentation export.
 - **Matching**: `src/demo/flows/matchPrompt.ts` does keyword scoring (exact substring match weighted by word count, partial word overlap as fallback) with a minimum score threshold of 2 to accept a match. Demo prompts are **not** hardcoded — add synonyms to each flow's `keywords` array. No embeddings/LLM involved.

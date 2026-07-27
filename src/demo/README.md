@@ -5,15 +5,15 @@ Six-step demo flow for portfolio occupancy analysis through executive presentati
 | Step | Example prompt | Data / flow |
 | --- | --- | --- |
 | 1 | Show me the building-level occupancy metrics for the Americas region. | `data/americasBuildings.ts` → `flows/definitions/americasOccupancy.ts` |
-| 2 | Show the Vacant vs Allocated costs for Jefferson House by Business Unit and analyse the results | `data/jeffersonHouseCosts.ts` → `flows/definitions/jeffersonCosts.ts` |
-| 3 | Review the workspace allocation for Engineering by floor and seat type | `data/engineeringWorkspace.ts` → `flows/definitions/engineeringWorkspace.ts` |
-| 4 | Show me the highlighted floorplan by Business Unit allocation on floor 07 with legend for Occupied and Vacant Workstations | `data/floorPlan.ts` → `flows/definitions/floorPlan.ts` |
+| 2 | Show the Actual vs Allocated alignment for Building F by Business Unit. | `data/buildingFAlignment.ts` → `flows/definitions/buildingFAlignment.ts` |
+| 3 | Investigate the Retail Business Unit detail. Analyse the workspace allocation by floor and seat type | `data/retailWorkspace.ts` → `flows/definitions/retailWorkspace.ts` |
+| 4 | Show me the highlighted floorplan on floor 1 with leaders legend | `data/floorPlan.ts` → `flows/definitions/floorPlan.ts` |
 | 5 | Prepare a presentation to be shared with the Executives | Presentation export via `presentation/presentationFlow.ts` |
 | 6 | Download PPTX from the slide artifact | Native Thesys export button → `/api/export-pptx` |
 
 ## Pre-created Anomaly thread
 
-On app load, the app opens a **New Chat** welcome screen. The sidebar also lists a pre-created thread named **Anomaly** with a pre-loaded anomaly report — select it to review Sanam cost-per-sqft and Boltro Road occupancy issues.
+On app load, the app opens a **New Chat** welcome screen. The sidebar also lists a pre-created thread named **Proactive Insights** with a pre-loaded anomaly report — select it to review Sanam area discrepancy and Boltro Road occupancy issues.
 
 - Seed config: `anomaly/anomalyThread.ts`
 - Data source: `data/anomalyFindings.ts`
@@ -27,9 +27,9 @@ Users can still create new chats normally. The Anomaly thread cannot be deleted 
 Edit demo content in:
 
 - `data/americasBuildings.ts` — Americas occupancy table
-- `data/jeffersonHouseCosts.ts` — Jefferson cost analysis and observations
-- `data/engineeringWorkspace.ts` — Engineering allocation by floor and seat type
-- `data/floorPlan.ts` — Floor 07 plan image URL and caption
+- `data/buildingFAlignment.ts` — Building F Actual vs Allocated alignment by business unit
+- `data/retailWorkspace.ts` — Retail allocation by floor and seat type
+- `data/floorPlan.ts` — Floor 1 plan image path and insights
 
 Each demo step is registered once in `flows/definitions/`. Those definition files import the data files and expose:
 
@@ -49,8 +49,8 @@ npm run bootstrap:demo
 This calls the Thesys API and writes:
 
 - `responses/americasOccupancy.c1.txt`
-- `responses/jeffersonCosts.c1.txt`
-- `responses/engineeringWorkspace.c1.txt`
+- `responses/buildingFAlignment.c1.txt`
+- `responses/retailWorkspace.c1.txt`
 - `responses/floorPlan.c1.txt`
 
 Requires `THESYS_API_KEY` in `.env`.

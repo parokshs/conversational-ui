@@ -1,20 +1,21 @@
+// Drop your floor plan image at: public/demo/floor-1-plan.png
+// It will be served at /demo/floor-1-plan.png
 export const floorPlanIntro =
-  "Floor 07 workspace allocation by Business Unit, with occupied and vacant workstation counts in the legend.";
+  "Floor 1 workspace allocation with leaders legend.";
 
-export const floorPlanImageUrl =
-  "https://res.cloudinary.com/zdhgzz00/image/upload/q_auto:best,w_1400,f_auto/v1784785651/floor-plan_ddlqm6.png";
+export const floorPlanImageUrl = "/demo/floor-1-plan.png";
 
 export const floorPlanCaption =
-  "Floor 07 — Business Unit allocation with occupied and vacant workstation legend";
+  "Floor 1 — highlighted floorplan with leaders legend";
 
-export const floorPlanHighlightDescription =
-  "Highlighted Floor 07 workspace allocation by Business Unit. Red dots indicate Vacant Workstations and orange dots indicate Reserved Desks.";
+export const floorPlanLegendDescription =
+  "Highlighted Floor 1 workspace allocation with leaders legend for occupied and vacant workstations by Business Unit.";
 
 export const floorPlanKeyInsights = [
-  "Travel (14) and Technologies (9) occupy the largest share of workstations.",
-  "Engineering has the highest vacancy, with 13 vacant and 1 occupied workstation.",
-  "Retail and Utilities each have 1 vacant workstation and no occupied workstations.",
-  "Overall, 38 workstations are occupied and 15 are vacant on Floor 07.",
+  "Overall occupancy: 38 occupied / 53 total workstations (~72%) — 15 vacant desks remain.",
+  "Engineering is the biggest underutiliser: only 1 occupied vs. 13 vacant — largest opportunity for reallocation.",
+  "Travel, Technologies, and Staff Groups are fully utilised (14, 9, 8 occupied, 0 vacant) — no spare capacity.",
+  "Retail and Utilities show minimal presence (0 occupied, 1 vacant each) — negligible footprint on this floor.",
 ];
 
 export function getFloorPlanPromptData() {
@@ -24,7 +25,7 @@ export function getFloorPlanPromptData() {
       url: floorPlanImageUrl,
       caption: floorPlanCaption,
     },
-    highlightDescription: floorPlanHighlightDescription,
+    legendDescription: floorPlanLegendDescription,
     keyInsights: floorPlanKeyInsights,
   };
 }

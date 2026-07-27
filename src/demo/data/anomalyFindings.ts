@@ -1,10 +1,10 @@
 import type { PresentationChart } from "../presentation/types";
 
-export type CostPerSqftAnomaly = {
+export type AreaDiscrepancyAnomaly = {
   building: string;
-  floor: string;
-  currentCostPerSqft: number;
-  previousCostPerSqft: number;
+  documentedAreaSqft: number;
+  measuredAreaSqft: number;
+  percentage: number;
 };
 
 export type RoomOccupancyAnomaly = {
@@ -16,16 +16,16 @@ export type RoomOccupancyAnomaly = {
 };
 
 export const anomalyIntro =
-  "Some anomalies have been found in the data. Review the highlighted findings below.";
+  "Some anomalies have been found in the data";
 
-export const sanamCostAnalysis =
-  "The cost per sqft for Sanam Floor 07 has significantly increased. Almost doubling the cost per square foot points to a major shift, far outside the normal bounds of change.";
+export const sanamAreaAnalysis =
+  "The document area for building Sanam is significantly different from the measured area on the floor plan.";
 
-export const sanamCostAnomaly: CostPerSqftAnomaly = {
+export const sanamAreaAnomaly: AreaDiscrepancyAnomaly = {
   building: "Sanam",
-  floor: "07",
-  currentCostPerSqft: 67.84,
-  previousCostPerSqft: 37.76,
+  documentedAreaSqft: 36446,
+  measuredAreaSqft: 51232.11,
+  percentage: 140.6,
 };
 
 export const boltroRoomAnalysis =
@@ -41,16 +41,11 @@ export const boltroRoomAnomaly: RoomOccupancyAnomaly = {
 
 export const anomalyUserPrompt = "What anomalies have been found in the data?";
 
-export function getSanamCostIncreasePct(
-  anomaly: CostPerSqftAnomaly = sanamCostAnomaly
-) {
-  return Number(
-    (
-      ((anomaly.currentCostPerSqft - anomaly.previousCostPerSqft) /
-        anomaly.previousCostPerSqft) *
-      100
-    ).toFixed(1)
-  );
+function formatArea(value: number) {
+  return value.toLocaleString("en-US", {
+    minimumFractionDigits: value % 1 === 0 ? 0 : 2,
+    maximumFractionDigits: 2,
+  });
 }
 
 export function getBoltroEmployeesPerWorkstation(
@@ -60,15 +55,14 @@ export function getBoltroEmployeesPerWorkstation(
 }
 
 export function getAnomalySummaryCards() {
-  const costIncreasePct = getSanamCostIncreasePct();
   const employeesPerWorkstation = getBoltroEmployeesPerWorkstation();
 
   return [
     {
-      title: "Cost spike",
-      label: `${sanamCostAnomaly.building} Floor ${sanamCostAnomaly.floor}`,
-      stat: `+${costIncreasePct}%`,
-      statLabel: "Cost per SQFT vs prior",
+      title: "Area mismatch",
+      label: `${sanamAreaAnomaly.building}`,
+      stat: `${sanamAreaAnomaly.percentage}%`,
+      statLabel: "Measured vs documented area",
       iconName: "trending-up",
       iconCategory: "charts",
     },
@@ -85,20 +79,20 @@ export function getAnomalySummaryCards() {
 
 export function getSanamChart(): PresentationChart {
   return {
-    heading: "Sanam Floor 07 · Cost per SQFT",
+    heading: "Sanam · Documented vs Measured Area",
     chartType: "groupedBar",
-    categories: [`${sanamCostAnomaly.building} Floor ${sanamCostAnomaly.floor}`],
+    categories: [sanamAreaAnomaly.building],
     series: [
       {
-        name: "Previous Cost per SQFT",
-        values: [sanamCostAnomaly.previousCostPerSqft],
+        name: "Documented Area SQFT",
+        values: [sanamAreaAnomaly.documentedAreaSqft],
       },
       {
-        name: "Current Cost per SQFT",
-        values: [sanamCostAnomaly.currentCostPerSqft],
+        name: "Measured Area SQFT",
+        values: [sanamAreaAnomaly.measuredAreaSqft],
       },
     ],
-    valueAxisLabel: "USD per SQFT",
+    valueAxisLabel: "SQFT",
   };
 }
 
@@ -109,7 +103,7 @@ export function getBoltroChart(): PresentationChart {
     categories: [boltroRoomAnomaly.room],
     series: [
       {
-        name: "Employees",
+        name: "Employee Count",
         values: [boltroRoomAnomaly.employeeCount],
       },
       {
@@ -122,30 +116,28 @@ export function getBoltroChart(): PresentationChart {
 }
 
 export function getAnomalyFindings() {
-  const costIncreasePct = getSanamCostIncreasePct();
-
   return [
     {
-      id: "sanam-cost-per-sqft",
-      title: "Sanam · Cost per SQFT",
+      id: "sanam-area-discrepancy",
+      title: "Sanam · Area Discrepancy",
       severity: "warning",
-      calloutTitle: "Cost spike detected",
-      calloutDescription: `Cost per SQFT is up **${costIncreasePct}%** versus the prior period.`,
-      analysis: sanamCostAnalysis,
+      calloutTitle: "Area mismatch detected",
+      calloutDescription: `Measured area is **${sanamAreaAnomaly.percentage}%** of documented area for ${sanamAreaAnomaly.building}.`,
+      analysis: sanamAreaAnalysis,
       chart: getSanamChart(),
       table: {
         columns: [
           "Building",
-          "Floor",
-          "Current Cost per SQFT",
-          "Previous Cost per SQFT",
+          "Documented Area SQFT",
+          "Measured Area SQFT",
+          "Percentage",
         ],
         rows: [
           [
-            sanamCostAnomaly.building,
-            sanamCostAnomaly.floor,
-            sanamCostAnomaly.currentCostPerSqft,
-            sanamCostAnomaly.previousCostPerSqft,
+            sanamAreaAnomaly.building,
+            formatArea(sanamAreaAnomaly.documentedAreaSqft),
+            formatArea(sanamAreaAnomaly.measuredAreaSqft),
+            `${sanamAreaAnomaly.percentage}%`,
           ],
         ],
       },

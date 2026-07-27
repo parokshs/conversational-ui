@@ -1,0 +1,165 @@
+<content thesys="true">
+{
+  &quot;component&quot;: {
+    &quot;component&quot;: &quot;Card&quot;,
+    &quot;props&quot;: {
+      &quot;children&quot;: [
+        {
+          &quot;component&quot;: &quot;Header&quot;,
+          &quot;props&quot;: {
+            &quot;title&quot;: &quot;Retail Workspace Allocation Analysis&quot;
+          }
+        },
+        {
+          &quot;component&quot;: &quot;TextContent&quot;,
+          &quot;props&quot;: {
+            &quot;textMarkdown&quot;: &quot;Analysing Retail workspace allocation by floor and seat type.&quot;
+          }
+        },
+        {
+          &quot;component&quot;: &quot;Tabs&quot;,
+          &quot;props&quot;: {
+            &quot;children&quot;: [
+              {
+                &quot;value&quot;: &quot;table&quot;,
+                &quot;trigger&quot;: {
+                  &quot;text&quot;: &quot;Table view&quot;
+                },
+                &quot;content&quot;: [
+                  {
+                    &quot;component&quot;: &quot;Table&quot;,
+                    &quot;props&quot;: {
+                      &quot;tableHeader&quot;: {
+                        &quot;rows&quot;: [
+                          { &quot;children&quot;: &quot;Floor&quot;, &quot;type&quot;: &quot;string&quot; },
+                          { &quot;children&quot;: &quot;Actual Employees&quot;, &quot;type&quot;: &quot;number&quot; },
+                          { &quot;children&quot;: &quot;Allocated Spaces&quot;, &quot;type&quot;: &quot;number&quot; },
+                          { &quot;children&quot;: &quot;Office&quot;, &quot;type&quot;: &quot;number&quot; },
+                          { &quot;children&quot;: &quot;Project/Team Room&quot;, &quot;type&quot;: &quot;number&quot; },
+                          { &quot;children&quot;: &quot;Touchdown&quot;, &quot;type&quot;: &quot;number&quot; },
+                          { &quot;children&quot;: &quot;Variance %&quot;, &quot;type&quot;: &quot;number&quot; }
+                        ]
+                      },
+                      &quot;tableBody&quot;: {
+                        &quot;rows&quot;: [
+                          {
+                            &quot;children&quot;: [
+                              &quot;1&quot;,
+                              &quot;90&quot;,
+                              &quot;65&quot;,
+                              &quot;45&quot;,
+                              &quot;10&quot;,
+                              &quot;10&quot;,
+                              &quot;72&quot;
+                            ]
+                          },
+                          {
+                            &quot;children&quot;: [
+                              &quot;2&quot;,
+                              &quot;170&quot;,
+                              &quot;110&quot;,
+                              &quot;40&quot;,
+                              &quot;30&quot;,
+                              &quot;40&quot;,
+                              &quot;65&quot;
+                            ]
+                          },
+                          {
+                            &quot;children&quot;: [
+                              &quot;Total&quot;,
+                              &quot;260&quot;,
+                              &quot;175&quot;,
+                              &quot;85&quot;,
+                              &quot;40&quot;,
+                              &quot;50&quot;,
+                              &quot;67&quot;
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                &quot;value&quot;: &quot;graph&quot;,
+                &quot;trigger&quot;: {
+                  &quot;text&quot;: &quot;Graph view&quot;
+                },
+                &quot;content&quot;: [
+                  {
+                    &quot;component&quot;: &quot;BarChartV2&quot;,
+                    &quot;props&quot;: {
+                      &quot;variant&quot;: &quot;grouped&quot;,
+                      &quot;type&quot;: &quot;normal&quot;,
+                      &quot;chartData&quot;: {
+                        &quot;header&quot;: {
+                          &quot;component&quot;: &quot;InlineHeader&quot;,
+                          &quot;props&quot;: {
+                            &quot;heading&quot;: &quot;Actual Employees vs Allocated Spaces by Floor&quot;
+                          }
+                        },
+                        &quot;data&quot;: {
+                          &quot;labels&quot;: [&quot;Floor 1&quot;, &quot;Floor 2&quot;],
+                          &quot;series&quot;: [
+                            {
+                              &quot;category&quot;: &quot;Actual Employees&quot;,
+                              &quot;values&quot;: [90, 170]
+                            },
+                            {
+                              &quot;category&quot;: &quot;Allocated Spaces&quot;,
+                              &quot;values&quot;: [65, 110]
+                            }
+                          ]
+                        }
+                      },
+                      &quot;xAxisLabel&quot;: &quot;Floor&quot;,
+                      &quot;yAxisLabel&quot;: &quot;Count&quot;
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          &quot;component&quot;: &quot;List&quot;,
+          &quot;props&quot;: {
+            &quot;heading&quot;: &quot;Insights&quot;,
+            &quot;variant&quot;: &quot;icon&quot;,
+            &quot;items&quot;: [
+              {
+                &quot;title&quot;: &quot;Retail overall: 67% aligned — 85-seat shortfall (260 employees, 175 seats).&quot;,
+                &quot;iconName&quot;: &quot;circle-check&quot;,
+                &quot;iconCategory&quot;: &quot;notifications&quot;
+              },
+              {
+                &quot;title&quot;: &quot;Floor 1: 72% aligned, office-heavy, low flex capacity.&quot;,
+                &quot;iconName&quot;: &quot;circle-check&quot;,
+                &quot;iconCategory&quot;: &quot;notifications&quot;
+              },
+              {
+                &quot;title&quot;: &quot;Floor 2: 65% aligned, more flex seats but most overflow into other orgs&#39; space.&quot;,
+                &quot;iconName&quot;: &quot;circle-check&quot;,
+                &quot;iconCategory&quot;: &quot;notifications&quot;
+              },
+              {
+                &quot;title&quot;: &quot;Root cause: not enough Retail-allocated seats on either floor.&quot;,
+                &quot;iconName&quot;: &quot;circle-check&quot;,
+                &quot;iconCategory&quot;: &quot;notifications&quot;
+              }
+            ]
+          }
+        },
+        {
+          &quot;component&quot;: &quot;TextContent&quot;,
+          &quot;props&quot;: {
+            &quot;textMarkdown&quot;: &quot;Recommendation: Consolidate Retail, reallocate surplus from under-used orgs (e.g., Engineering) and add flex seating on Floor 1 — then monitor.&quot;
+          }
+        }
+      ]
+    }
+  },
+  &quot;error&quot;: null
+}
+</content>

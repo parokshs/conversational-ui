@@ -8,30 +8,27 @@
         {
           &quot;component&quot;: &quot;Header&quot;,
           &quot;props&quot;: {
-            &quot;title&quot;: &quot;Floor 07 — Workspace Allocation&quot;
+            &quot;title&quot;: &quot;Floor 1 Plan&quot;,
+            &quot;subtitle&quot;: &quot;Executive Summary&quot;
           }
         },
         {
           &quot;component&quot;: &quot;TextContent&quot;,
           &quot;props&quot;: {
-            &quot;textMarkdown&quot;: &quot;Floor 07 workspace allocation by Business Unit, with occupied and vacant workstation counts in the legend.&quot;
+            &quot;textMarkdown&quot;: &quot;Floor 1 workspace allocation with leaders legend.&quot;
           }
         },
         {
           &quot;component&quot;: &quot;ImageGallery&quot;,
           &quot;props&quot;: {
-            &quot;imagesSrc&quot;: [
-              &quot;https://res.cloudinary.com/zdhgzz00/image/upload/q_auto:best,w_1400,f_auto/v1784785651/floor-plan_ddlqm6.png&quot;
-            ],
-            &quot;imagesAlt&quot;: [
-              &quot;Floor 07 — Business Unit allocation with occupied and vacant workstation legend&quot;
-            ]
+            &quot;imagesSrc&quot;: [&quot;/demo/floor-1-plan.png&quot;],
+            &quot;imagesAlt&quot;: [&quot;Floor 1 — highlighted floorplan with leaders legend&quot;]
           }
         },
         {
           &quot;component&quot;: &quot;TextContent&quot;,
           &quot;props&quot;: {
-            &quot;textMarkdown&quot;: &quot;Highlighted Floor 07 workspace allocation by Business Unit. Red dots indicate Vacant Workstations and orange dots indicate Reserved Desks.&quot;
+            &quot;textMarkdown&quot;: &quot;Highlighted Floor 1 workspace allocation with leaders legend for occupied and vacant workstations by Business Unit.&quot;
           }
         },
         {
@@ -41,32 +38,33 @@
             &quot;sections&quot;: [
               {
                 &quot;value&quot;: &quot;section1&quot;,
-                &quot;trigger&quot;: &quot;Key insights&quot;,
+                &quot;trigger&quot;: &quot;Insights&quot;,
                 &quot;content&quot;: [
                   {
                     &quot;component&quot;: &quot;List&quot;,
                     &quot;props&quot;: {
+                      &quot;heading&quot;: &quot;Key Insights&quot;,
                       &quot;variant&quot;: &quot;icon&quot;,
                       &quot;items&quot;: [
                         {
-                          &quot;title&quot;: &quot;Travel (14) and Technologies (9) occupy the largest share of workstations.&quot;,
-                          &quot;iconName&quot;: &quot;circle-check&quot;,
-                          &quot;iconCategory&quot;: &quot;notifications&quot;
+                          &quot;title&quot;: &quot;Overall occupancy: 38 occupied / 53 total workstations (~72%) — 15 vacant desks remain.&quot;,
+                          &quot;iconName&quot;: &quot;dot&quot;,
+                          &quot;iconCategory&quot;: &quot;shapes&quot;
                         },
                         {
-                          &quot;title&quot;: &quot;Engineering has the highest vacancy, with 13 vacant and 1 occupied workstation.&quot;,
-                          &quot;iconName&quot;: &quot;circle-check&quot;,
-                          &quot;iconCategory&quot;: &quot;notifications&quot;
+                          &quot;title&quot;: &quot;Engineering is the biggest underutiliser: only 1 occupied vs. 13 vacant — largest opportunity for reallocation.&quot;,
+                          &quot;iconName&quot;: &quot;dot&quot;,
+                          &quot;iconCategory&quot;: &quot;shapes&quot;
                         },
                         {
-                          &quot;title&quot;: &quot;Retail and Utilities each have 1 vacant workstation and no occupied workstations.&quot;,
-                          &quot;iconName&quot;: &quot;circle-check&quot;,
-                          &quot;iconCategory&quot;: &quot;notifications&quot;
+                          &quot;title&quot;: &quot;Travel, Technologies, and Staff Groups are fully utilised (14, 9, 8 occupied, 0 vacant) — no spare capacity.&quot;,
+                          &quot;iconName&quot;: &quot;dot&quot;,
+                          &quot;iconCategory&quot;: &quot;shapes&quot;
                         },
                         {
-                          &quot;title&quot;: &quot;Overall, 38 workstations are occupied and 15 are vacant on Floor 07.&quot;,
-                          &quot;iconName&quot;: &quot;circle-check&quot;,
-                          &quot;iconCategory&quot;: &quot;notifications&quot;
+                          &quot;title&quot;: &quot;Retail and Utilities show minimal presence (0 occupied, 1 vacant each) — negligible footprint on this floor.&quot;,
+                          &quot;iconName&quot;: &quot;dot&quot;,
+                          &quot;iconCategory&quot;: &quot;shapes&quot;
                         }
                       ]
                     }

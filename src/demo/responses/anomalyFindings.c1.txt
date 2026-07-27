@@ -3,19 +3,18 @@
   &quot;component&quot;: {
     &quot;component&quot;: &quot;Card&quot;,
     &quot;props&quot;: {
-      &quot;width&quot;: &quot;full&quot;,
       &quot;children&quot;: [
         {
           &quot;component&quot;: &quot;Header&quot;,
           &quot;props&quot;: {
-            &quot;title&quot;: &quot;Proactive Insights&quot;,
+            &quot;title&quot;: &quot;Proactive Insights · Anomaly Report&quot;,
             &quot;subtitle&quot;: &quot;2 anomalies detected&quot;
           }
         },
         {
           &quot;component&quot;: &quot;TextContent&quot;,
           &quot;props&quot;: {
-            &quot;textMarkdown&quot;: &quot;Some anomalies have been found in the data. Review the highlighted findings below.&quot;
+            &quot;textMarkdown&quot;: &quot;Some anomalies have been found in the data&quot;
           }
         },
         {
@@ -28,8 +27,8 @@
                   &quot;lhs&quot;: {
                     &quot;component&quot;: &quot;ProfileTile&quot;,
                     &quot;props&quot;: {
-                      &quot;title&quot;: &quot;Cost spike&quot;,
-                      &quot;label&quot;: &quot;Sanam Floor 07&quot;,
+                      &quot;title&quot;: &quot;Area mismatch&quot;,
+                      &quot;label&quot;: &quot;Sanam&quot;,
                       &quot;child&quot;: {
                         &quot;component&quot;: &quot;Icon&quot;,
                         &quot;props&quot;: {
@@ -42,8 +41,8 @@
                   &quot;rhs&quot;: {
                     &quot;component&quot;: &quot;Stats&quot;,
                     &quot;props&quot;: {
-                      &quot;number&quot;: &quot;+79.7%&quot;,
-                      &quot;label&quot;: &quot;Cost per SQFT vs prior&quot;
+                      &quot;number&quot;: &quot;140.6%&quot;,
+                      &quot;label&quot;: &quot;Measured vs documented area&quot;
                     }
                   }
                 }
@@ -83,21 +82,21 @@
             &quot;isFoldable&quot;: false,
             &quot;sections&quot;: [
               {
-                &quot;value&quot;: &quot;sanam&quot;,
-                &quot;trigger&quot;: &quot;Sanam · Cost per SQFT&quot;,
+                &quot;value&quot;: &quot;section1-sanam-area-discrepancy&quot;,
+                &quot;trigger&quot;: &quot;Sanam · Area Discrepancy&quot;,
                 &quot;content&quot;: [
                   {
-                    &quot;component&quot;: &quot;Callout&quot;,
+                    &quot;component&quot;: &quot;CalloutV2&quot;,
                     &quot;props&quot;: {
                       &quot;variant&quot;: &quot;warning&quot;,
-                      &quot;title&quot;: &quot;Cost spike detected&quot;,
-                      &quot;description&quot;: &quot;Cost per SQFT is up **79.7%** versus the prior period.&quot;
+                      &quot;title&quot;: &quot;Area mismatch detected&quot;,
+                      &quot;description&quot;: &quot;Measured area is **140.6%** of documented area for Sanam.&quot;
                     }
                   },
                   {
                     &quot;component&quot;: &quot;TextContent&quot;,
                     &quot;props&quot;: {
-                      &quot;textMarkdown&quot;: &quot;The cost per sqft for Sanam Floor 07 has significantly increased. Almost doubling the cost per square foot points to a major shift, far outside the normal bounds of change.&quot;
+                      &quot;textMarkdown&quot;: &quot;The document area for building Sanam is significantly different from the measured area on the floor plan.&quot;
                     }
                   },
                   {
@@ -105,9 +104,16 @@
                     &quot;props&quot;: {
                       &quot;children&quot;: [
                         {
-                          &quot;value&quot;: &quot;table&quot;,
+                          &quot;value&quot;: &quot;tab-table-sanam&quot;,
                           &quot;trigger&quot;: {
-                            &quot;text&quot;: &quot;Table view&quot;
+                            &quot;text&quot;: &quot;Table&quot;,
+                            &quot;icon&quot;: {
+                              &quot;component&quot;: &quot;Icon&quot;,
+                              &quot;props&quot;: {
+                                &quot;name&quot;: &quot;table&quot;,
+                                &quot;category&quot;: &quot;charts&quot;
+                              }
+                            }
                           },
                           &quot;content&quot;: [
                             {
@@ -116,15 +122,20 @@
                                 &quot;tableHeader&quot;: {
                                   &quot;rows&quot;: [
                                     { &quot;children&quot;: &quot;Building&quot;, &quot;type&quot;: &quot;string&quot; },
-                                    { &quot;children&quot;: &quot;Floor&quot;, &quot;type&quot;: &quot;string&quot; },
-                                    { &quot;children&quot;: &quot;Current Cost per SQFT&quot;, &quot;type&quot;: &quot;number&quot; },
-                                    { &quot;children&quot;: &quot;Previous Cost per SQFT&quot;, &quot;type&quot;: &quot;number&quot; }
+                                    { &quot;children&quot;: &quot;Documented Area SQFT&quot;, &quot;type&quot;: &quot;number&quot; },
+                                    { &quot;children&quot;: &quot;Measured Area SQFT&quot;, &quot;type&quot;: &quot;number&quot; },
+                                    { &quot;children&quot;: &quot;Percentage&quot;, &quot;type&quot;: &quot;string&quot; }
                                   ]
                                 },
                                 &quot;tableBody&quot;: {
                                   &quot;rows&quot;: [
                                     {
-                                      &quot;children&quot;: [&quot;Sanam&quot;, &quot;07&quot;, &quot;67.84&quot;, &quot;37.76&quot;]
+                                      &quot;children&quot;: [
+                                        &quot;Sanam&quot;,
+                                        &quot;36,446&quot;,
+                                        &quot;51,232.11&quot;,
+                                        &quot;140.6%&quot;
+                                      ]
                                     }
                                   ]
                                 }
@@ -133,9 +144,16 @@
                           ]
                         },
                         {
-                          &quot;value&quot;: &quot;graph&quot;,
+                          &quot;value&quot;: &quot;tab-graph-sanam&quot;,
                           &quot;trigger&quot;: {
-                            &quot;text&quot;: &quot;Graph view&quot;
+                            &quot;text&quot;: &quot;Graph&quot;,
+                            &quot;icon&quot;: {
+                              &quot;component&quot;: &quot;Icon&quot;,
+                              &quot;props&quot;: {
+                                &quot;name&quot;: &quot;bar-chart-3&quot;,
+                                &quot;category&quot;: &quot;charts&quot;
+                              }
+                            }
                           },
                           &quot;content&quot;: [
                             {
@@ -147,24 +165,24 @@
                                   &quot;header&quot;: {
                                     &quot;component&quot;: &quot;InlineHeader&quot;,
                                     &quot;props&quot;: {
-                                      &quot;heading&quot;: &quot;Sanam Floor 07 · Cost per SQFT&quot;
+                                      &quot;heading&quot;: &quot;Sanam · Documented vs Measured Area&quot;
                                     }
                                   },
                                   &quot;data&quot;: {
-                                    &quot;labels&quot;: [&quot;Sanam Floor 07&quot;],
+                                    &quot;labels&quot;: [&quot;Sanam&quot;],
                                     &quot;series&quot;: [
                                       {
-                                        &quot;category&quot;: &quot;Previous Cost per SQFT&quot;,
-                                        &quot;values&quot;: [37.76]
+                                        &quot;category&quot;: &quot;Documented Area SQFT&quot;,
+                                        &quot;values&quot;: [36446]
                                       },
                                       {
-                                        &quot;category&quot;: &quot;Current Cost per SQFT&quot;,
-                                        &quot;values&quot;: [67.84]
+                                        &quot;category&quot;: &quot;Measured Area SQFT&quot;,
+                                        &quot;values&quot;: [51232.11]
                                       }
                                     ]
                                   }
                                 },
-                                &quot;yAxisLabel&quot;: &quot;USD per SQFT&quot;
+                                &quot;yAxisLabel&quot;: &quot;SQFT&quot;
                               }
                             }
                           ]
@@ -175,11 +193,11 @@
                 ]
               },
               {
-                &quot;value&quot;: &quot;boltro&quot;,
+                &quot;value&quot;: &quot;section2-boltro-room-occupancy&quot;,
                 &quot;trigger&quot;: &quot;Boltro Road · Room Occupancy&quot;,
                 &quot;content&quot;: [
                   {
-                    &quot;component&quot;: &quot;Callout&quot;,
+                    &quot;component&quot;: &quot;CalloutV2&quot;,
                     &quot;props&quot;: {
                       &quot;variant&quot;: &quot;warning&quot;,
                       &quot;title&quot;: &quot;Occupancy mismatch detected&quot;,
@@ -197,9 +215,16 @@
                     &quot;props&quot;: {
                       &quot;children&quot;: [
                         {
-                          &quot;value&quot;: &quot;table&quot;,
+                          &quot;value&quot;: &quot;tab-table-boltro&quot;,
                           &quot;trigger&quot;: {
-                            &quot;text&quot;: &quot;Table view&quot;
+                            &quot;text&quot;: &quot;Table&quot;,
+                            &quot;icon&quot;: {
+                              &quot;component&quot;: &quot;Icon&quot;,
+                              &quot;props&quot;: {
+                                &quot;name&quot;: &quot;table&quot;,
+                                &quot;category&quot;: &quot;charts&quot;
+                              }
+                            }
                           },
                           &quot;content&quot;: [
                             {
@@ -208,7 +233,7 @@
                                 &quot;tableHeader&quot;: {
                                   &quot;rows&quot;: [
                                     { &quot;children&quot;: &quot;Building&quot;, &quot;type&quot;: &quot;string&quot; },
-                                    { &quot;children&quot;: &quot;Floor&quot;, &quot;type&quot;: &quot;string&quot; },
+                                    { &quot;children&quot;: &quot;Floor&quot;, &quot;type&quot;: &quot;number&quot; },
                                     { &quot;children&quot;: &quot;Room&quot;, &quot;type&quot;: &quot;string&quot; },
                                     { &quot;children&quot;: &quot;Employee Count&quot;, &quot;type&quot;: &quot;number&quot; },
                                     { &quot;children&quot;: &quot;Workstations&quot;, &quot;type&quot;: &quot;number&quot; }
@@ -217,7 +242,13 @@
                                 &quot;tableBody&quot;: {
                                   &quot;rows&quot;: [
                                     {
-                                      &quot;children&quot;: [&quot;Boltro Road&quot;, &quot;1&quot;, &quot;01A0705E&quot;, &quot;21&quot;, &quot;1&quot;]
+                                      &quot;children&quot;: [
+                                        &quot;Boltro Road&quot;,
+                                        &quot;1&quot;,
+                                        &quot;01A0705E&quot;,
+                                        &quot;21&quot;,
+                                        &quot;1&quot;
+                                      ]
                                     }
                                   ]
                                 }
@@ -226,9 +257,16 @@
                           ]
                         },
                         {
-                          &quot;value&quot;: &quot;graph&quot;,
+                          &quot;value&quot;: &quot;tab-graph-boltro&quot;,
                           &quot;trigger&quot;: {
-                            &quot;text&quot;: &quot;Graph view&quot;
+                            &quot;text&quot;: &quot;Graph&quot;,
+                            &quot;icon&quot;: {
+                              &quot;component&quot;: &quot;Icon&quot;,
+                              &quot;props&quot;: {
+                                &quot;name&quot;: &quot;bar-chart-3&quot;,
+                                &quot;category&quot;: &quot;charts&quot;
+                              }
+                            }
                           },
                           &quot;content&quot;: [
                             {
@@ -247,7 +285,7 @@
                                     &quot;labels&quot;: [&quot;01A0705E&quot;],
                                     &quot;series&quot;: [
                                       {
-                                        &quot;category&quot;: &quot;Employees&quot;,
+                                        &quot;category&quot;: &quot;Employee Count&quot;,
                                         &quot;values&quot;: [21]
                                       },
                                       {

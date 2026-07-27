@@ -14,7 +14,8 @@ export const americasOccupancyFlow: DemoFlowDefinition = {
     "portfolio",
     "vacant",
     "seats",
-    "employees",
+    "program headcount",
+    "assigned seats",
   ],
   responseFile: "americasOccupancy.c1.txt",
   thinking: {
@@ -31,7 +32,7 @@ export const americasOccupancyFlow: DemoFlowDefinition = {
         "Start with DATA.intro exactly.",
         ...buildTableGraphTabsLayout({
           tableSource: "DATA.buildings",
-          tableColumns: "Building, Employees, Seats, Vacant %",
+          tableColumns: "Building, Program Headcount, Assigned Seats, Vacant %",
         }),
         "After the Tabs block, add DATA.observation as a TextContent paragraph exactly, using textMarkdown so **bold** markers render as emphasis on the building name, vacancy rate, and utilization threshold.",
       ],
@@ -47,11 +48,11 @@ export const americasOccupancyFlow: DemoFlowDefinition = {
       tables: [
         {
           heading: "Building-Level Metrics",
-          columns: ["Building", "Employees", "Seats", "Vacant %"],
+          columns: ["Building", "Program Headcount", "Assigned Seats", "Vacant %"],
           rows: data.buildings.map((row) => [
             row.building,
-            String(row.employees),
-            String(row.seats),
+            String(row.programHeadcount),
+            String(row.assignedSeats),
             `${row.vacantPct}%`,
           ]),
         },

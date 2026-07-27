@@ -13,8 +13,8 @@ Six-step portfolio demo in `src/demo/`. Read `src/demo/README.md` for full workf
 | # | Flow id | Data file |
 |---|---------|-----------|
 | 1 | `americas-occupancy` | `data/americasBuildings.ts` |
-| 2 | `jefferson-costs` | `data/jeffersonHouseCosts.ts` |
-| 3 | `engineering-workspace` | `data/engineeringWorkspace.ts` |
+| 2 | `building-f-alignment` | `data/buildingFAlignment.ts` |
+| 3 | `retail-workspace` | `data/retailWorkspace.ts` |
 | 4 | `floor-plan` | `data/floorPlan.ts` |
 | 5 | presentation export | `presentation/presentationFlow.ts` |
 | 6 | PPTX download | `/api/export-pptx` (SDK export button) |

@@ -1,13 +1,13 @@
 import { americasOccupancyFlow } from "./definitions/americasOccupancy";
-import { engineeringWorkspaceFlow } from "./definitions/engineeringWorkspace";
+import { buildingFAlignmentFlow } from "./definitions/buildingFAlignment";
 import { floorPlanFlow } from "./definitions/floorPlan";
-import { jeffersonCostsFlow } from "./definitions/jeffersonCosts";
+import { retailWorkspaceFlow } from "./definitions/retailWorkspace";
 import type { DemoFlowDefinition, DemoResponseJob } from "./types";
 
 export const demoFlows: DemoFlowDefinition[] = [
   americasOccupancyFlow,
-  jeffersonCostsFlow,
-  engineeringWorkspaceFlow,
+  buildingFAlignmentFlow,
+  retailWorkspaceFlow,
   floorPlanFlow,
 ];
 

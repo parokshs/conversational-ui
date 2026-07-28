@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
       const filename = (body.title || cached.title).replace(/\.pptx$/i, "");
 
-      return new NextResponse(cached.buffer, {
+      return new NextResponse(new Uint8Array(cached.buffer), {
         headers: {
           "Content-Type":
             "application/vnd.openxmlformats-officedocument.presentationml.presentation",

@@ -102,10 +102,28 @@ The chat API:
 
 1. Collects the demo steps already answered in that thread
 2. Builds a presentation bundle from the same `data/*.ts` source files
-3. Streams a slide artifact into the chat UI
+3. Streams a **CWP-branded** slide artifact (live generation until seeded)
 4. Shows the native Thesys export button for PPTX download
 
-PPTX export is handled by `/api/export-pptx`, which proxies to the Thesys artifact PPTX API.
+**CWP brand:** slide prompts follow `.agents/skills/cwp_template/` (colors, typography, layout). Reference template: `presentation/assets/CWP_Template.pptx`.
+
+**First-time workflow:**
+
+1. Generate presentation in the app (live Thesys artifact + live PPTX download)
+2. Edit the downloaded deck in PowerPoint
+3. Seed for stable demo replay:
+
+```bash
+npm run seed:presentation -- --pptx ~/Downloads/edited-deck.pptx
+```
+
+After seeding, demo mode replays cached slides and serves the seeded `.pptx` on download.
+
+Optional draft cache (`seeded=false`, does not affect live demo):
+
+```bash
+npm run bootstrap:presentation
+```
 
 ## Adding a new demo step
 

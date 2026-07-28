@@ -1,15 +1,21 @@
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
 import { makeC1Response } from "@thesysai/genui-sdk/server";
-import { getPresentationDemoLatencyMs, waitForDemoLatency } from "../demoLatency";
 import {
   buildArtifactSystemPrompt,
   buildArtifactUserPrompt,
+  PRESENTATION_ARTIFACT_MODEL,
 } from "./artifactPrompt";
 import { buildDemoPresentationBundle } from "./buildBundle";
 import { buildSimpleTextCard } from "../format/buildSimpleTextCard";
 import { getMatchedFlowIds } from "../../app/api/chat/messageStore";
 import { logDemoRouting } from "../logDemoRouting";
+import {
+  loadCachedSlides,
+  loadPresentationManifest,
+  resolvePresentationCacheKey,
+} from "./presentationCache";
+import { isDemoModeEnabled } from "../flows/buildStagedResponse";
 
 const presentationExportPatterns: Array<{ name: string; pattern: RegExp }> = [
   { name: "export_presentation", pattern: /export\s+(a\s+)?presentation/ },
@@ -62,58 +68,80 @@ function closeArtifactTag() {
   return "</artifact>";
 }
 
-export async function handlePresentationExport({
+async function streamCachedPresentation({
   question,
   responseId,
   messageStore,
+  flowIds,
+  cacheKey,
 }: {
   question: string;
   responseId: string;
   messageStore: ReturnType<
     typeof import("../../app/api/chat/messageStore").getMessageStore
   >;
+  flowIds: string[];
+  cacheKey: string;
 }) {
-  const flowIds = getMatchedFlowIds(messageStore.messageList);
-  const bundle = buildDemoPresentationBundle(flowIds);
+  const slidesContent = loadCachedSlides(cacheKey);
+  const manifest = loadPresentationManifest(cacheKey);
+
+  if (!slidesContent) {
+    return null;
+  }
+
+  const artifactId = manifest?.artifactId ?? createArtifactId();
+  const c1Response = makeC1Response();
+
+  const ready = (async () => {
+    await c1Response.writeThinkItem({
+      title: "Preparing executive presentation",
+      description: "Loading CWP-branded portfolio deck.",
+      ephemeral: true,
+    });
+
+    await c1Response.writeContent(openArtifactTag(artifactId));
+    await c1Response.writeContent(slidesContent);
+    await c1Response.writeContent(closeArtifactTag());
+    await c1Response.end();
+  })();
+
+  void ready.then(() => {
+    messageStore.addMessage({
+      role: "assistant",
+      content: c1Response.getAssistantMessage().content,
+      id: responseId,
+    });
+  });
 
   logDemoRouting("presentation_export", {
     question,
     matchedFlowIds: flowIds,
-    sectionCount: bundle?.sections.length ?? 0,
-    outcome: bundle ? "artifact_stream" : "missing_prior_steps",
+    cacheKey,
+    outcome: "cached_artifact_stream",
+    artifactId,
   });
 
-  if (!bundle) {
-    const c1Response = makeC1Response();
-    const ready = (async () => {
-      await c1Response.writeContent(
-        buildSimpleTextCard(
-          "Ask about portfolio occupancy or building costs first, then request a presentation export."
-        )
-      );
-      await c1Response.end();
-    })();
+  return new NextResponse(c1Response.responseStream, {
+    headers: streamHeaders(),
+  });
+}
 
-    void ready.then(() => {
-      messageStore.addMessage({
-        role: "assistant",
-        content: c1Response.getAssistantMessage().content,
-        id: responseId,
-      });
-    });
-
-    return new NextResponse(c1Response.responseStream, {
-      headers: streamHeaders(),
-    });
-  }
-
-  if (!process.env.THESYS_API_KEY) {
-    return NextResponse.json(
-      { error: "THESYS_API_KEY is not configured on the server." },
-      { status: 500 }
-    );
-  }
-
+async function streamLivePresentation({
+  question,
+  responseId,
+  messageStore,
+  flowIds,
+  bundle,
+}: {
+  question: string;
+  responseId: string;
+  messageStore: ReturnType<
+    typeof import("../../app/api/chat/messageStore").getMessageStore
+  >;
+  flowIds: string[];
+  bundle: NonNullable<ReturnType<typeof buildDemoPresentationBundle>>;
+}) {
   const artifactId = createArtifactId();
   const artifactClient = new OpenAI({
     baseURL: "https://api.thesys.dev/v1/artifact",
@@ -121,7 +149,7 @@ export async function handlePresentationExport({
   });
 
   const artifactStream = await artifactClient.chat.completions.create({
-    model: "c1/artifact/v-20251030",
+    model: PRESENTATION_ARTIFACT_MODEL,
     messages: [
       {
         role: "system",
@@ -145,11 +173,9 @@ export async function handlePresentationExport({
   const ready = (async () => {
     await c1Response.writeThinkItem({
       title: "Preparing executive presentation",
-      description: "Compiling portfolio analytics into slide format.",
+      description: "Compiling portfolio analytics into CWP slide format.",
       ephemeral: true,
     });
-
-    await waitForDemoLatency({ ms: getPresentationDemoLatencyMs() });
 
     await c1Response.writeContent(openArtifactTag(artifactId));
 
@@ -172,7 +198,93 @@ export async function handlePresentationExport({
     });
   });
 
+  logDemoRouting("presentation_export", {
+    question,
+    matchedFlowIds: flowIds,
+    sectionCount: bundle.sections.length,
+    outcome: "live_artifact_stream",
+    artifactId,
+  });
+
   return new NextResponse(c1Response.responseStream, {
     headers: streamHeaders(),
+  });
+}
+
+export async function handlePresentationExport({
+  question,
+  responseId,
+  messageStore,
+}: {
+  question: string;
+  responseId: string;
+  messageStore: ReturnType<
+    typeof import("../../app/api/chat/messageStore").getMessageStore
+  >;
+}) {
+  const flowIds = getMatchedFlowIds(messageStore.messageList);
+  const bundle = buildDemoPresentationBundle(flowIds);
+
+  if (!bundle) {
+    logDemoRouting("presentation_export", {
+      question,
+      matchedFlowIds: flowIds,
+      sectionCount: 0,
+      outcome: "missing_prior_steps",
+    });
+
+    const c1Response = makeC1Response();
+    const ready = (async () => {
+      await c1Response.writeContent(
+        buildSimpleTextCard(
+          "Complete the portfolio analysis steps first, then request a presentation export."
+        )
+      );
+      await c1Response.end();
+    })();
+
+    void ready.then(() => {
+      messageStore.addMessage({
+        role: "assistant",
+        content: c1Response.getAssistantMessage().content,
+        id: responseId,
+      });
+    });
+
+    return new NextResponse(c1Response.responseStream, {
+      headers: streamHeaders(),
+    });
+  }
+
+  if (isDemoModeEnabled()) {
+    const cacheKey = resolvePresentationCacheKey(flowIds);
+    if (cacheKey) {
+      const cachedResponse = await streamCachedPresentation({
+        question,
+        responseId,
+        messageStore,
+        flowIds,
+        cacheKey,
+      });
+
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+    }
+  }
+
+  if (!process.env.THESYS_API_KEY) {
+    return NextResponse.json(
+      { error: "THESYS_API_KEY is not configured on the server." },
+      { status: 500 }
+    );
+  }
+
+  return streamLivePresentation({
+    question,
+    responseId,
+    messageStore,
+    flowIds,
+    bundle,
   });
 }

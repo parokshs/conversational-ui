@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "bootstrap:demo": "tsx scripts/bootstrap-c1-responses.ts"
+    "bootstrap:demo": "tsx scripts/bootstrap-c1-responses.ts",
+    "bootstrap:presentation": "tsx scripts/bootstrap-presentation.ts",
+    "seed:presentation": "tsx scripts/seed-presentation.ts"
   },
   "dependencies": {
     "@crayonai/react-core": "^0.7.6",

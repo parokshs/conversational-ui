@@ -1,12 +1,41 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getMatchedFlowIds, getMessageStore } from "../chat/messageStore";
+import { isDemoModeEnabled } from "../../../demo/flows/buildStagedResponse";
+import { logDemoRouting } from "../../../demo/logDemoRouting";
+import { resolveCachedPptx } from "../../../demo/presentation/presentationCache";
 
 type ExportRequest = {
   exportParams?: string;
   title?: string;
+  threadId?: string;
 };
 
 export async function POST(req: NextRequest) {
   const body = (await req.json()) as ExportRequest;
+
+  if (isDemoModeEnabled() && body.threadId) {
+    const flowIds = getMatchedFlowIds(getMessageStore(body.threadId).messageList);
+    const cached = resolveCachedPptx(flowIds);
+
+    if (cached) {
+      logDemoRouting("presentation_pptx_download", {
+        threadId: body.threadId,
+        matchedFlowIds: flowIds,
+        cacheKey: cached.cacheKey,
+        outcome: "seeded_pptx",
+      });
+
+      const filename = (body.title || cached.title).replace(/\.pptx$/i, "");
+
+      return new NextResponse(cached.buffer, {
+        headers: {
+          "Content-Type":
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "Content-Disposition": `attachment; filename="${filename}.pptx"`,
+        },
+      });
+    }
+  }
 
   if (!body.exportParams) {
     return NextResponse.json(
@@ -51,6 +80,11 @@ export async function POST(req: NextRequest) {
     }
 
     const filename = (body.title || "presentation").replace(/\.pptx$/i, "");
+
+    logDemoRouting("presentation_pptx_download", {
+      threadId: body.threadId ?? null,
+      outcome: "live_pptx_export",
+    });
 
     return new NextResponse(pptxResponse.body, {
       headers: {

@@ -39,6 +39,41 @@ export type PresentationImage = {
   caption?: string;
 };
 
+export type PresentationInfoItem = {
+  title: string;
+  description: string;
+};
+
+export type PresentationSlideContent = {
+  sectionDividerTitle: string;
+  tableSlides?: {
+    slideTitle: string;
+    layout: "horizontal-grid" | "horizontal-list";
+    infoItems: PresentationInfoItem[];
+  }[];
+  chartSlides?: {
+    slideTitle: string;
+    body?: string;
+    layout: "title-body-top" | "title-left";
+    chartType: PresentationChart["chartType"];
+    categories: string[];
+    series: PresentationChart["series"];
+    categoryAxisLabel?: string;
+    valueAxisLabel?: string;
+  }[];
+  insightSlides?: {
+    slideTitle: string;
+    layout: "horizontal-grid";
+    infoItems: PresentationInfoItem[];
+  }[];
+  imageSlide?: {
+    slideTitle: string;
+    body?: string;
+    imageUrl: string;
+    layout: "image-right";
+  };
+};
+
 export type PresentationSection = {
   id: string;
   title: string;
@@ -49,9 +84,15 @@ export type PresentationSection = {
   callouts?: PresentationCallout[];
   bullets?: PresentationBullets[];
   images?: PresentationImage[];
+  slideContent?: PresentationSlideContent;
 };
 
 export type DemoPresentationBundle = {
   title: string;
+  subtitle?: string;
+  helperText?: string;
   sections: PresentationSection[];
+  closingSlides?: {
+    items: { title: string; body: string }[];
+  }[];
 };

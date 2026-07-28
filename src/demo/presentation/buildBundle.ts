@@ -1,4 +1,5 @@
 import { getFlowById } from "../flows/registry";
+import { enrichPresentationBundle } from "./formatPresentationSlides";
 import type { DemoPresentationBundle } from "./types";
 
 export function buildDemoPresentationBundle(
@@ -15,10 +16,10 @@ export function buildDemoPresentationBundle(
   const title =
     sections.length === 1
       ? sections[0].title
-      : "Portfolio & Building Analytics";
+      : "Portfolio Analytics";
 
-  return {
+  return enrichPresentationBundle({
     title,
     sections,
-  };
+  });
 }

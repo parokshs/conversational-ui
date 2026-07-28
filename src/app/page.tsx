@@ -3,11 +3,12 @@
 import { C1Chat, ArtifactViewMode, ThemeProvider } from "@thesysai/genui-sdk";
 import "@crayonai/react-ui/styles/index.css";
 import { useCallback, useMemo, useRef } from "react";
-import { APP_BRAND, brandTheme } from "@/config/branding";
+import { APP_BRAND, brandTheme, cwpSlidesTheme } from "@/config/branding";
 import { useAnomalyChatManagers } from "@/hooks/useAnomalyChatManagers";
 
 export default function Home() {
   const isExportingRef = useRef(false);
+  const selectedThreadIdRef = useRef<string | null>(null);
 
   const handlePptxExport = useCallback(
     async ({
@@ -27,7 +28,11 @@ export default function Home() {
         const response = await fetch("/api/export-pptx", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ exportParams }),
+          body: JSON.stringify({
+            exportParams,
+            title,
+            threadId: selectedThreadIdRef.current,
+          }),
         });
 
         if (!response.ok) {
@@ -67,8 +72,14 @@ export default function Home() {
     customizeC1,
   });
 
+  selectedThreadIdRef.current = threadListManager.selectedThreadId;
+
   return (
-    <ThemeProvider mode="light" theme={brandTheme}>
+    <ThemeProvider
+      mode="light"
+      theme={brandTheme}
+      __experimentalSlidesTheme={cwpSlidesTheme}
+    >
       <C1Chat
         apiUrl="/api/chat"
         agentName={APP_BRAND.name}

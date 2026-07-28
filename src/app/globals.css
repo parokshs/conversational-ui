@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "../demo/presentation/cwpSlides.css";
 
 :root {
   --background: #ffffff;

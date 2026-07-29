@@ -59,20 +59,20 @@ export function getAnomalySummaryCards() {
 
   return [
     {
-      title: "Area mismatch",
-      label: `${sanamAreaAnomaly.building}`,
-      stat: `${sanamAreaAnomaly.percentage}%`,
-      statLabel: "Measured vs documented area",
-      iconName: "trending-up",
-      iconCategory: "charts",
-    },
-    {
       title: "Occupancy mismatch",
       label: `${boltroRoomAnomaly.building} · ${boltroRoomAnomaly.room}`,
       stat: `${employeesPerWorkstation}:1`,
       statLabel: "Employees per workstation",
       iconName: "alert-triangle",
       iconCategory: "notifications",
+    },
+    {
+      title: "Area mismatch",
+      label: `${sanamAreaAnomaly.building}`,
+      stat: `${sanamAreaAnomaly.percentage}%`,
+      statLabel: "Measured vs documented area",
+      iconName: "trending-up",
+      iconCategory: "charts",
     },
   ];
 }
@@ -118,31 +118,6 @@ export function getBoltroChart(): PresentationChart {
 export function getAnomalyFindings() {
   return [
     {
-      id: "sanam-area-discrepancy",
-      title: "Sanam · Area Discrepancy",
-      severity: "warning",
-      calloutTitle: "Area mismatch detected",
-      calloutDescription: `Measured area is **${sanamAreaAnomaly.percentage}%** of documented area for ${sanamAreaAnomaly.building}.`,
-      analysis: sanamAreaAnalysis,
-      chart: getSanamChart(),
-      table: {
-        columns: [
-          "Building",
-          "Documented Area SQFT",
-          "Measured Area SQFT",
-          "Percentage",
-        ],
-        rows: [
-          [
-            sanamAreaAnomaly.building,
-            formatArea(sanamAreaAnomaly.documentedAreaSqft),
-            formatArea(sanamAreaAnomaly.measuredAreaSqft),
-            `${sanamAreaAnomaly.percentage}%`,
-          ],
-        ],
-      },
-    },
-    {
       id: "boltro-room-occupancy",
       title: "Boltro Road · Room Occupancy",
       severity: "warning",
@@ -165,6 +140,31 @@ export function getAnomalyFindings() {
             boltroRoomAnomaly.room,
             boltroRoomAnomaly.employeeCount,
             boltroRoomAnomaly.workstations,
+          ],
+        ],
+      },
+    },
+    {
+      id: "sanam-area-discrepancy",
+      title: "Sanam · Area Discrepancy",
+      severity: "warning",
+      calloutTitle: "Area mismatch detected",
+      calloutDescription: `Measured area is **${sanamAreaAnomaly.percentage}%** of documented area for ${sanamAreaAnomaly.building}.`,
+      analysis: sanamAreaAnalysis,
+      chart: getSanamChart(),
+      table: {
+        columns: [
+          "Building",
+          "Documented Area SQFT",
+          "Measured Area SQFT",
+          "Percentage",
+        ],
+        rows: [
+          [
+            sanamAreaAnomaly.building,
+            formatArea(sanamAreaAnomaly.documentedAreaSqft),
+            formatArea(sanamAreaAnomaly.measuredAreaSqft),
+            `${sanamAreaAnomaly.percentage}%`,
           ],
         ],
       },

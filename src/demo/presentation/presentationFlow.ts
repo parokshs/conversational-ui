@@ -11,12 +11,13 @@ import { patchPresentationSlides } from "./patchPresentationSlides";
 import { buildSimpleTextCard } from "../format/buildSimpleTextCard";
 import { getMatchedFlowIds } from "../../app/api/chat/messageStore";
 import { logDemoRouting } from "../logDemoRouting";
-import { waitForPresentationDemoLatency } from "../demoLatency";
+import { waitForPresentationDemoLatency, waitForPresentationSlideLatency } from "../demoLatency";
 import {
   loadCachedSlides,
   loadPresentationManifest,
   resolvePresentationCacheKey,
 } from "./presentationCache";
+import { streamSlidesArtifactIncrementally } from "./streamSlidesArtifact";
 import { isDemoModeEnabled } from "../flows/buildStagedResponse";
 
 const presentationExportPatterns: Array<{ name: string; pattern: RegExp }> = [
@@ -70,14 +71,6 @@ function closeArtifactTag() {
   return "</artifact>";
 }
 
-function prepareCachedSlidesStream(slidesContent: string, artifactId: string) {
-  if (slidesContent.trimStart().startsWith("<artifact")) {
-    return slidesContent;
-  }
-
-  return `${openArtifactTag(artifactId)}${slidesContent}${closeArtifactTag()}`;
-}
-
 async function streamCachedPresentation({
   question,
   responseId,
@@ -119,9 +112,9 @@ async function streamCachedPresentation({
 
     await waitForPresentationDemoLatency();
 
-    await c1Response.writeContent(
-      prepareCachedSlidesStream(patchedSlidesContent, artifactId)
-    );
+    await streamSlidesArtifactIncrementally(c1Response, patchedSlidesContent, {
+      waitBeforeEachSlide: waitForPresentationSlideLatency,
+    });
     await c1Response.end();
   })();
 

@@ -7,6 +7,9 @@ function parseNonNegativeInt(value: string | undefined): number | undefined {
   return Number.isFinite(parsed) && parsed >= 0 ? parsed : undefined;
 }
 
+/** Per-slide delay while the deck streams in (override via DEMO_PRESENTATION_SLIDE_LATENCY_MS). */
+const DEFAULT_PRESENTATION_SLIDE_LATENCY_MS = 1000;
+
 /** Shown while the in-chat slide deck is prepared (override via DEMO_PRESENTATION_LATENCY_MS). */
 const DEFAULT_PRESENTATION_PREVIEW_LATENCY_MS = 3500;
 
@@ -53,6 +56,18 @@ export function getPresentationDownloadLatencyMs(): number {
   return DEFAULT_PRESENTATION_DOWNLOAD_LATENCY_MS;
 }
 
+export function getPresentationSlideLatencyMs(): number {
+  const slideOverride = parseNonNegativeInt(
+    process.env.DEMO_PRESENTATION_SLIDE_LATENCY_MS
+  );
+
+  if (slideOverride !== undefined) {
+    return slideOverride;
+  }
+
+  return DEFAULT_PRESENTATION_SLIDE_LATENCY_MS;
+}
+
 export async function waitForDemoLatency(options?: { ms?: number }): Promise<void> {
   const ms = getDemoLatencyMs(options?.ms);
 
@@ -69,4 +84,8 @@ export async function waitForPresentationDemoLatency(): Promise<void> {
 
 export async function waitForPresentationDownloadLatency(): Promise<void> {
   await waitForDemoLatency({ ms: getPresentationDownloadLatencyMs() });
+}
+
+export async function waitForPresentationSlideLatency(): Promise<void> {
+  await waitForDemoLatency({ ms: getPresentationSlideLatencyMs() });
 }

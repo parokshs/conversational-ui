@@ -2,11 +2,12 @@
 
 import { C1Chat, ArtifactViewMode, ThemeProvider } from "@thesysai/genui-sdk";
 import "@crayonai/react-ui/styles/index.css";
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { APP_BRAND, brandTheme, cwpSlidesTheme } from "@/config/branding";
 import { useAnomalyChatManagers } from "@/hooks/useAnomalyChatManagers";
 
 export default function Home() {
+  const [isClientMounted, setIsClientMounted] = useState(false);
   const isExportingRef = useRef(false);
   const selectedThreadIdRef = useRef<string | null>(null);
 
@@ -73,6 +74,14 @@ export default function Home() {
   });
 
   selectedThreadIdRef.current = threadListManager.selectedThreadId;
+
+  useEffect(() => {
+    setIsClientMounted(true);
+  }, []);
+
+  if (!isClientMounted) {
+    return <div className="min-h-screen bg-[#fafafa]" aria-hidden="true" />;
+  }
 
   return (
     <ThemeProvider

@@ -22,11 +22,18 @@ ENTERPRISE POLISH:
 export const CWP_CHART_PALETTE = {
   singleSeries: "#CC4678",
   twoSeries: ["#CC4678", "#FF9933"] as const,
-  brandAccents: ["#1767D2", "#FF9933", "#D43900", "#FFCC33", "#049A0D", "#9933CC"] as const,
-};
+} as const;
 
-/** Flat palette for chat UI charts (brand accents). */
-export const CWP_UI_CHART_PALETTE = [...CWP_CHART_PALETTE.brandAccents] as const;
+/**
+ * Chat UI chart colors (BarChartV2, MiniChart, etc.).
+ * Crayon picks palette[floor(n/2)] for one series and palette[mid±1] for two —
+ * order must stay [maroon, maroon, orange] so singles and pairs match PPT slides.
+ */
+export const CWP_UI_CHART_PALETTE = [
+  CWP_CHART_PALETTE.twoSeries[0],
+  CWP_CHART_PALETTE.singleSeries,
+  CWP_CHART_PALETTE.twoSeries[1],
+] as const;
 
 export const CWP_SLIDES_THEME = {
   font: "Roboto, sans-serif",

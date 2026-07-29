@@ -19,7 +19,7 @@ export const anomalyIntro =
   "Some anomalies have been found in the data";
 
 export const sanamAreaAnalysis =
-  "The document area for building Sanam is significantly different from the measured area on the floor plan.";
+  "The documented area for building Sanam is significantly different from the measured area on the floor plan.";
 
 export const sanamAreaAnomaly: AreaDiscrepancyAnomaly = {
   building: "Sanam",
@@ -29,7 +29,7 @@ export const sanamAreaAnomaly: AreaDiscrepancyAnomaly = {
 };
 
 export const boltroRoomAnalysis =
-  "A room in Boltro Road Floor 01 has been found to have an exceptionally high employee count compared to Workstations. Indicating that something is incorrect, either employees have been misplaced in this room, or it is an enclosed office where the Workstation count has not been updated.";
+  "A room in Boltro Road Floor 01 has been found to have an exceptionally high employee count compared to workstations. Indicating that something is incorrect, either employees have been misplaced in this room, or it is an enclosed office where the workstation count has not been updated.";
 
 export const boltroRoomAnomaly: RoomOccupancyAnomaly = {
   building: "Boltro Road",

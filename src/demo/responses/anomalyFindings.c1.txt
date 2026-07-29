@@ -96,7 +96,7 @@
                   {
                     &quot;component&quot;: &quot;TextContent&quot;,
                     &quot;props&quot;: {
-                      &quot;textMarkdown&quot;: &quot;The document area for building Sanam is significantly different from the measured area on the floor plan.&quot;
+                      &quot;textMarkdown&quot;: &quot;The documented area for building Sanam is significantly different from the measured area on the floor plan.&quot;
                     }
                   },
                   {
@@ -207,7 +207,7 @@
                   {
                     &quot;component&quot;: &quot;TextContent&quot;,
                     &quot;props&quot;: {
-                      &quot;textMarkdown&quot;: &quot;A room in Boltro Road Floor 01 has been found to have an exceptionally high employee count compared to Workstations. Indicating that something is incorrect, either employees have been misplaced in this room, or it is an enclosed office where the Workstation count has not been updated.&quot;
+                      &quot;textMarkdown&quot;: &quot;A room in Boltro Road Floor 01 has been found to have an exceptionally high employee count compared to workstations. Indicating that something is incorrect, either employees have been misplaced in this room, or it is an enclosed office where the workstation count has not been updated.&quot;
                     }
                   },
                   {

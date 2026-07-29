@@ -59,7 +59,7 @@ Presentation export does **not** need bootstrapping. It reads the TypeScript dat
 
 ## Runtime
 
-The chat API serves the `.c1.txt` files for matched demo questions. It also tracks which demo steps were answered in each thread so presentation export can include only the analyses the user actually requested.
+The chat API serves the `.c1.txt` files for matched demo questions. Presentation export always builds the **full 4-step executive deck** from demo data, even if the user skips straight to "Generate PPT".
 
 Responses are instant by default because they replay pre-generated files rather than querying a database. To simulate fetch/analysis time, configure artificial latency in `.env`:
 
@@ -100,8 +100,8 @@ After asking one or more demo questions in a thread, the user can type a natural
 
 The chat API:
 
-1. Collects the demo steps already answered in that thread
-2. Builds a presentation bundle from the same `data/*.ts` source files
+1. Collects all four demo analytics sections from `data/*.ts` (always — not limited to steps answered in the thread)
+2. Builds a presentation bundle from the same source files
 3. Streams a **CWP-branded** slide artifact (live generation until seeded)
 4. Shows the native Thesys export button for PPTX download
 
@@ -136,7 +136,7 @@ npm run bootstrap:presentation
 3. Register the flow in `flows/registry.ts`
 4. Run `npm run bootstrap:demo`
 
-No extra presentation wiring is needed. The new step is included automatically when it has been answered in the current thread before the user requests a presentation export.
+No extra presentation wiring is needed. New chat steps are included in the deck automatically once registered in `flows/registry.ts`.
 
 ## Editing an existing step
 

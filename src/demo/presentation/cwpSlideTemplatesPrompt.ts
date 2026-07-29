@@ -1,48 +1,30 @@
 /**
- * Thesys slide template rules (c1/artifact/v-20260130) mapped to CWP brand.
+ * Thesys slide rules mapped to cwp_template skill (SKILL.md + references/).
  */
 export const CWP_SLIDE_TEMPLATES_PROMPT = `
-SLIDE TEMPLATE RULES (c1/artifact/v-20260130):
+SLIDE TEMPLATE RULES (Thesys c1/artifact/v-20260130 + cwp_template skill):
 
-USE PRE-BUILT slideContent FROM DATA — copy titles, infoItems, items, chart values, and image URLs exactly.
-Do NOT invent markdown tables, do NOT use Text Body variant for tabular data, do NOT reformat slideContent.
+USE PRE-BUILT DATA ONLY — copy slideContent and actionPlanSlide fields exactly.
+Follow references/analytics-layout-guide.md typography and references/browser-preview-mapping.md.
 
-SLIDE SEQUENCE (strict):
-1. Title slide → variant "minimal", layout "title-bottom"
-   - title: DATA.title, subtitle: DATA.subtitle, helperText: DATA.helperText
-   - NO bgImageSrc, NO images
+DECK SIZE: 6 slides — title + 4 section contentSlides + actionPlanSlide.
 
-2. For each DATA.sections[] in order:
-   a) Section Break → variant "classic" (section break slide), title: section.slideContent.sectionDividerTitle
-   b) For each section.slideContent.tableSlides[] → Key Info with Title
-      - variant "key-info-with-title", layout from slideContent (usually horizontal-grid)
-      - title + infoItems copied exactly from slideContent
-   c) For each section.slideContent.chartSlides[] → Chart with Context
-      - variant "chart-with-context", layout "title-body-top"
-      - title, body, chart from slideContent; chart fills most of the slide
-      - horizontalBar → BarChart isHorizontal true; groupedBar → BarChart multi-series
-   d) section.slideContent.imageSlide (if present) → Content with Image
-      - variant "content-with-image", layout "image-right"
-      - title, body, images: [imageUrl] from slideContent exactly
-   e) For each section.slideContent.insightSlides[] → Key Info with Title
-      - variant "key-info-with-title", layout "horizontal-grid"
-      - title + infoItems copied exactly from slideContent (do NOT use Content Classic or Numbered Key Points for insights)
+SLIDE SEQUENCE:
+1. Title → variant "minimal", layout "title-bottom"
+   title: DATA.title, subtitle: DATA.subtitle only — NO helperText, NO bgImageSrc
+   Typography: 44pt bold title, 24pt subtitle (layout guide)
+2. Americas → contentSlide slideType "metrics-overview", layout "title-body-bottom"
+   NO blue header. Chart hero top ~55%. slideTitle 28pt bold left + body 16pt right below.
+3–5. Building F, Retail, Floor plan → contentSlide slideType "insight"
+   - Charts: template chart-with-context, layout "title-body-left"
+   - Floor plan: template list-with-image
+   Blue header bar (~28pt white title) + 16pt bullets left + visual right
+   - chartHorizontal true → BarChartV2 isHorizontal true
+   - horizontalBar: xAxisLabel=valueAxisLabel, yAxisLabel=categoryAxisLabel
+   - Body ≤120 chars — copy verbatim with line breaks (bullets + Rec: line)
+6. Action-plan → variant "numbered-key-point" from DATA.actionPlanSlide (18pt items)
 
-3. For each DATA.closingSlides[] → Numbered Key Points (max 3 items per slide for large typography)
-   - variant "numbered-key-point", items copied exactly — never exceed 3 items per closing slide
+CHART COLORS: contentSlide.chartColors (#CC4678 single, #CC4678+#FF9933 dual).
 
-FORBIDDEN:
-- Text Body variant (renders markdown as tiny plain text — never use)
-- Markdown tables or pipe-delimited table text
-- Title Standard, Title Dramatic, TitleWithImage, TwoColumnText, KeyStatement
-- ANY thesys_image:* or decorative/stock/AI images
-- bgImageSrc on any slide
-- Content Classic for insight bullets (use insightSlides key-info grid instead)
-- Empty slides or slides with large unused body areas
-
-DENSITY & TYPOGRAPHY:
-- Every content slide must fill the viewport: charts large, info grids use horizontal-grid, bullets use two columns when >4 items
-- Prefer fewer, denser slides over many sparse slides
-- Keep titles within schema max lengths already enforced in slideContent
-- No images except DATA.sections[].slideContent.imageSlide.imageUrl when provided
+FORBIDDEN: SectionBreak slides, extra slides, thesys_image, decorative images, bgImageSrc.
 `.trim();

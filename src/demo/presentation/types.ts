@@ -1,3 +1,7 @@
+import type { CwpSkillReference } from "./cwpSkillLoader";
+
+export type { CwpSkillReference };
+
 export type PresentationTable = {
   heading: string;
   columns: string[];
@@ -39,40 +43,61 @@ export type PresentationImage = {
   caption?: string;
 };
 
-export type PresentationInfoItem = {
-  title: string;
-  description: string;
+export type PresentationInsightItem = {
+  iconName: string;
+  iconCategory: string;
+  primaryText: string;
 };
 
+export type CwpSlideType = "metrics-overview" | "insight" | "action-plan";
+
+export type ChartContentLayout =
+  | "title-body-left"
+  | "title-body-bottom"
+  | "title-body-top"
+  | "title-left";
+
+export type PresentationContentSlide =
+  | {
+      slideType: "metrics-overview" | "insight";
+      template: "chart-with-context";
+      slideTitle: string;
+      body: string;
+      layout: ChartContentLayout;
+      chartType: PresentationChart["chartType"];
+      categories: string[];
+      series: PresentationChart["series"];
+      categoryAxisLabel?: string;
+      valueAxisLabel?: string;
+      chartColors: string[];
+      chartHorizontal?: boolean;
+    }
+  | {
+      slideType: "insight";
+      template: "list-with-image";
+      slideTitle: string;
+      insightItems: PresentationInsightItem[];
+      imageUrl: string;
+    };
+
 export type PresentationSlideContent = {
-  sectionDividerTitle: string;
-  tableSlides?: {
-    slideTitle: string;
-    layout: "horizontal-grid" | "horizontal-list";
-    infoItems: PresentationInfoItem[];
-  }[];
-  chartSlides?: {
-    slideTitle: string;
-    body?: string;
-    layout: "title-body-top" | "title-left";
-    chartType: PresentationChart["chartType"];
-    categories: string[];
-    series: PresentationChart["series"];
-    categoryAxisLabel?: string;
-    valueAxisLabel?: string;
-  }[];
-  insightSlides?: {
-    slideTitle: string;
-    layout: "horizontal-grid";
-    infoItems: PresentationInfoItem[];
-  }[];
-  imageSlide?: {
-    slideTitle: string;
-    body?: string;
-    imageUrl: string;
-    layout: "image-right";
-  };
+  contentSlide: PresentationContentSlide;
 };
+
+export type PresentationActionPlanSlide = {
+  slideTitle: string;
+  items: { title: string; body: string }[];
+};
+
+export type CwpSkillAssetReference = {
+  relativePath: string;
+  absolutePath: string;
+  exists: boolean;
+  fileName: string;
+};
+
+/** @deprecated Use CwpSkillReference from cwpSkillLoader */
+export type CwpTemplateReference = CwpSkillReference;
 
 export type PresentationSection = {
   id: string;
@@ -91,8 +116,7 @@ export type DemoPresentationBundle = {
   title: string;
   subtitle?: string;
   helperText?: string;
+  templateReference?: CwpSkillReference;
   sections: PresentationSection[];
-  closingSlides?: {
-    items: { title: string; body: string }[];
-  }[];
+  actionPlanSlide?: PresentationActionPlanSlide;
 };

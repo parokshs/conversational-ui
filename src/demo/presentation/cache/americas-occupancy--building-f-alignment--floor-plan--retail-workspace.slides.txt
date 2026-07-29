@@ -1,6 +1,6 @@
-<artifact thesys="true" type="slides" id="366a986f1e" version="1785214321676">
+<artifact thesys="true" type="slides" id="9974aa816e" version="1785305823523">
 {&quot;component&quot;:{&quot;component&quot;:&quot;Presentation&quot;,&quot;props&quot;:{&quot;metadata&quot;:{&quot;title&quot;:{&quot;id&quot;:&quot;presentation-title&quot;,&quot;text&quot;:&quot;Presentation&quot;}},&quot;slides&quot;:[]}}}
-</artifact><artifact_diff thesys="true" type="slides" id="366a986f1e">
+</artifact><artifact_diff thesys="true" type="slides" id="9974aa816e">
 [
   {
     &quot;op&quot;: &quot;replace&quot;,
@@ -13,44 +13,44 @@
   {
     &quot;op&quot;: &quot;append&quot;,
     &quot;value&quot;: {
-      &quot;id&quot;: &quot;title-slide&quot;,
-      &quot;variant&quot;: &quot;TitleWithImage&quot;,
-      &quot;layout&quot;: &quot;image_bottom&quot;,
-      &quot;title&quot;: &quot;Portfolio &amp; Building Analytics&quot;,
-      &quot;subtitle&quot;: &quot;Americas Region | Executive Summary&quot;,
-      &quot;helperText&quot;: &quot;The Changing Workplace (CWP) | Workplace Intelligence Report&quot;,
-      &quot;imageSrc&quot;: &quot;thesys_image:142&quot;
+      &quot;id&quot;: &quot;slide-title&quot;,
+      &quot;template&quot;: &quot;Title&quot;,
+      &quot;props&quot;: {
+        &quot;variant&quot;: &quot;minimal&quot;,
+        &quot;layout&quot;: &quot;title-bottom&quot;,
+        &quot;title&quot;: &quot;Portfolio &amp; Building Analytics&quot;,
+        &quot;subtitle&quot;: &quot;Americas Real Estate Insights&quot;
+      }
     }
   },
   {
     &quot;op&quot;: &quot;append&quot;,
     &quot;value&quot;: {
-      &quot;id&quot;: &quot;americas-occupancy-intro&quot;,
-      &quot;variant&quot;: &quot;KeyStatement&quot;,
-      &quot;text&quot;: &quot;Americas Portfolio Occupancy: 10 buildings analysed across the region — most showing strong utilisation, with one clear outlier demanding immediate attention.&quot;
-    }
-  },
-  {
-    &quot;op&quot;: &quot;append&quot;,
-    &quot;value&quot;: {
-      &quot;id&quot;: &quot;americas-building-metrics&quot;,
-      &quot;variant&quot;: &quot;TextWithChartHorizontal&quot;,
-      &quot;title&quot;: &quot;Building-Level Metrics — Vacant % by Building&quot;,
-      &quot;content&quot;: &quot;Across the 10 Americas buildings, vacancy rates are consistently low — ranging from 4.1% to 5.7% for nine of the buildings. Building F stands as a significant outlier at 24% vacancy, nearly 5x the portfolio average.\n\nBuilding E has the next highest vacancy at 5.7%, followed by Building H at 5.6%. Buildings G and A are the most efficiently utilised at 4.1% and 4.4% respectively.&quot;,
-      &quot;chart&quot;: {
-        &quot;component&quot;: &quot;BarChartV2&quot;,
-        &quot;props&quot;: {
-          &quot;isHorizontal&quot;: true,
-          &quot;chartData&quot;: {
-            &quot;data&quot;: {
-              &quot;labels&quot;: [&quot;Building F&quot;, &quot;Building E&quot;, &quot;Building H&quot;, &quot;Building C&quot;, &quot;Building B&quot;, &quot;Building I&quot;, &quot;Building J&quot;, &quot;Building D&quot;, &quot;Building A&quot;, &quot;Building G&quot;],
-              &quot;series&quot;: [
-                { &quot;category&quot;: &quot;Vacant %&quot;, &quot;values&quot;: [24, 5.7, 5.6, 5.3, 5, 4.8, 4.7, 4.6, 4.4, 4.1] }
-              ]
+      &quot;id&quot;: &quot;slide-americas-occupancy&quot;,
+      &quot;template&quot;: &quot;Chart&quot;,
+      &quot;props&quot;: {
+        &quot;variant&quot;: &quot;chart-with-context&quot;,
+        &quot;layout&quot;: &quot;title-body-bottom&quot;,
+        &quot;title&quot;: &quot;Building-Level Metrics — Vacant % b…&quot;,
+        &quot;body&quot;: &quot;Building F is a clear outlier with the highest vacancy rate (24%), well above the rest of the Americas portfolio. Most …&quot;,
+        &quot;chart&quot;: {
+          &quot;component&quot;: &quot;BarChartV2&quot;,
+          &quot;props&quot;: {
+            &quot;xAxisLabel&quot;: &quot;Vacant %&quot;,
+            &quot;yAxisLabel&quot;: &quot;Building&quot;,
+            &quot;isHorizontal&quot;: true,
+            &quot;chartData&quot;: {
+              &quot;data&quot;: {
+                &quot;labels&quot;: [&quot;Building F&quot;, &quot;Building E&quot;, &quot;Building H&quot;, &quot;Building C&quot;, &quot;Building B&quot;, &quot;Building I&quot;, &quot;Building J&quot;, &quot;Building D&quot;, &quot;Building A&quot;, &quot;Building G&quot;],
+                &quot;series&quot;: [
+                  {
+                    &quot;category&quot;: &quot;Vacant %&quot;,
+                    &quot;values&quot;: [24, 5.7, 5.6, 5.3, 5, 4.8, 4.7, 4.6, 4.4, 4.1]
+                  }
+                ]
+              }
             }
-          },
-          &quot;xAxisLabel&quot;: &quot;Vacant %&quot;,
-          &quot;yAxisLabel&quot;: &quot;Building&quot;
+          }
         }
       }
     }
@@ -58,44 +58,31 @@
   {
     &quot;op&quot;: &quot;append&quot;,
     &quot;value&quot;: {
-      &quot;id&quot;: &quot;americas-occupancy-observation&quot;,
-      &quot;variant&quot;: &quot;TwoColumnText&quot;,
-      &quot;leftContent&quot;: &quot;**Portfolio Summary**\n\nThe Americas portfolio spans 10 buildings with a combined program headcount of 4,933 and 4,702 assigned seats. Nine of ten buildings maintain vacancy rates below 6%, reflecting strong and consistent space utilisation across the region.&quot;,
-      &quot;rightContent&quot;: &quot;**Key Observation: Building F**\n\nBuilding F is a clear outlier with a 24% vacancy rate — its program headcount of 942 significantly exceeds its 577 assigned seats, indicating a serious misalignment between space allocation and actual workforce needs. Immediate investigation is warranted.&quot;
-    }
-  },
-  {
-    &quot;op&quot;: &quot;append&quot;,
-    &quot;value&quot;: {
-      &quot;id&quot;: &quot;building-f-divider&quot;,
-      &quot;variant&quot;: &quot;TitleOnly&quot;,
-      &quot;layout&quot;: &quot;title_top_left&quot;,
-      &quot;title&quot;: &quot;Building F — Actual vs Allocated Alignment&quot;,
-      &quot;subtitle&quot;: &quot;Business Unit Deep Dive&quot;,
-      &quot;helperText&quot;: &quot;Identifying misalignment drivers within Building F&#39;s six Business Units&quot;
-    }
-  },
-  {
-    &quot;op&quot;: &quot;append&quot;,
-    &quot;value&quot;: {
-      &quot;id&quot;: &quot;building-f-alignment-chart&quot;,
-      &quot;variant&quot;: &quot;TextWithChartHorizontal&quot;,
-      &quot;title&quot;: &quot;Alignment % by Business Unit — Building F&quot;,
-      &quot;content&quot;: &quot;Building F&#39;s overall alignment sits at 89%, which is healthy. However, the Retail Business Unit is a significant outlier at 68% alignment — nearly 3x the misalignment rate of the next-lowest unit.\n\nHuman Resources leads the building at 98% alignment, while Engineering, Finance, Staff Groups, and Operations all fall in the healthy-to-excellent range of 89–96%.&quot;,
-      &quot;chart&quot;: {
-        &quot;component&quot;: &quot;BarChartV2&quot;,
-        &quot;props&quot;: {
-          &quot;isHorizontal&quot;: true,
-          &quot;chartData&quot;: {
-            &quot;data&quot;: {
-              &quot;labels&quot;: [&quot;Retail&quot;, &quot;Finance&quot;, &quot;Operations&quot;, &quot;Engineering&quot;, &quot;Staff Groups&quot;, &quot;Human Resources&quot;],
-              &quot;series&quot;: [
-                { &quot;category&quot;: &quot;Actual = Allocated %&quot;, &quot;values&quot;: [68, 89, 90, 92, 96, 98] }
-              ]
+      &quot;id&quot;: &quot;slide-building-f-alignment&quot;,
+      &quot;template&quot;: &quot;Chart&quot;,
+      &quot;props&quot;: {
+        &quot;variant&quot;: &quot;chart-with-context&quot;,
+        &quot;layout&quot;: &quot;title-body-left&quot;,
+        &quot;title&quot;: &quot;Actual vs. Allocated Space Alignment – Building F&quot;,
+        &quot;body&quot;: &quot;• HR: 98%, best in building\n• Others: 89–96% healthy\n• Retail: 68% outlier\n\nRec: Investigate Retail misallocation.&quot;,
+        &quot;chart&quot;: {
+          &quot;component&quot;: &quot;BarChartV2&quot;,
+          &quot;props&quot;: {
+            &quot;xAxisLabel&quot;: &quot;Alignment %&quot;,
+            &quot;yAxisLabel&quot;: &quot;Business Unit&quot;,
+            &quot;isHorizontal&quot;: true,
+            &quot;chartData&quot;: {
+              &quot;data&quot;: {
+                &quot;labels&quot;: [&quot;Retail&quot;, &quot;Finance&quot;, &quot;Operations&quot;, &quot;Engineering&quot;, &quot;Staff Groups&quot;, &quot;Human Resources&quot;],
+                &quot;series&quot;: [
+                  {
+                    &quot;category&quot;: &quot;Actual = Allocated %&quot;,
+                    &quot;values&quot;: [68, 89, 90, 92, 96, 98]
+                  }
+                ]
+              }
             }
-          },
-          &quot;xAxisLabel&quot;: &quot;Alignment %&quot;,
-          &quot;yAxisLabel&quot;: &quot;Business Unit&quot;
+          }
         }
       }
     }
@@ -103,45 +90,34 @@
   {
     &quot;op&quot;: &quot;append&quot;,
     &quot;value&quot;: {
-      &quot;id&quot;: &quot;building-f-insights&quot;,
-      &quot;variant&quot;: &quot;TwoColumnText&quot;,
-      &quot;leftContent&quot;: &quot;**Business Unit Alignment Summary**\n\n- **Human Resources**: 98% — Excellent, best in building\n- **Staff Groups**: 96% — Excellent\n- **Engineering**: 92% — Healthy\n- **Operations**: 90% — Healthy\n- **Finance**: 89% — Healthy\n- **Retail**: 68% — Requires Investigation (32% misallocated)&quot;,
-      &quot;rightContent&quot;: &quot;**Recommendation: Retail Investigation**\n\nRetail&#39;s 32% misalignment is nearly 3x the building average and represents the primary driver of Building F&#39;s elevated vacancy. The next step is to confirm whether this misalignment is intentional — such as project seating or temporary moves — or whether a formal reallocation of Retail seats is required to restore alignment.&quot;
-    }
-  },
-  {
-    &quot;op&quot;: &quot;append&quot;,
-    &quot;value&quot;: {
-      &quot;id&quot;: &quot;retail-workspace-divider&quot;,
-      &quot;variant&quot;: &quot;TitleOnly&quot;,
-      &quot;layout&quot;: &quot;title_top_left&quot;,
-      &quot;title&quot;: &quot;Retail Workspace Allocation&quot;,
-      &quot;subtitle&quot;: &quot;Floor-by-Floor Breakdown&quot;,
-      &quot;helperText&quot;: &quot;Analysing Retail seat shortfall by floor and seat type across Building F&quot;
-    }
-  },
-  {
-    &quot;op&quot;: &quot;append&quot;,
-    &quot;value&quot;: {
-      &quot;id&quot;: &quot;retail-workspace-chart&quot;,
-      &quot;variant&quot;: &quot;TextWithChartVertical&quot;,
-      &quot;title&quot;: &quot;Actual Employees vs Allocated Spaces — Retail by Floor&quot;,
-      &quot;content&quot;: &quot;Retail has 260 actual employees but only 175 allocated spaces — a shortfall of 85 seats and an overall alignment of just 67%. Floor 1 is 72% aligned with an office-heavy configuration and low flex capacity. Floor 2 is worse at 65% aligned, with most overflow spilling into other organisations&#39; space.\n\nThe root cause is a structural undersupply of Retail-allocated seats on both floors.&quot;,
-      &quot;chart&quot;: {
-        &quot;component&quot;: &quot;BarChartV2&quot;,
-        &quot;props&quot;: {
-          &quot;variant&quot;: &quot;grouped&quot;,
-          &quot;chartData&quot;: {
-            &quot;data&quot;: {
-              &quot;labels&quot;: [&quot;Floor 1&quot;, &quot;Floor 2&quot;],
-              &quot;series&quot;: [
-                { &quot;category&quot;: &quot;Actual Employees&quot;, &quot;values&quot;: [90, 170] },
-                { &quot;category&quot;: &quot;Allocated Spaces&quot;, &quot;values&quot;: [65, 110] }
-              ]
+      &quot;id&quot;: &quot;slide-retail-workspace&quot;,
+      &quot;template&quot;: &quot;Chart&quot;,
+      &quot;props&quot;: {
+        &quot;variant&quot;: &quot;chart-with-context&quot;,
+        &quot;layout&quot;: &quot;title-body-left&quot;,
+        &quot;title&quot;: &quot;Retail Workspace Allocation by Floor&quot;,
+        &quot;body&quot;: &quot;• Retail: 67% aligned, 85-seat gap\n• Floor 1: 72%; Floor 2: 65%\n\nRec: Consolidate Retail; flex on Floor 1.&quot;,
+        &quot;chart&quot;: {
+          &quot;component&quot;: &quot;BarChartV2&quot;,
+          &quot;props&quot;: {
+            &quot;xAxisLabel&quot;: &quot;Count&quot;,
+            &quot;yAxisLabel&quot;: &quot;Floor&quot;,
+            &quot;chartData&quot;: {
+              &quot;data&quot;: {
+                &quot;labels&quot;: [&quot;Floor 1&quot;, &quot;Floor 2&quot;],
+                &quot;series&quot;: [
+                  {
+                    &quot;category&quot;: &quot;Actual Employees&quot;,
+                    &quot;values&quot;: [90, 170]
+                  },
+                  {
+                    &quot;category&quot;: &quot;Allocated Spaces&quot;,
+                    &quot;values&quot;: [65, 110]
+                  }
+                ]
+              }
             }
-          },
-          &quot;yAxisLabel&quot;: &quot;Count&quot;,
-          &quot;xAxisLabel&quot;: &quot;Floor&quot;
+          }
         }
       }
     }
@@ -149,61 +125,59 @@
   {
     &quot;op&quot;: &quot;append&quot;,
     &quot;value&quot;: {
-      &quot;id&quot;: &quot;retail-workspace-detail&quot;,
-      &quot;variant&quot;: &quot;TwoColumnText&quot;,
-      &quot;leftContent&quot;: &quot;**Allocation by Seat Type (Total)**\n\n- **Office seats**: 85 allocated\n- **Project / Team Room**: 40 allocated\n- **Touchdown**: 50 allocated\n- **Total allocated**: 175 seats for 260 employees\n- **Overall variance**: 67% aligned — 85-seat shortfall\n\nFloor 1 is office-heavy with limited flex capacity, while Floor 2 has more flex seats but insufficient total volume to absorb Retail&#39;s headcount.&quot;,
-      &quot;rightContent&quot;: &quot;**Recommendation: Consolidate &amp; Reallocate**\n\nConsolidate Retail onto dedicated floors and reallocate surplus seats from under-utilised organisations — particularly Engineering, which shows significant spare capacity. Add flex seating on Floor 1 to improve coverage for overflow headcount. Once changes are implemented, monitor alignment weekly to confirm improvement against the 67% baseline.&quot;
+      &quot;id&quot;: &quot;slide-floor-plan&quot;,
+      &quot;template&quot;: &quot;ImageWithText&quot;,
+      &quot;props&quot;: {
+        &quot;variant&quot;: &quot;list-with-image&quot;,
+        &quot;title&quot;: &quot;Floor 1 — Leaders Legend&quot;,
+        &quot;items&quot;: [
+          {
+            &quot;iconName&quot;: &quot;circle&quot;,
+            &quot;iconCategory&quot;: &quot;shapes&quot;,
+            &quot;primaryText&quot;: &quot;38 occupied / 53 total (~72%)&quot;,
+            &quot;body&quot;: &quot;15 vacant desks remain across the floor&quot;
+          },
+          {
+            &quot;iconName&quot;: &quot;circle&quot;,
+            &quot;iconCategory&quot;: &quot;shapes&quot;,
+            &quot;primaryText&quot;: &quot;Engineering: 1 occupied, 13 vacant&quot;,
+            &quot;body&quot;: &quot;Largest reallocation opportunity on Floor 1&quot;
+          },
+          {
+            &quot;iconName&quot;: &quot;circle&quot;,
+            &quot;iconCategory&quot;: &quot;shapes&quot;,
+            &quot;primaryText&quot;: &quot;Travel, Tech &amp; Staff Groups: 100% full&quot;,
+            &quot;body&quot;: &quot;No spare capacity — 14, 9, 8 occupied, 0 vacant&quot;
+          },
+          {
+            &quot;iconName&quot;: &quot;circle&quot;,
+            &quot;iconCategory&quot;: &quot;shapes&quot;,
+            &quot;primaryText&quot;: &quot;Retail &amp; Utilities: minimal footprint&quot;,
+            &quot;body&quot;: &quot;0 occupied, 1 vacant each — negligible presence&quot;
+          }
+        ],
+        &quot;images&quot;: [&quot;/demo/floor-1-plan.png&quot;]
+      }
     }
   },
   {
     &quot;op&quot;: &quot;append&quot;,
     &quot;value&quot;: {
-      &quot;id&quot;: &quot;floor-plan-divider&quot;,
-      &quot;variant&quot;: &quot;TitleOnly&quot;,
-      &quot;layout&quot;: &quot;title_top_left&quot;,
-      &quot;title&quot;: &quot;Floor 1 — Leaders Legend &amp; Workstation Detail&quot;,
-      &quot;subtitle&quot;: &quot;Occupied vs Vacant Workstations by Business Unit&quot;,
-      &quot;helperText&quot;: &quot;38 occupied / 53 total workstations (~72%) — 15 vacant desks remain&quot;
-    }
-  },
-  {
-    &quot;op&quot;: &quot;append&quot;,
-    &quot;value&quot;: {
-      &quot;id&quot;: &quot;floor-plan-image&quot;,
-      &quot;variant&quot;: &quot;TextWithImage&quot;,
-      &quot;title&quot;: &quot;Floor 1 — Highlighted Floorplan&quot;,
-      &quot;content&quot;: &quot;The Floor 1 floorplan highlights workstation allocation and occupancy by Business Unit. Overall occupancy stands at 38 of 53 total workstations (~72%), leaving 15 vacant desks available for reallocation.\n\nEngineering is the largest underutiliser with only 1 occupied desk versus 13 vacant — the single greatest opportunity for reallocation on this floor. Travel, Technologies, and Staff Groups are fully utilised with zero spare capacity.&quot;,
-      &quot;imageSrc&quot;: &quot;/demo/floor-1-plan.png&quot;,
-      &quot;layout&quot;: &quot;image_right&quot;
-    }
-  },
-  {
-    &quot;op&quot;: &quot;append&quot;,
-    &quot;value&quot;: {
-      &quot;id&quot;: &quot;floor-plan-insights&quot;,
-      &quot;variant&quot;: &quot;TwoColumnText&quot;,
-      &quot;leftContent&quot;: &quot;**Occupancy by Business Unit — Floor 1**\n\n- **Engineering**: 1 occupied / 14 total — 13 vacant (largest opportunity)\n- **Travel**: 14 occupied / 14 total — fully utilised\n- **Technologies**: 9 occupied / 9 total — fully utilised\n- **Staff Groups**: 8 occupied / 8 total — fully utilised\n- **Retail**: 0 occupied / 1 vacant — negligible footprint\n- **Utilities**: 0 occupied / 1 vacant — negligible footprint&quot;,
-      &quot;rightContent&quot;: &quot;**Strategic Implications for Floor 1**\n\nEngineering&#39;s 13 vacant desks represent the primary reallocation opportunity on Floor 1. Redirecting these seats to Retail — which is critically undersupplied — would directly address the 67% alignment gap identified at the Business Unit level.\n\nFully utilised units (Travel, Technologies, Staff Groups) should not be displaced. Any reallocation plan must protect these groups&#39; existing footprint while channelling Engineering&#39;s surplus to high-need teams.&quot;
-    }
-  },
-  {
-    &quot;op&quot;: &quot;append&quot;,
-    &quot;value&quot;: {
-      &quot;id&quot;: &quot;closing-recommendations&quot;,
-      &quot;variant&quot;: &quot;TitleOnly&quot;,
-      &quot;layout&quot;: &quot;title_top_left&quot;,
-      &quot;title&quot;: &quot;Summary Recommendations&quot;,
-      &quot;subtitle&quot;: &quot;Priority Actions for Americas Portfolio Optimisation&quot;,
-      &quot;helperText&quot;: &quot;The Changing Workplace (CWP) | Next Steps&quot;
-    }
-  },
-  {
-    &quot;op&quot;: &quot;append&quot;,
-    &quot;value&quot;: {
-      &quot;id&quot;: &quot;recommendations-detail&quot;,
-      &quot;variant&quot;: &quot;TwoColumnText&quot;,
-      &quot;leftContent&quot;: &quot;**Immediate Actions**\n\n1. **Investigate Building F Retail**: Confirm whether 32% misalignment is intentional (project/temp moves) or requires formal reallocation — this is the highest-priority action.\n2. **Reallocate Engineering surplus on Floor 1**: Redirect 13 vacant Engineering desks to Retail to close the 85-seat shortfall.\n3. **Add flex seating on Floor 1**: Increase touchdown and project room capacity to absorb Retail overflow without displacing fully utilised teams.&quot;,
-      &quot;rightContent&quot;: &quot;**Ongoing Monitoring**\n\n4. **Track Retail alignment weekly**: Set a target of ≥85% alignment for Retail within 90 days of reallocation, with monthly CWP dashboard reviews.\n5. **Portfolio-wide vacancy audit**: While nine buildings are healthy (&lt;6% vacancy), schedule a quarterly review to catch emerging trends before they reach Building F&#39;s 24% threshold.\n6. **Protect fully utilised teams**: Any space changes must preserve footprints for Travel, Technologies, and Staff Groups — all at 100% utilisation on Floor 1.&quot;
+      &quot;id&quot;: &quot;slide-action-plan&quot;,
+      &quot;template&quot;: &quot;KeyFigures&quot;,
+      &quot;props&quot;: {
+        &quot;variant&quot;: &quot;numbered-key-point&quot;,
+        &quot;items&quot;: [
+          {
+            &quot;title&quot;: &quot;1. Investigate Retail Misalignment&quot;,
+            &quot;body&quot;: &quot;Confirm if misalignment is intentional (project seating, temp moves) or requires formal reallocation across Building F.&quot;
+          },
+          {
+            &quot;title&quot;: &quot;2. Consolidate Retail &amp; Add Flex Seating&quot;,
+            &quot;body&quot;: &quot;Reallocate surplus from under-used orgs (e.g., Engineering) and add flex seating on Floor 1 — then monitor utilisation.&quot;
+          }
+        ]
+      }
     }
   }
 ]

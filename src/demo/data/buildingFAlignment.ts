@@ -91,6 +91,7 @@ export function getBuildingFCharts(): PresentationChart[] {
         },
       ],
       valueAxisLabel: "Alignment %",
+      categoryAxisLabel: "Business Unit",
     },
   ];
 }

@@ -1,8 +1,13 @@
 import fs from "fs";
 import path from "path";
 
+export {
+  getCwpTemplatePath,
+  loadCwpSkillReference,
+  loadCwpSkillReference as loadCwpTemplateReference,
+} from "./cwpSkillLoader";
+
 const cacheDir = path.join(process.cwd(), "src/demo/presentation/cache");
-const assetsDir = path.join(process.cwd(), "src/demo/presentation/assets");
 
 export const FULL_DEMO_FLOW_IDS = [
   "americas-occupancy",
@@ -78,7 +83,7 @@ export function savePresentationCache({
   title,
   slidesContent,
   pptxBuffer,
-  seeded = false,
+  seeded,
 }: {
   cacheKey: string;
   flowIds: string[];
@@ -187,8 +192,4 @@ export function resolveCachedPptx(flowIds: string[]): {
   }
 
   return null;
-}
-
-export function getCwpTemplatePath() {
-  return path.join(assetsDir, "CWP_Template.pptx");
 }

@@ -1,35 +1,65 @@
+import type { CwpSkillReference } from "./cwpSkillLoader";
 import type { DemoPresentationBundle } from "./types";
 import { CWP_BRAND_PROMPT } from "./cwpBrandPrompt";
+import {
+  buildCwpAnalyticsDeckPrompt,
+  buildCwpAnalyticsLayoutPrompt,
+  buildCwpBrowserPreviewPrompt,
+  buildCwpTemplateReferencePrompt,
+} from "./cwpSkillPrompt";
 import { CWP_SLIDE_TEMPLATES_PROMPT } from "./cwpSlideTemplatesPrompt";
 
 export const PRESENTATION_ARTIFACT_MODEL = "c1/artifact/v-20260130";
 
 function collectAllowedImageUrls(bundle: DemoPresentationBundle): string[] {
-  const urls = bundle.sections.flatMap(
-    (section) =>
-      section.slideContent?.imageSlide?.imageUrl
-        ? [section.slideContent.imageSlide.imageUrl]
-        : []
-  );
+  const urls = bundle.sections.flatMap((section) => {
+    const slide = section.slideContent?.contentSlide;
+    if (slide?.template === "list-with-image") {
+      return [slide.imageUrl];
+    }
+
+    return [];
+  });
 
   return [...new Set(urls)];
 }
 
-export function buildArtifactSystemPrompt() {
-  return `
-You are generating a CWP-branded executive slide deck from precomputed analytics.
+function buildSkillReferenceBlock(skillReference?: CwpSkillReference) {
+  return buildCwpTemplateReferencePrompt(skillReference);
+}
 
-You do NOT compute anything. Use only DATA in the user message, especially DATA.sections[].slideContent and DATA.closingSlides.
+export function buildArtifactSystemPrompt(skillReference?: CwpSkillReference) {
+  return `
+You are generating a CWP portfolio & building analytics deck for browser viewing.
+Follow the cwp_template skill (.agents/skills/cwp_template) exactly.
+
+You do NOT compute anything. Use only DATA:
+- DATA.sections[].slideContent.contentSlide
+- DATA.actionPlanSlide
+- DATA.templateReference (skill asset paths)
+
+${buildCwpAnalyticsDeckPrompt()}
+
+${buildCwpAnalyticsLayoutPrompt()}
+
+${buildCwpBrowserPreviewPrompt()}
+
+${buildSkillReferenceBlock(skillReference)}
 
 ${CWP_BRAND_PROMPT}
 
 ${CWP_SLIDE_TEMPLATES_PROMPT}
 
 CRITICAL:
-- slideContent fields are pre-sized for Thesys schema limits — copy them verbatim.
-- Never output markdown tables or Text Body slides for data tables.
-- Charts and info grids must occupy most of each slide — no poster-style empty layouts.
-- Do not mention demo or staged content.
+- Primary layout reference: portfolio-building-analytics-cwp-v2.pptx (skill assets/)
+- PPTX seed template: CWP_Template.pptx (demo assets/) — for download, not browser rendering
+- Exactly 6 slides. No SectionBreak slides.
+- Title slide: NO helperText — only title and subtitle on blue background.
+- metrics-overview: NO blue header; chart hero top, 28pt title + 16pt body below.
+- insight slides: blue header (~28pt white title) + 16pt bullets left + chart/image right.
+- Body max 120 chars — copy contentSlide.body exactly, preserve line breaks.
+- Apply chartColors from contentSlide. When chartHorizontal is true, render horizontal BarChart (isHorizontal true).
+- Copy all contentSlide fields verbatim (including chartHorizontal, categoryAxisLabel, valueAxisLabel).
 `.trim();
 }
 
@@ -41,20 +71,33 @@ export function buildArtifactUserPrompt({
   bundle: DemoPresentationBundle;
 }) {
   const allowedImageUrls = collectAllowedImageUrls(bundle);
+  const ref = bundle.templateReference;
 
   return [
     question,
     "",
-    "Build the deck by iterating DATA.sections[].slideContent in order, then DATA.closingSlides.",
-    "Use insightSlides (key-info-with-title horizontal-grid) for insights — never Content Classic numbered lists.",
-    "Copy slideContent titles, infoItems, items, chart series, and image URLs exactly.",
+    "Build 6 slides matching cwp_template references/analytics-layout-guide.md exactly.",
+    "Follow cwp_template skill: metrics-overview (Americas), insight (sections 2–4), action-plan (closing).",
+    "Copy contentSlide and actionPlanSlide fields exactly.",
+    "",
+    ref
+      ? [
+          "SKILL ASSETS:",
+          `- Sample deck: ${ref.sampleDeck.relativePath} (exists: ${ref.sampleDeck.exists})`,
+          `- Layout guide: ${ref.layoutGuide.relativePath} (exists: ${ref.layoutGuide.exists})`,
+          `- Browser preview: ${"browserPreviewGuide" in ref ? ref.browserPreviewGuide.relativePath : "references/browser-preview-mapping.md"}`,
+          `- Base template: ${ref.baseTemplate.relativePath} (exists: ${ref.baseTemplate.exists})`,
+        ].join("\n")
+      : "",
     "",
     allowedImageUrls.length > 0
-      ? `ALLOWED IMAGE URLS (only these): ${allowedImageUrls.join(", ")}`
-      : "ALLOWED IMAGE URLS: none — no images except floor plan when slideContent.imageSlide exists.",
+      ? `ALLOWED IMAGE URLS: ${allowedImageUrls.join(", ")}`
+      : "ALLOWED IMAGE URLS: none.",
     "NEVER use thesys_image:* or decorative images.",
     "",
     "DATA:",
     JSON.stringify(bundle, null, 2),
-  ].join("\n");
+  ]
+    .filter(Boolean)
+    .join("\n");
 }

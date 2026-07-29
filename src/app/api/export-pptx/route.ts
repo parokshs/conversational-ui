@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getMatchedFlowIds, getMessageStore } from "../chat/messageStore";
 import { isDemoModeEnabled } from "../../../demo/flows/buildStagedResponse";
 import { logDemoRouting } from "../../../demo/logDemoRouting";
+import { getPresentationFlowIds } from "../../../demo/presentation/buildBundle";
 import { resolveCachedPptx } from "../../../demo/presentation/presentationCache";
 
 type ExportRequest = {
@@ -14,13 +14,13 @@ export async function POST(req: NextRequest) {
   const body = (await req.json()) as ExportRequest;
 
   if (isDemoModeEnabled() && body.threadId) {
-    const flowIds = getMatchedFlowIds(getMessageStore(body.threadId).messageList);
-    const cached = resolveCachedPptx(flowIds);
+    const presentationFlowIds = getPresentationFlowIds();
+    const cached = resolveCachedPptx(presentationFlowIds);
 
     if (cached) {
       logDemoRouting("presentation_pptx_download", {
         threadId: body.threadId,
-        matchedFlowIds: flowIds,
+        presentationFlowIds,
         cacheKey: cached.cacheKey,
         outcome: "seeded_pptx",
       });

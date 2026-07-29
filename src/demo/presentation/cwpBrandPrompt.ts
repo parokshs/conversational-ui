@@ -1,50 +1,37 @@
 /**
- * CWP / The Changing Workplace brand rules for slide artifact generation.
- * Source: .agents/skills/cwp_template/brand-style.md
+ * CWP brand rules for Thesys slide artifact generation.
+ * Layout details loaded at runtime from .agents/skills/cwp_template/references/
  */
 export const CWP_BRAND_PROMPT = `
-CWP BRAND (The Changing Workplace) — apply to every slide:
+CWP BRAND (The Changing Workplace):
 
-Reference template: presentation/assets/CWP_Template.pptx (The Changing Workplace enterprise deck).
-Match its professional, consulting-grade look: primary blue headers, Roboto typography, dense data layouts.
-
-COLORS (use exactly; do not substitute purple/teal/navy gradients):
-- Primary blue #1767D2 — title slides, section dividers, table headers, primary chart series
+COLORS:
+- Primary blue #1767D2 — title slide background, insight-slide header bars
 - Body text #2B2B2B on white; secondary #3F3F3F
-- Chart accent order for multi-series: #1767D2, #FF9933, #D43900, #FFCC33, #049A0D, #9933CC
-- Table headers: bold white text on solid #1767D2; body rows banded light blue tints (not gray zebra)
+- Analytics single-series chart bars: #CC4678 (rose/magenta)
+- Two-series charts: #CC4678 primary, #FF9933 secondary
 
-TYPOGRAPHY (Roboto throughout):
-- Deck title ~42pt bold; section dividers ~32pt bold; slide header in blue bar ~20pt white
-- Body ~14pt; secondary ~12pt; captions minimum 11pt — split slides instead of shrinking text
-
-LAYOUT PATTERNS (mirror CWP template):
-1. Title slide — primary blue background feel, white title lower-third, CWP helper text
-2. Section divider — solid primary blue, single bold left-aligned section title
-3. Content slide — white body, blue header bar with white slide title, structured content below
-4. Table slide — header + compact banded-blue table sized to content
-5. Closing — text-only recommendations, no decorative imagery
+TYPOGRAPHY: Roboto throughout (see skill layout guide for per-slide-type sizes).
 
 ENTERPRISE POLISH:
-- No slide with only one giant stat and one sentence
-- No large empty body areas — balance with chart, table, or bullets
-- Charts: axis labels, title, brand accent colors; quiet gridlines
-- Consistent left margin; dense but not cramped
-- Maximum one short intro sentence per slide; detail in tables, charts, bullets
+- No sparse slides or large empty body areas
+- One visual + one recommendation per insight slide
+- Quiet chart gridlines; caption axes on analytics charts
 `.trim();
 
-export const CWP_CHART_PALETTE = [
-  "#1767D2",
-  "#FF9933",
-  "#D43900",
-  "#FFCC33",
-  "#049A0D",
-  "#9933CC",
-] as const;
+export const CWP_CHART_PALETTE = {
+  singleSeries: "#CC4678",
+  twoSeries: ["#CC4678", "#FF9933"] as const,
+  brandAccents: ["#1767D2", "#FF9933", "#D43900", "#FFCC33", "#049A0D", "#9933CC"] as const,
+};
+
+/** Flat palette for chat UI charts (brand accents). */
+export const CWP_UI_CHART_PALETTE = [...CWP_CHART_PALETTE.brandAccents] as const;
 
 export const CWP_SLIDES_THEME = {
   font: "Roboto, sans-serif",
   primaryText: "#2B2B2B",
   secondaryText: "#3F3F3F",
   slidesBg: "#FFFFFF",
+  headerBlue: "#1767D2",
 } as const;

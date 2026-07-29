@@ -1,5 +1,5 @@
 import {
-  CWP_CHART_PALETTE,
+  CWP_UI_CHART_PALETTE,
   CWP_SLIDES_THEME,
 } from "@/demo/presentation/cwpBrandPrompt";
 
@@ -25,11 +25,11 @@ export const brandTheme = {
   interactiveAccentPressed: APP_BRAND.accentPressed,
   interactiveAccentDisabled: APP_BRAND.accentDisabled,
   accentPrimaryText: APP_BRAND.accentText,
-  defaultChartPalette: [...CWP_CHART_PALETTE],
-  barChartPalette: [...CWP_CHART_PALETTE],
-  lineChartPalette: [...CWP_CHART_PALETTE],
-  areaChartPalette: [...CWP_CHART_PALETTE],
-  pieChartPalette: [...CWP_CHART_PALETTE],
+  defaultChartPalette: [...CWP_UI_CHART_PALETTE],
+  barChartPalette: [...CWP_UI_CHART_PALETTE],
+  lineChartPalette: [...CWP_UI_CHART_PALETTE],
+  areaChartPalette: [...CWP_UI_CHART_PALETTE],
+  pieChartPalette: [...CWP_UI_CHART_PALETTE],
 };
 
 export const cwpSlidesTheme = {

@@ -6,7 +6,8 @@ import {
   buildArtifactUserPrompt,
   PRESENTATION_ARTIFACT_MODEL,
 } from "./artifactPrompt";
-import { buildDemoPresentationBundle } from "./buildBundle";
+import { buildFullDemoPresentationBundle, getPresentationFlowIds } from "./buildBundle";
+import { patchPresentationSlides } from "./patchPresentationSlides";
 import { buildSimpleTextCard } from "../format/buildSimpleTextCard";
 import { getMatchedFlowIds } from "../../app/api/chat/messageStore";
 import { logDemoRouting } from "../logDemoRouting";
@@ -68,6 +69,14 @@ function closeArtifactTag() {
   return "</artifact>";
 }
 
+function prepareCachedSlidesStream(slidesContent: string, artifactId: string) {
+  if (slidesContent.trimStart().startsWith("<artifact")) {
+    return slidesContent;
+  }
+
+  return `${openArtifactTag(artifactId)}${slidesContent}${closeArtifactTag()}`;
+}
+
 async function streamCachedPresentation({
   question,
   responseId,
@@ -90,6 +99,10 @@ async function streamCachedPresentation({
     return null;
   }
 
+  const bundle = buildFullDemoPresentationBundle();
+  const patchedSlidesContent =
+    bundle != null ? patchPresentationSlides(slidesContent, bundle) : slidesContent;
+
   const artifactId = manifest?.artifactId ?? createArtifactId();
   const c1Response = makeC1Response();
 
@@ -100,9 +113,9 @@ async function streamCachedPresentation({
       ephemeral: true,
     });
 
-    await c1Response.writeContent(openArtifactTag(artifactId));
-    await c1Response.writeContent(slidesContent);
-    await c1Response.writeContent(closeArtifactTag());
+    await c1Response.writeContent(
+      prepareCachedSlidesStream(patchedSlidesContent, artifactId)
+    );
     await c1Response.end();
   })();
 
@@ -140,7 +153,7 @@ async function streamLivePresentation({
     typeof import("../../app/api/chat/messageStore").getMessageStore
   >;
   flowIds: string[];
-  bundle: NonNullable<ReturnType<typeof buildDemoPresentationBundle>>;
+  bundle: NonNullable<ReturnType<typeof buildFullDemoPresentationBundle>>;
 }) {
   const artifactId = createArtifactId();
   const artifactClient = new OpenAI({
@@ -153,7 +166,7 @@ async function streamLivePresentation({
     messages: [
       {
         role: "system",
-        content: buildArtifactSystemPrompt(),
+        content: buildArtifactSystemPrompt(bundle.templateReference),
       },
       {
         role: "user",
@@ -222,22 +235,24 @@ export async function handlePresentationExport({
     typeof import("../../app/api/chat/messageStore").getMessageStore
   >;
 }) {
-  const flowIds = getMatchedFlowIds(messageStore.messageList);
-  const bundle = buildDemoPresentationBundle(flowIds);
+  const threadFlowIds = getMatchedFlowIds(messageStore.messageList);
+  const presentationFlowIds = getPresentationFlowIds();
+  const bundle = buildFullDemoPresentationBundle();
 
   if (!bundle) {
     logDemoRouting("presentation_export", {
       question,
-      matchedFlowIds: flowIds,
+      threadFlowIds,
+      presentationFlowIds,
       sectionCount: 0,
-      outcome: "missing_prior_steps",
+      outcome: "bundle_unavailable",
     });
 
     const c1Response = makeC1Response();
     const ready = (async () => {
       await c1Response.writeContent(
         buildSimpleTextCard(
-          "Complete the portfolio analysis steps first, then request a presentation export."
+          "Presentation export is unavailable — demo flow configuration is missing."
         )
       );
       await c1Response.end();
@@ -257,13 +272,13 @@ export async function handlePresentationExport({
   }
 
   if (isDemoModeEnabled()) {
-    const cacheKey = resolvePresentationCacheKey(flowIds);
+    const cacheKey = resolvePresentationCacheKey(presentationFlowIds);
     if (cacheKey) {
       const cachedResponse = await streamCachedPresentation({
         question,
         responseId,
         messageStore,
-        flowIds,
+        flowIds: presentationFlowIds,
         cacheKey,
       });
 
@@ -280,11 +295,19 @@ export async function handlePresentationExport({
     );
   }
 
+  logDemoRouting("presentation_export", {
+    question,
+    threadFlowIds,
+    presentationFlowIds,
+    sectionCount: bundle.sections.length,
+    outcome: "using_full_demo_deck",
+  });
+
   return streamLivePresentation({
     question,
     responseId,
     messageStore,
-    flowIds,
+    flowIds: presentationFlowIds,
     bundle,
   });
 }

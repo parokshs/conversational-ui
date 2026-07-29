@@ -1,64 +1,39 @@
 ---
-name: cwp-brand-presentations
-description: "Use this skill whenever creating, editing, or reviewing a PowerPoint deck for The Changing Workplace / CWP (or when the user references the CWP template, asks for a deck 'in our brand'/'in our template', or asks for an enterprise-quality/company-quality/Microsoft-quality polished presentation without naming a different brand). Make sure to use this skill whenever the user mentions 'CWP', 'The Changing Workplace', 'WebCoRE', 'our template', 'brand deck', or asks to make a presentation look 'professional', 'polished', 'company quality', or 'consulting-grade' — even if they don't explicitly name the brand. This skill supplies the color palette, typography scale, layout patterns, and a bundled template file; pair it with the general pptx skill for the actual build mechanics (pptxgenjs, XML editing, QA, validation)."
+name: cwp-analytics-decks
+description: "Use this skill when creating a data/analytics-driven presentation for The Changing Workplace / CWP — portfolio analytics, building or floor utilization, space/seat alignment, occupancy reports, or any 'insights + recommendation' style deck referencing real estate or workplace metrics. Also see reference-slide-presentations-SKILL.md for matching reference screenshots in PPTX export."
 ---
 
-# CWP Brand Presentations
+# CWP Portfolio & Building Analytics Decks
 
-Companion to the general `pptx` skill. That skill covers *how* to build/edit a `.pptx`
-(pptxgenjs gotchas, template editing, validation, visual QA). This skill covers *what it
-should look like* for The Changing Workplace / CWP brand, plus a ready-made template to
-build from.
+This skill covers a specific CWP deck type: short, data-driven reports that pair a chart or
+floor-plan visual with a tight set of bullet insights and a concrete recommendation, closing
+with a numbered action plan.
 
-**Always use both**: load `pptx`'s SKILL.md for the mechanical how-to, and this skill for
-the brand rules below. Skipping the `pptx` skill's QA section is the most common way a
-brand-correct-looking deck still ships with overflow or overlap bugs — don't skip it.
+Read `references/analytics-layout-guide.md` in full before building — it has the exact
+layout measurements, per-slide-type typography, and chart color conventions.
 
-## Step 1: Decide your starting point
+## Slide types (see layout guide)
 
-- **Ask matches one of the template's existing slide types** (title slide, section divider,
-  content + table, content + image, closing slide) → duplicate the matching slide from
-  `assets/CWP_Template_ppt.pptx` (via `pptx` skill's `add_slide.py`) and edit its content in
-  place. Preserves exact positioning, the decorative circle graphic, and fonts.
-- **Ask needs a slide type the template doesn't have** (e.g. a chart-heavy slide, a
-  comparison grid) → build it fresh with pptxgenjs, but pull every color/size/spacing value
-  from `references/brand-style.md` so it reads as part of the same deck.
-- **Mixed deck** → do both; duplicate what fits, build the rest fresh, and sanity-check at
-  the end that hand-built slides don't look like a different deck (same header bar height,
-  same title indent, same font).
+1. **Title slide** — full-bleed CWP blue, white title (44pt bold), subtitle (24pt).
+2. **Metrics-overview slide** — hero chart top ~55%, bold 28pt header left + 16pt narrative
+   right below. **No blue header bar.**
+3. **Insight slide** — blue header bar + bold title; left column 16pt bullets +
+   **Recommendation:** block; right column single horizontal bar chart or floor-plan image.
+4. **Action-plan slide** — numbered list, 18pt bold headers + 18pt body, generous spacing.
 
-Read `references/brand-style.md` in full before writing any content — it has the exact hex
-values, the type scale, and the per-layout rules (what goes in a header bar vs. body, how
-tables are shaded, what "too much whitespace" vs "too cramped" means for this brand).
+## Browser preview (Thesys artifact)
 
-## Step 2: Build
+For in-app slide preview, follow `references/browser-preview-mapping.md` — it maps this
+layout guide to Thesys chart-with-context / list-with-image templates and CSS overrides.
 
-Follow the `pptx` skill's build guidance (pptxgenjs gotchas if building fresh, or the
-unzip → edit `slideN.xml` → zip flow if working from the template). Apply:
+## PPTX export
 
-- Colors and type scale from `references/brand-style.md` — never improvise a palette.
-- Layout pattern matching the slide's purpose (title / divider / content / table / closing).
-- The enterprise-polish rules in `references/brand-style.md` for whitespace balance, chart
-  styling, and text sizing — these are this skill's answer to "make it look company-quality."
-
-## Step 3: QA (required, don't skip)
-
-Run the full QA process from the `pptx` skill (content QA via `markitdown`, file QA via
-`validate.py --original assets/CWP_Template_ppt.pptx` if you started from the template,
-visual QA via rendered slide images). On top of that generic pass, check brand-specific
-items:
-
-- Every header bar is the same height and blue across slides.
-- No stray fonts — everything is Roboto.
-- No slide has a large empty body area next to a small element (see brand-style.md).
-- Table headers are bold white on solid blue; body rows use the banded tint, not plain gray.
-- Chart series colors follow the accent order in brand-style.md.
-
-If a rendered slide's density looks noticeably lower or higher than its neighbors, that's
-usually the whitespace-balance rule being violated — fix before calling it done.
+For PowerPoint files, pair this skill with `reference-slide-presentations-SKILL.md` and the
+general `pptx` skill. Match reference screenshots / sample deck spacing exactly.
 
 ## Reference files
 
-- `references/brand-style.md` — full palette, type scale, layout patterns, polish bar.
-- `assets/CWP_Template_ppt.pptx` — the source template; duplicate slides from this rather
-  than recreating them by hand.
+- `references/analytics-layout-guide.md` — layout measurements, typography, chart colors.
+- `references/browser-preview-mapping.md` — Thesys viewer mapping for demo preview.
+- `reference-slide-presentations-SKILL.md` — reference-matched PPTX workflow.
+- `assets/portfolio-building-analytics-cwp-v2.pptx` — sample deck (optional, for PPTX QA).

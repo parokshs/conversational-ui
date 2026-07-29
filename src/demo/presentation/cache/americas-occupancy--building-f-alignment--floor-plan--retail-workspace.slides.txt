@@ -1,4 +1,4 @@
-<artifact thesys="true" type="slides" id="9974aa816e" version="1785308477445">
+<artifact thesys="true" type="slides" id="9974aa816e" version="1785326448136">
 {&quot;component&quot;:{&quot;component&quot;:&quot;Presentation&quot;,&quot;props&quot;:{&quot;metadata&quot;:{&quot;title&quot;:{&quot;id&quot;:&quot;presentation-title&quot;,&quot;text&quot;:&quot;Presentation&quot;}},&quot;slides&quot;:[]}}}
 </artifact><artifact_diff thesys="true" type="slides" id="9974aa816e">
 [
@@ -58,6 +58,32 @@
         &quot;variant&quot;: &quot;images&quot;,
         &quot;images&quot;: [
           &quot;/demo/presentation/slides/4.png&quot;
+        ]
+      }
+    }
+  },
+  {
+    &quot;op&quot;: &quot;append&quot;,
+    &quot;value&quot;: {
+      &quot;id&quot;: &quot;slide-5&quot;,
+      &quot;template&quot;: &quot;Image&quot;,
+      &quot;props&quot;: {
+        &quot;variant&quot;: &quot;images&quot;,
+        &quot;images&quot;: [
+          &quot;/demo/presentation/slides/5.png&quot;
+        ]
+      }
+    }
+  },
+  {
+    &quot;op&quot;: &quot;append&quot;,
+    &quot;value&quot;: {
+      &quot;id&quot;: &quot;slide-6&quot;,
+      &quot;template&quot;: &quot;Image&quot;,
+      &quot;props&quot;: {
+        &quot;variant&quot;: &quot;images&quot;,
+        &quot;images&quot;: [
+          &quot;/demo/presentation/slides/6.png&quot;
         ]
       }
     }

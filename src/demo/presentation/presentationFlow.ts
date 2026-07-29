@@ -106,7 +106,7 @@ async function streamCachedPresentation({
   const ready = (async () => {
     await c1Response.writeThinkItem({
       title: "Preparing executive presentation",
-      description: "Assembling MSSpaces-branded slides from portfolio analytics.",
+      description: "Assembling MS Space branded slides from portfolio analytics.",
       ephemeral: true,
     });
 

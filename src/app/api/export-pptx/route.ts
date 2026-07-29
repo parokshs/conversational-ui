@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isDemoModeEnabled } from "../../../demo/flows/buildStagedResponse";
 import { logDemoRouting } from "../../../demo/logDemoRouting";
+import { waitForPresentationDownloadLatency } from "../../../demo/demoLatency";
 import { getPresentationFlowIds } from "../../../demo/presentation/buildBundle";
 import { resolveCachedPptx } from "../../../demo/presentation/presentationCache";
 
@@ -24,6 +25,8 @@ export async function POST(req: NextRequest) {
         cacheKey: cached.cacheKey,
         outcome: "seeded_pptx",
       });
+
+      await waitForPresentationDownloadLatency();
 
       const filename = (body.title || cached.title).replace(/\.pptx$/i, "");
 
@@ -85,6 +88,8 @@ export async function POST(req: NextRequest) {
       threadId: body.threadId ?? null,
       outcome: "live_pptx_export",
     });
+
+    await waitForPresentationDownloadLatency();
 
     return new NextResponse(pptxResponse.body, {
       headers: {

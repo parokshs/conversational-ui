@@ -11,6 +11,7 @@ import { patchPresentationSlides } from "./patchPresentationSlides";
 import { buildSimpleTextCard } from "../format/buildSimpleTextCard";
 import { getMatchedFlowIds } from "../../app/api/chat/messageStore";
 import { logDemoRouting } from "../logDemoRouting";
+import { waitForPresentationDemoLatency } from "../demoLatency";
 import {
   loadCachedSlides,
   loadPresentationManifest,
@@ -100,8 +101,11 @@ async function streamCachedPresentation({
   }
 
   const bundle = buildFullDemoPresentationBundle();
+  const isImagePreview = slidesContent.includes('&quot;template&quot;: &quot;Image&quot;');
   const patchedSlidesContent =
-    bundle != null ? patchPresentationSlides(slidesContent, bundle) : slidesContent;
+    bundle != null && !isImagePreview
+      ? patchPresentationSlides(slidesContent, bundle)
+      : slidesContent;
 
   const artifactId = manifest?.artifactId ?? createArtifactId();
   const c1Response = makeC1Response();
@@ -109,9 +113,11 @@ async function streamCachedPresentation({
   const ready = (async () => {
     await c1Response.writeThinkItem({
       title: "Preparing executive presentation",
-      description: "Loading CWP-branded portfolio deck.",
+      description: "Assembling CWP-branded slides from portfolio analytics.",
       ephemeral: true,
     });
+
+    await waitForPresentationDemoLatency();
 
     await c1Response.writeContent(
       prepareCachedSlidesStream(patchedSlidesContent, artifactId)
@@ -189,6 +195,8 @@ async function streamLivePresentation({
       description: "Compiling portfolio analytics into CWP slide format.",
       ephemeral: true,
     });
+
+    await waitForPresentationDemoLatency();
 
     await c1Response.writeContent(openArtifactTag(artifactId));
 

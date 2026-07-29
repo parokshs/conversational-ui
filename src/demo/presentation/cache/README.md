@@ -32,7 +32,12 @@ After seeding, demo mode serves the cached preview + download for that cache key
 
 ## Draft cache (optional)
 
-`npm run bootstrap:presentation` pre-generates slide JSON for reference (`seeded=false`). It does **not** enable cached demo behavior until you run `seed:presentation`.
+`npm run bootstrap:presentation` pre-generates slide JSON for reference (`seeded=false`).
+
+**Image-based preview (recommended):** add numbered PNGs (`1.png`, `2.png`, …) to
+`public/demo/presentation/slides/` — any count, then run bootstrap (no Thesys API).
+
+It does **not** enable cached demo behavior until you run `seed:presentation`.
 
 Default full-demo cache key:
 

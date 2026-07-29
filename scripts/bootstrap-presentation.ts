@@ -1,13 +1,7 @@
 import fs from "fs";
 import path from "path";
 import crypto from "node:crypto";
-import OpenAI from "openai";
 import { demoFlows } from "../src/demo/flows/registry";
-import {
-  buildArtifactSystemPrompt,
-  buildArtifactUserPrompt,
-  PRESENTATION_ARTIFACT_MODEL,
-} from "../src/demo/presentation/artifactPrompt";
 import { buildDemoPresentationBundle } from "../src/demo/presentation/buildBundle";
 import {
   readCwpBrowserPreviewGuide,
@@ -22,7 +16,11 @@ import {
   loadPresentationManifest,
   savePresentationCache,
 } from "../src/demo/presentation/presentationCache";
-import { patchPresentationSlides } from "../src/demo/presentation/patchPresentationSlides";
+import { buildImageSlidesArtifact } from "../src/demo/presentation/buildImageSlidesArtifact";
+import {
+  discoverPresentationSlideImages,
+  hasPresentationSlideImages,
+} from "../src/demo/presentation/slideImages";
 
 function loadEnvFile() {
   const envPath = path.join(process.cwd(), ".env");
@@ -58,11 +56,6 @@ function logSkillContext() {
 
   console.log(`Skill: ${skillRef.skillPath} (${skillRef.skillName})`);
   console.log(
-    skillRef.sampleDeck.exists
-      ? `Sample deck: ${skillRef.sampleDeck.relativePath}`
-      : `WARNING: Sample deck missing at ${skillRef.sampleDeck.relativePath}`
-  );
-  console.log(
     skillRef.layoutGuide.exists
       ? `Layout guide: ${skillRef.layoutGuide.relativePath}`
       : `WARNING: Layout guide missing at ${skillRef.layoutGuide.relativePath}`
@@ -72,91 +65,30 @@ function logSkillContext() {
       ? `Browser preview: ${skillRef.browserPreviewGuide.relativePath}`
       : `WARNING: Browser preview guide missing`
   );
-  console.log(
-    skillRef.referenceSlideSkill.exists
-      ? `Reference-slide skill: ${skillRef.referenceSlideSkill.relativePath}`
-      : `WARNING: Reference-slide skill missing`
-  );
-  console.log(
-    skillRef.baseTemplate.exists
-      ? `Base template: ${skillRef.baseTemplate.relativePath}`
-      : `WARNING: Base template missing at ${skillRef.baseTemplate.relativePath}`
-  );
 
   if (readCwpSkillDoc()) {
     console.log("Loaded SKILL.md into generation prompts.");
   }
   if (readCwpLayoutGuide()) {
-    console.log("Loaded references/analytics-layout-guide.md into generation prompts.");
+    console.log("Loaded references/analytics-layout-guide.md.");
   }
   if (readCwpBrowserPreviewGuide()) {
-    console.log("Loaded references/browser-preview-mapping.md into generation prompts.");
+    console.log("Loaded references/browser-preview-mapping.md.");
   }
   if (readCwpReferenceSlideSkill()) {
     console.log("Loaded reference-slide-presentations-SKILL.md (PPTX reference).");
   }
 }
 
-async function generateSlidesArtifact(
-  client: OpenAI,
-  artifactId: string,
-  bundle: NonNullable<ReturnType<typeof buildDemoPresentationBundle>>
-) {
-  const stream = await client.chat.completions.create({
-    model: PRESENTATION_ARTIFACT_MODEL,
-    messages: [
-      {
-        role: "system",
-        content: buildArtifactSystemPrompt(bundle.templateReference),
-      },
-      {
-        role: "user",
-        content: buildArtifactUserPrompt({
-          question:
-            "Prepare a CWP portfolio & building analytics deck. Match .agents/skills/cwp_template/references/analytics-layout-guide.md and browser-preview-mapping.md.",
-          bundle,
-        }),
-      },
-    ],
-    metadata: {
-      thesys: JSON.stringify({
-        c1_artifact_type: "slides",
-        id: artifactId,
-      }),
-    },
-    stream: true,
-  });
-
-  let slidesContent = "";
-  for await (const chunk of stream) {
-    slidesContent += chunk.choices?.[0]?.delta?.content ?? "";
-  }
-
-  return slidesContent;
-}
-
 async function main() {
   loadEnvFile();
 
-  if (!process.env.THESYS_API_KEY) {
-    throw new Error("THESYS_API_KEY is required to bootstrap presentation cache.");
-  }
-
-  logSkillContext();
-
-  const skillReference = loadCwpSkillReference();
-  if (!skillReference.sampleDeck.exists) {
-    console.warn(
-      "Sample analytics deck missing — prompts will use SKILL.md + layout guide text only."
-    );
-  }
-
   const flowIds = [...FULL_DEMO_FLOW_IDS];
   const registeredFlowIds = new Set(demoFlows.map((flow) => flow.id));
-  const missing = flowIds.filter((flowId) => !registeredFlowIds.has(flowId));
+  const missingFlows = flowIds.filter((flowId) => !registeredFlowIds.has(flowId));
 
-  if (missing.length > 0) {
-    throw new Error(`Missing demo flow definitions for: ${missing.join(", ")}`);
+  if (missingFlows.length > 0) {
+    throw new Error(`Missing demo flow definitions for: ${missingFlows.join(", ")}`);
   }
 
   const bundle = buildDemoPresentationBundle(flowIds);
@@ -164,20 +96,33 @@ async function main() {
     throw new Error("Failed to build presentation bundle for full demo.");
   }
 
+  if (!hasPresentationSlideImages()) {
+    throw new Error(
+      "No numbered slide images found in public/demo/presentation/slides/.\n" +
+        "Add files named 1.png, 2.png, 3.png, … then re-run bootstrap:presentation."
+    );
+  }
+
+  logSkillContext();
+
+  const skillReference = loadCwpSkillReference();
   bundle.templateReference = skillReference;
 
   const cacheKey = getPresentationCacheKey(flowIds);
   const existingManifest = loadPresentationManifest(cacheKey);
   const artifactId = existingManifest?.artifactId ?? createArtifactId();
 
-  const artifactClient = new OpenAI({
-    baseURL: "https://api.thesys.dev/v1/artifact",
-    apiKey: process.env.THESYS_API_KEY,
+  const slides = discoverPresentationSlideImages();
+  console.log(`Building image preview (${slides.length} slide(s)) for ${cacheKey}…`);
+  for (const slide of slides) {
+    console.log(`  ${slide.index}. ${slide.fileName} → ${slide.publicUrl}`);
+  }
+
+  const slidesContent = buildImageSlidesArtifact({
+    artifactId,
+    presentationTitle: bundle.title,
   });
 
-  console.log(`Generating CWP analytics preview slides for ${cacheKey}...`);
-  const rawSlidesContent = await generateSlidesArtifact(artifactClient, artifactId, bundle);
-  const slidesContent = patchPresentationSlides(rawSlidesContent, bundle);
   console.log(`Slides preview ready (${slidesContent.length} chars).`);
 
   savePresentationCache({
@@ -193,8 +138,7 @@ async function main() {
   if (seeded) {
     console.log("Existing seeded PPTX and seeded=true manifest were left unchanged.");
   } else {
-    console.log("Seed PPTX download separately (edit from base template):");
-    console.log("  npm run seed:presentation -- --pptx <path-to-edited.pptx>");
+    console.log("Image-based preview cache ready.");
   }
 }
 

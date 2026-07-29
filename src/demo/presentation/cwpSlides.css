@@ -338,3 +338,45 @@
   width: 100% !important;
   height: 100% !important;
 }
+
+/* ── Image template: full-slide PNG preview (bootstrap from public/demo/presentation/slides/) ── */
+.c1-slideshow-container .c1-images-slide,
+.c1-print-presentation-container .c1-images-slide {
+  padding: 0 !important;
+  background: #ffffff !important;
+}
+
+.c1-slideshow-container .c1-images-slide__container,
+.c1-print-presentation-container .c1-images-slide__container {
+  gap: 0 !important;
+  overflow: visible !important;
+}
+
+.c1-slideshow-container .c1-images-slide__image-wrapper,
+.c1-slideshow-container .c1-images-slide__image-wrapper--single,
+.c1-print-presentation-container .c1-images-slide__image-wrapper,
+.c1-print-presentation-container .c1-images-slide__image-wrapper--single {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  flex: 1 1 auto !important;
+  overflow: visible !important;
+  border-radius: 0 !important;
+}
+
+/* SDK uses background-image with cover — switch to contain so full PNGs are visible */
+.c1-slideshow-container .c1-images-slide .c1-slide-editable-image,
+.c1-print-presentation-container .c1-images-slide .c1-slide-editable-image {
+  background-size: contain !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  overflow: visible !important;
+}
+
+.c1-slideshow-container .c1-images-slide img,
+.c1-print-presentation-container .c1-images-slide img {
+  object-fit: contain !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+}

@@ -7,6 +7,12 @@ function parseNonNegativeInt(value: string | undefined): number | undefined {
   return Number.isFinite(parsed) && parsed >= 0 ? parsed : undefined;
 }
 
+/** Shown while the in-chat slide deck is prepared (override via DEMO_PRESENTATION_LATENCY_MS). */
+const DEFAULT_PRESENTATION_PREVIEW_LATENCY_MS = 3500;
+
+/** Shown while a PPTX download is prepared (override via DEMO_PRESENTATION_DOWNLOAD_LATENCY_MS). */
+const DEFAULT_PRESENTATION_DOWNLOAD_LATENCY_MS = 2500;
+
 export function getDemoLatencyMs(overrideMs?: number): number {
   if (overrideMs !== undefined) {
     return overrideMs;
@@ -31,7 +37,20 @@ export function getPresentationDemoLatencyMs(): number {
     return presentationOverride;
   }
 
-  return getDemoLatencyMs();
+  const general = getDemoLatencyMs();
+  return general > 0 ? general : DEFAULT_PRESENTATION_PREVIEW_LATENCY_MS;
+}
+
+export function getPresentationDownloadLatencyMs(): number {
+  const downloadOverride = parseNonNegativeInt(
+    process.env.DEMO_PRESENTATION_DOWNLOAD_LATENCY_MS
+  );
+
+  if (downloadOverride !== undefined) {
+    return downloadOverride;
+  }
+
+  return DEFAULT_PRESENTATION_DOWNLOAD_LATENCY_MS;
 }
 
 export async function waitForDemoLatency(options?: { ms?: number }): Promise<void> {
@@ -42,4 +61,12 @@ export async function waitForDemoLatency(options?: { ms?: number }): Promise<voi
   }
 
   await new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export async function waitForPresentationDemoLatency(): Promise<void> {
+  await waitForDemoLatency({ ms: getPresentationDemoLatencyMs() });
+}
+
+export async function waitForPresentationDownloadLatency(): Promise<void> {
+  await waitForDemoLatency({ ms: getPresentationDownloadLatencyMs() });
 }

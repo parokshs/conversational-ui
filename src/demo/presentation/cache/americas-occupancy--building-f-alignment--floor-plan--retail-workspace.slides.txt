@@ -1,4 +1,4 @@
-<artifact thesys="true" type="slides" id="9974aa816e" version="1785305823523">
+<artifact thesys="true" type="slides" id="9974aa816e" version="1785308477445">
 {&quot;component&quot;:{&quot;component&quot;:&quot;Presentation&quot;,&quot;props&quot;:{&quot;metadata&quot;:{&quot;title&quot;:{&quot;id&quot;:&quot;presentation-title&quot;,&quot;text&quot;:&quot;Presentation&quot;}},&quot;slides&quot;:[]}}}
 </artifact><artifact_diff thesys="true" type="slides" id="9974aa816e">
 [
@@ -13,169 +13,51 @@
   {
     &quot;op&quot;: &quot;append&quot;,
     &quot;value&quot;: {
-      &quot;id&quot;: &quot;slide-title&quot;,
-      &quot;template&quot;: &quot;Title&quot;,
+      &quot;id&quot;: &quot;slide-1&quot;,
+      &quot;template&quot;: &quot;Image&quot;,
       &quot;props&quot;: {
-        &quot;variant&quot;: &quot;minimal&quot;,
-        &quot;layout&quot;: &quot;title-bottom&quot;,
-        &quot;title&quot;: &quot;Portfolio &amp; Building Analytics&quot;,
-        &quot;subtitle&quot;: &quot;Americas Real Estate Insights&quot;
+        &quot;variant&quot;: &quot;images&quot;,
+        &quot;images&quot;: [
+          &quot;/demo/presentation/slides/1.png&quot;
+        ]
       }
     }
   },
   {
     &quot;op&quot;: &quot;append&quot;,
     &quot;value&quot;: {
-      &quot;id&quot;: &quot;slide-americas-occupancy&quot;,
-      &quot;template&quot;: &quot;Chart&quot;,
+      &quot;id&quot;: &quot;slide-2&quot;,
+      &quot;template&quot;: &quot;Image&quot;,
       &quot;props&quot;: {
-        &quot;variant&quot;: &quot;chart-with-context&quot;,
-        &quot;layout&quot;: &quot;title-body-bottom&quot;,
-        &quot;title&quot;: &quot;Building-Level Metrics — Vacant % b…&quot;,
-        &quot;body&quot;: &quot;Building F is a clear outlier with the highest vacancy rate (24%), well above the rest of the Americas portfolio. Most …&quot;,
-        &quot;chart&quot;: {
-          &quot;component&quot;: &quot;BarChartV2&quot;,
-          &quot;props&quot;: {
-            &quot;xAxisLabel&quot;: &quot;Vacant %&quot;,
-            &quot;yAxisLabel&quot;: &quot;Building&quot;,
-            &quot;isHorizontal&quot;: true,
-            &quot;chartData&quot;: {
-              &quot;data&quot;: {
-                &quot;labels&quot;: [&quot;Building F&quot;, &quot;Building E&quot;, &quot;Building H&quot;, &quot;Building C&quot;, &quot;Building B&quot;, &quot;Building I&quot;, &quot;Building J&quot;, &quot;Building D&quot;, &quot;Building A&quot;, &quot;Building G&quot;],
-                &quot;series&quot;: [
-                  {
-                    &quot;category&quot;: &quot;Vacant %&quot;,
-                    &quot;values&quot;: [24, 5.7, 5.6, 5.3, 5, 4.8, 4.7, 4.6, 4.4, 4.1]
-                  }
-                ]
-              }
-            }
-          }
-        }
+        &quot;variant&quot;: &quot;images&quot;,
+        &quot;images&quot;: [
+          &quot;/demo/presentation/slides/2.png&quot;
+        ]
       }
     }
   },
   {
     &quot;op&quot;: &quot;append&quot;,
     &quot;value&quot;: {
-      &quot;id&quot;: &quot;slide-building-f-alignment&quot;,
-      &quot;template&quot;: &quot;Chart&quot;,
+      &quot;id&quot;: &quot;slide-3&quot;,
+      &quot;template&quot;: &quot;Image&quot;,
       &quot;props&quot;: {
-        &quot;variant&quot;: &quot;chart-with-context&quot;,
-        &quot;layout&quot;: &quot;title-body-left&quot;,
-        &quot;title&quot;: &quot;Actual vs. Allocated Space Alignment – Building F&quot;,
-        &quot;body&quot;: &quot;• HR: 98%, best in building\n• Others: 89–96% healthy\n• Retail: 68% outlier\n\nRec: Investigate Retail misallocation.&quot;,
-        &quot;chart&quot;: {
-          &quot;component&quot;: &quot;BarChartV2&quot;,
-          &quot;props&quot;: {
-            &quot;xAxisLabel&quot;: &quot;Alignment %&quot;,
-            &quot;yAxisLabel&quot;: &quot;Business Unit&quot;,
-            &quot;isHorizontal&quot;: true,
-            &quot;chartData&quot;: {
-              &quot;data&quot;: {
-                &quot;labels&quot;: [&quot;Retail&quot;, &quot;Finance&quot;, &quot;Operations&quot;, &quot;Engineering&quot;, &quot;Staff Groups&quot;, &quot;Human Resources&quot;],
-                &quot;series&quot;: [
-                  {
-                    &quot;category&quot;: &quot;Actual = Allocated %&quot;,
-                    &quot;values&quot;: [68, 89, 90, 92, 96, 98]
-                  }
-                ]
-              }
-            }
-          }
-        }
+        &quot;variant&quot;: &quot;images&quot;,
+        &quot;images&quot;: [
+          &quot;/demo/presentation/slides/3.png&quot;
+        ]
       }
     }
   },
   {
     &quot;op&quot;: &quot;append&quot;,
     &quot;value&quot;: {
-      &quot;id&quot;: &quot;slide-retail-workspace&quot;,
-      &quot;template&quot;: &quot;Chart&quot;,
+      &quot;id&quot;: &quot;slide-4&quot;,
+      &quot;template&quot;: &quot;Image&quot;,
       &quot;props&quot;: {
-        &quot;variant&quot;: &quot;chart-with-context&quot;,
-        &quot;layout&quot;: &quot;title-body-left&quot;,
-        &quot;title&quot;: &quot;Retail Workspace Allocation by Floor&quot;,
-        &quot;body&quot;: &quot;• Retail: 67% aligned, 85-seat gap\n• Floor 1: 72%; Floor 2: 65%\n\nRec: Consolidate Retail; flex on Floor 1.&quot;,
-        &quot;chart&quot;: {
-          &quot;component&quot;: &quot;BarChartV2&quot;,
-          &quot;props&quot;: {
-            &quot;xAxisLabel&quot;: &quot;Count&quot;,
-            &quot;yAxisLabel&quot;: &quot;Floor&quot;,
-            &quot;chartData&quot;: {
-              &quot;data&quot;: {
-                &quot;labels&quot;: [&quot;Floor 1&quot;, &quot;Floor 2&quot;],
-                &quot;series&quot;: [
-                  {
-                    &quot;category&quot;: &quot;Actual Employees&quot;,
-                    &quot;values&quot;: [90, 170]
-                  },
-                  {
-                    &quot;category&quot;: &quot;Allocated Spaces&quot;,
-                    &quot;values&quot;: [65, 110]
-                  }
-                ]
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  {
-    &quot;op&quot;: &quot;append&quot;,
-    &quot;value&quot;: {
-      &quot;id&quot;: &quot;slide-floor-plan&quot;,
-      &quot;template&quot;: &quot;ImageWithText&quot;,
-      &quot;props&quot;: {
-        &quot;variant&quot;: &quot;list-with-image&quot;,
-        &quot;title&quot;: &quot;Floor 1 — Leaders Legend&quot;,
-        &quot;items&quot;: [
-          {
-            &quot;iconName&quot;: &quot;circle&quot;,
-            &quot;iconCategory&quot;: &quot;shapes&quot;,
-            &quot;primaryText&quot;: &quot;38 occupied / 53 total (~72%)&quot;,
-            &quot;body&quot;: &quot;15 vacant desks remain across the floor&quot;
-          },
-          {
-            &quot;iconName&quot;: &quot;circle&quot;,
-            &quot;iconCategory&quot;: &quot;shapes&quot;,
-            &quot;primaryText&quot;: &quot;Engineering: 1 occupied, 13 vacant&quot;,
-            &quot;body&quot;: &quot;Largest reallocation opportunity on Floor 1&quot;
-          },
-          {
-            &quot;iconName&quot;: &quot;circle&quot;,
-            &quot;iconCategory&quot;: &quot;shapes&quot;,
-            &quot;primaryText&quot;: &quot;Travel, Tech &amp; Staff Groups: 100% full&quot;,
-            &quot;body&quot;: &quot;No spare capacity — 14, 9, 8 occupied, 0 vacant&quot;
-          },
-          {
-            &quot;iconName&quot;: &quot;circle&quot;,
-            &quot;iconCategory&quot;: &quot;shapes&quot;,
-            &quot;primaryText&quot;: &quot;Retail &amp; Utilities: minimal footprint&quot;,
-            &quot;body&quot;: &quot;0 occupied, 1 vacant each — negligible presence&quot;
-          }
-        ],
-        &quot;images&quot;: [&quot;/demo/floor-1-plan.png&quot;]
-      }
-    }
-  },
-  {
-    &quot;op&quot;: &quot;append&quot;,
-    &quot;value&quot;: {
-      &quot;id&quot;: &quot;slide-action-plan&quot;,
-      &quot;template&quot;: &quot;KeyFigures&quot;,
-      &quot;props&quot;: {
-        &quot;variant&quot;: &quot;numbered-key-point&quot;,
-        &quot;items&quot;: [
-          {
-            &quot;title&quot;: &quot;1. Investigate Retail Misalignment&quot;,
-            &quot;body&quot;: &quot;Confirm if misalignment is intentional (project seating, temp moves) or requires formal reallocation across Building F.&quot;
-          },
-          {
-            &quot;title&quot;: &quot;2. Consolidate Retail &amp; Add Flex Seating&quot;,
-            &quot;body&quot;: &quot;Reallocate surplus from under-used orgs (e.g., Engineering) and add flex seating on Floor 1 — then monitor utilisation.&quot;
-          }
+        &quot;variant&quot;: &quot;images&quot;,
+        &quot;images&quot;: [
+          &quot;/demo/presentation/slides/4.png&quot;
         ]
       }
     }

@@ -1,69 +1,182 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code and Cursor when working on this repository.
 
 ## What this is
 
-A Next.js (App Router) generative-UI chat client built on **Thesys C1** (`@thesysai/genui-sdk`, `@crayonai/react-core`/`react-ui`/`stream`). The whole UI is a single `C1Chat` component (`src/app/page.tsx`) that talks to a streaming `/api/chat` route; C1 turns LLM output into rendered UI (tables, callouts, artifacts) via a custom XML-ish dialect the SDK parses out of the model's streamed text.
+A Next.js (App Router) generative-UI chat client built on **Thesys C1** (`@thesysai/genui-sdk`, `@crayonai/react-core`/`react-ui`/`stream`). The UI is a single `C1Chat` component (`src/app/page.tsx`) that streams to `/api/chat`; the SDK parses a custom XML-ish dialect from the model stream and renders tables, charts, callouts, and slide artifacts.
 
-The app also has a **demo mode** layered on top that intercepts matched questions and returns pre-generated, staged C1 responses instead of calling the live model, plus a presentation/PPTX export feature built from the same demo data.
+The app has **demo mode** (staged C1 responses from disk, no live LLM) plus **presentation preview + PPTX download** for the portfolio analytics demo.
 
 ## Commands
 
 ```bash
-npm run dev            # start dev server (Turbopack), http://localhost:3000
-npm run build           # production build
-npm run start           # run production build
-npm run lint             # next lint
-npm run bootstrap:demo  # regenerate src/demo/responses/*.c1.txt from src/demo/data/*.ts via the live Thesys API
+npm run dev                  # dev server (Turbopack), http://localhost:3000
+npm run build && npm run start
+npm run lint
+npm run bootstrap:demo       # regenerate src/demo/responses/*.c1.txt via Thesys API
+npm run bootstrap:presentation  # build slides preview cache from PNG slide images (no Thesys)
+npm run seed:presentation -- --pptx <path>  # lock in edited PPTX + enable seeded demo cache
 ```
 
-No test suite exists in this repo currently.
+No test suite exists. Node **>= 20.9.0**.
 
-`bootstrap:demo` requires `THESYS_API_KEY` in `.env` (it reads `.env` itself via a hand-rolled loader in `scripts/bootstrap-c1-responses.ts`, not dotenv). `.env` also sets `DEMO_MODE` (defaults to enabled — see below).
+Scripts read `.env` via hand-rolled loaders (not dotenv). `THESYS_API_KEY` is required for `bootstrap:demo` and live LLM/artifact paths.
+
+## Environment (demo)
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `DEMO_MODE` | on (unless `"false"`) | Staged responses + presentation cache path |
+| `DEMO_LATENCY_MS` | 0 | Delay before each staged chat step |
+| `DEMO_PRESENTATION_LATENCY_MS` | 3500 | Delay before slide deck opens (think item visible) |
+| `DEMO_PRESENTATION_SLIDE_LATENCY_MS` | 1000 | Delay between each slide appearing in preview |
+| `DEMO_PRESENTATION_DOWNLOAD_LATENCY_MS` | 2500 | Delay before PPTX download starts (export button spinner) |
+
+See `.env-example` and `src/demo/demoLatency.ts`.
 
 ## Architecture
 
 ### Chat request flow (`src/app/api/chat/route.ts`)
 
-Each POST carries `{ prompt, threadId, responseId }`. The route, in order:
+Each POST: `{ prompt, threadId, responseId }`.
 
-1. Appends `prompt` to an in-memory per-thread message store (`messageStore.ts` — a plain object keyed by `threadId`, **not persisted**, reset on server restart).
-2. If demo mode is on and the question matches a presentation-export phrase (`isPresentationExportRequest`), delegates to `demo/presentation/presentationFlow.ts`.
-3. Else if demo mode is on and the question keyword-matches a registered demo flow (`matchStagedFlow`), streams back that flow's pre-generated `.c1.txt` file instead of calling the model (`buildStagedResponse.ts`).
-4. Otherwise falls through to a real streaming call to Thesys (`https://api.thesys.dev/v1/embed/`, model `c1/openai/gpt-5/v-20251130`), piping deltas into a `c1Response` via `@crayonai/stream`'s `transformStream`.
+1. Append `prompt` to in-memory per-thread store (`messageStore.ts` — **not persisted**, lost on restart).
+2. If demo mode + **presentation phrase match** → `presentation/presentationFlow.ts` (checked **before** staged flows).
+3. Else if demo mode + keyword match → stream pre-generated `.c1.txt` (`buildStagedResponse.ts`).
+4. Else → live Thesys embed API.
 
-In all three cases the assistant's final message is written back into the message store, tagged with `flowId` when it came from a demo flow — this tagging is how presentation export later knows which demo analyses have been shown in a given thread (`getMatchedFlowIds`).
+Unmatched demo prompts return: *"Sorry, I couldn't process that. Please try again."*
 
-Demo mode is controlled by `isDemoModeEnabled()` in `buildStagedResponse.ts`: **on unless `DEMO_MODE` is explicitly `"false"`**.
+Assistant messages from staged flows get `flowId` for logging; presentation export does **not** require prior steps in the thread.
+
+Demo mode: `isDemoModeEnabled()` → on unless `DEMO_MODE === "false"`.
 
 ### Demo flow system (`src/demo/`)
 
-This is the part of the codebase most likely to need edits day-to-day. Read `src/demo/README.md` for the full workflow; summary:
+Read `src/demo/README.md` for the full workflow.
 
-- **Six-step demo**: (1) Americas occupancy, (2) Building F alignment, (3) Retail workspace, (4) Floor 1 plan, (5) presentation export, (6) PPTX download. See `src/demo/README.md`.
-- **Data**: `src/demo/data/*.ts` — plain TypeScript source-of-truth for numbers/text (e.g. `americasBuildings.ts`, `buildingFAlignment.ts`, `retailWorkspace.ts`, `floorPlan.ts`).
-- **Flow definitions**: `src/demo/flows/definitions/*.ts` implement `DemoFlowDefinition` (`src/demo/flows/types.ts`): `keywords` for matching, `responseFile` naming the staged `.c1.txt`, optional `thinking` (title/description shown as an ephemeral "thinking" step), `buildChatPrompt()` (prompt used to bootstrap the staged in-chat response), and `buildPresentationSection()` (structured slide content built directly from the data files, no LLM involved).
-- **Registry**: `src/demo/flows/registry.ts` lists every flow — a new flow must be registered here or it's invisible to matching, bootstrapping, and presentation export.
-- **Matching**: `src/demo/flows/matchPrompt.ts` does keyword scoring (exact substring match weighted by word count, partial word overlap as fallback) with a minimum score threshold of 2 to accept a match. Demo prompts are **not** hardcoded — add synonyms to each flow's `keywords` array. No embeddings/LLM involved.
-- **Latency**: `src/demo/demoLatency.ts` — optional artificial delay via `.env` (`DEMO_LATENCY_MS`, `DEMO_LATENCY_MIN_MS`/`MAX`, `DEMO_PRESENTATION_LATENCY_MS`) or per-flow `latencyMs`. Staged responses read disk, not a database.
-- **Staged responses**: `src/demo/responses/*.c1.txt` are raw C1-formatted text, generated ahead of time by `npm run bootstrap:demo` (calls the real Thesys API once per flow, per `buildChatPrompt()`) and replayed verbatim at request time. **If you edit `data/*.ts`, you must rerun `bootstrap:demo` for the in-chat response to reflect it** — presentation export does not need this since it reads the data files directly at request time.
+- **Steps 1–4**: Americas occupancy, Building F alignment, Retail workspace, Floor 1 plan — registered in `flows/registry.ts`, data in `src/demo/data/*.ts`.
+- **Step 5**: Presentation export (phrase match, not keyword scoring).
+- **Step 6**: PPTX download from artifact viewer → `/api/export-pptx`.
 
-### Presentation / PPTX export (`src/demo/presentation/`)
+**Matching (steps 1–4)**: `flows/matchPrompt.ts` — keyword scoring, threshold **2**. Add synonyms to each flow's `keywords` array.
 
-Triggered by natural-language phrases matched in `presentationFlow.ts` (`isPresentationExportRequest`: "export a presentation", "create slides", "generate a deck", etc.). `handlePresentationExport`:
+**Staged responses**: `src/demo/responses/*.c1.txt`. After editing `data/*.ts`, run `npm run bootstrap:demo` for in-chat UI to update. Presentation **preview cache** is separate (see below).
 
-1. Looks up which demo flows have already been answered in this thread (`getMatchedFlowIds` on the message store) and builds a `DemoPresentationBundle` from their `buildPresentationSection()` output (`buildBundle.ts`) — export is scoped to what the user actually asked about, not all demo content.
-2. If nothing matched yet, streams back a plain message asking the user to ask a demo question first.
-3. Otherwise calls the Thesys **artifact** API (`https://api.thesys.dev/v1/artifact`, model `c1/artifact/v-20251030`) with a system/user prompt built by `artifactPrompt.ts` from the bundle, streaming the result wrapped in `<artifact type="slides" ...>` tags into the chat response. The `@thesysai/genui-sdk` client renders this as a native artifact viewer with a PPTX export button.
-4. Actual PPTX generation happens server-side in `src/app/api/export-pptx/route.ts`, which proxies `exportParams` (produced client-side by the SDK's export button) to `https://api.thesys.dev/v1/artifact/pptx/export` and streams the binary back with `Content-Disposition: attachment`.
+### Anomaly thread (sidebar)
 
-### Adding a new demo step
+Pre-loaded **Proactive Insights** thread (`anomaly/anomalyThread.ts`):
 
-Follow `src/demo/README.md`'s table exactly — in short: add a data file, add a flow definition with both builder functions, register it in `registry.ts`, run `npm run bootstrap:demo`. No other wiring is needed; presentation export picks up any registered flow automatically once it's been matched in a thread.
+- Data: `data/anomalyFindings.ts` — **Boltro Road · Room Occupancy first**, then **Sanam · Area Discrepancy** (order in `getAnomalyFindings()` + `responses/anomalyFindings.c1.txt`).
+- Loaded via `/api/demo/anomaly-thread` → `buildAnomalySeed.ts`.
+
+### Presentation preview + PPTX (`src/demo/presentation/`)
+
+**Two separate outputs:**
+
+| Output | Source | When updated |
+| --- | --- | --- |
+| **In-chat slide preview** | `cache/*.slides.txt` | `npm run bootstrap:presentation` |
+| **PPTX download** | `cache/*.pptx` | `npm run seed:presentation` (manual edit in PowerPoint) |
+
+**Seeded gate**: `cache/<key>.json` must have `"seeded": true` for demo mode to replay cached preview + serve cached PPTX. `bootstrap:presentation` updates `.slides.txt` but preserves existing `seeded` flag and PPTX.
+
+Default cache key (full 4-step demo):
+
+`americas-occupancy--building-f-alignment--floor-plan--retail-workspace`
+
+#### Image-based preview (current approach)
+
+Thesys-generated slide layouts were unreliable for CWP typography/charts, so **preview uses full-slide PNGs**:
+
+1. Add numbered images: `public/demo/presentation/slides/1.png`, `2.png`, … (`.webp`/`.jpg` OK; gaps OK; README ignored).
+2. Run `npm run bootstrap:presentation` — **requires at least one image; no Thesys fallback**.
+3. Builder: `buildImageSlidesArtifact.ts` + `slideImages.ts` → Thesys `Image` template artifact in `.slides.txt`.
+
+**Recommended PNG size**: **1920×1080** (16:9) to match the in-browser slide canvas. See `public/demo/presentation/slides/README.md`.
+
+**Artifact format** (must match working Thesys cache or client shows *"Error while generating response"*):
+
+```
+<artifact thesys="true" type="slides" id="..." version="...">
+{encoded JSON — single `{`, not `{{`}
+</artifact><artifact_diff thesys="true" type="slides" id="...">
+[
+  { "op": "replace", "id": "presentation-title", ... },
+  { "op": "append", "value": { "template": "Image", ... } },
+  ...
+]
+</artifact_diff>
+```
+
+Do **not** append an extra `]` after the diff array. Use template literals for tags containing `thesys="true"`.
+
+**Streaming**: `streamSlidesArtifactIncrementally.ts` sends one diff operation at a time so slides appear progressively (SDK supports partial `artifact_diff` JSON). Wired from `presentationFlow.ts` with `DEMO_PRESENTATION_SLIDE_LATENCY_MS` between slides.
+
+**CSS**: Image slides render as `background-image` on `.c1-slide-editable-image` with SDK default `background-size: cover` (crops PNGs). Overrides in `cwpSlides.css` use `background-size: contain` for full-slide PNG preview.
+
+**Legacy Thesys path** (still in repo, not used by bootstrap): `formatPresentationSlides.ts`, `patchPresentationSlides.ts`, `artifactPrompt.ts` — used if cache is not image-based and live API is called.
+
+#### Presentation phrase matching
+
+Regex list in `presentationFlow.ts` → `evaluatePresentationExportRequest()`. Examples that work:
+
+- `generate ppt`, `Prepare a presentation`, `Prepare a presentation to be shared with the Executives`
+- `export/create/make/build` + presentation/slides/deck/pptx
+
+**Does not match**: `Preparing a presentation`, `Prepare slides/deck` (prepare pattern lacks `slides|deck` — extend patterns if needed).
+
+If user gets the generic sorry message, check server logs for `presentation_export_check` (`matched: false` → phrase or empty `userQuestion` from `getPromptText()`).
+
+#### PPTX download
+
+`src/app/api/export-pptx/route.ts`: if demo + seeded cache → serve `cache/*.pptx`; else proxy Thesys export API. Download delay via `waitForPresentationDownloadLatency()`.
+
+### CWP brand & charts
+
+- Skill folder: `.agents/skills/cwp_template/` (layout guide, browser preview mapping, PPTX reference).
+- Brand constants: `presentation/cwpBrandPrompt.ts` → `config/branding.ts` (`brandTheme`, `cwpSlidesTheme`).
+- Slide viewer CSS: `presentation/cwpSlides.css` (imported in `globals.css`).
+
+**Chart colors in chat UI** (BarChartV2, MiniChart): Crayon `@crayonai/react-ui` picks colors from theme palette using **middle-index logic** (`PalletUtils.getDistributedColors`). Therefore:
+
+```typescript
+// cwpBrandPrompt.ts — order matters, not just hex values
+CWP_UI_CHART_PALETTE = ["#CC4678", "#CC4678", "#FF9933"]
+// single-series → maroon; two-series → maroon + orange (matches PPT)
+```
+
+Do not use a generic multi-color `brandAccents` array — it produced yellow bars (`#FFCC33` at palette midpoint).
+
+### Frontend notes (`src/app/page.tsx`)
+
+- Wraps `C1Chat` in `ThemeProvider` with `disableThemeProvider` on chat.
+- **Hydration**: Crayon `ThemeProvider` uses a non-SSR-safe `useId` polyfill (global counter → mismatched `crayon-theme-portal-uid-*`). Chat mounts after `useEffect` client gate to avoid hydration errors.
+- PPTX export: `customizeC1.exportAsPPTX` → `/api/export-pptx`.
+
+## Key files (quick map)
+
+| Area | Files |
+| --- | --- |
+| Chat routing | `src/app/api/chat/route.ts` |
+| Presentation export | `src/demo/presentation/presentationFlow.ts` |
+| Image slide bootstrap | `scripts/bootstrap-presentation.ts`, `buildImageSlidesArtifact.ts`, `slideImages.ts` |
+| Slide cache | `src/demo/presentation/presentationCache.ts`, `cache/*.slides.txt`, `cache/*.json` |
+| Incremental slide stream | `src/demo/presentation/streamSlidesArtifact.ts` |
+| Demo data | `src/demo/data/*.ts` |
+| Staged chat responses | `src/demo/responses/*.c1.txt` |
+| Flow registry | `src/demo/flows/registry.ts` |
+| Anomaly seed | `src/demo/anomaly/*`, `data/anomalyFindings.ts` |
 
 ## Conventions
 
-- Path alias `@/*` → `src/*` (see `tsconfig.json`).
-- `strict` is `false` in `tsconfig.json` — don't assume strict-null-check guarantees when editing.
-- ESLint extends `next/core-web-vitals` + `next/typescript` — nothing custom.
+- Path alias `@/*` → `src/*`.
+- `strict: false` in `tsconfig.json`.
+- Prefer editing `data/*.ts` as source of truth; regenerate `.c1.txt` with `bootstrap:demo` when chat copy/layout from bootstrap should change.
+- For presentation **preview** PNGs: edit images → `bootstrap:presentation`. For **PPTX file**: edit in PowerPoint → `seed:presentation`.
+- Minimize scope; match existing demo/presentation patterns before adding new abstractions.
+
+## Adding a new demo step
+
+See `src/demo/README.md`: data file → flow definition (`buildChatPrompt`, `buildPresentationSection`) → `registry.ts` → `bootstrap:demo`. Presentation deck includes all registered full-demo flows via `FULL_DEMO_FLOW_IDS` in `presentationCache.ts`.
